@@ -1,0 +1,12 @@
+venv
+env
+*.pyc
+static
+.env
+.DS_Store
+.idea/*.*
+activate
+.idea
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py

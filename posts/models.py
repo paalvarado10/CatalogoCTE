@@ -46,7 +46,7 @@ class Perfil(models.Model):
     REVISOR = 3
     ROLE_CHOICES = (
         (ADMINISTRADOR, 'Administrador'),
-        (CREADOR, 'MIEBROGIT'),
+        (CREADOR, 'Miembro GTI'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     fotoUrl = models.CharField(max_length=500, null=True, blank=True)

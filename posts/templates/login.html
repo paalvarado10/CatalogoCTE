@@ -1,0 +1,34 @@
+{% load bootstrap3%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% bootstrap_css %}
+</head>
+<body>
+
+{% block content %}
+    <div class="wrapper2 p10">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="header">Login</div>
+            {% if mensaje %}
+                <div class="alert alert-danger">
+                    {{ mensaje }}
+                </div>
+            {% endif %}
+            <form method="post" action="">
+                {% csrf_token %}
+                <label class="control-label" for="username">Nombre de usuario</label>
+                <input type="text" id="username" name="username" class="form-control"/>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-control"/>
+                <button type="submit" class="btn submit">Login</button>
+            </form>
+        </div>
+
+    </div>
+{% endblock content %}
+
+</body>
+</html>

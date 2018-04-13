@@ -80,7 +80,6 @@ WSGI_APPLICATION = 'catalogo.wsgi.application'
 # }
 
 # Database DEVELOP
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -89,7 +88,11 @@ DATABASES = {
         'PASSWORD': '70b24bd34f14df8076ac216570b8b6270b4d2275b5e15db16ca466fb33f1733b',
         'HOST': 'ec2-54-243-213-188.compute-1.amazonaws.com',
         'PORT': '5432',
-    }
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'dd1f52u3e1rg36',
+        },
+    },
 }
 
 

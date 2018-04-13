@@ -7,9 +7,30 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
+class TestModel(models.Model):
+    nombre = models.CharField(max_length=100, null=False, blank=False)
+
 class Herramienta(models.Model):
-    nombre = models.CharField(max_length=200, null=False, blank=False)
+    nombre = models.CharField(max_length=100, null=False, blank=False)
     urlReferencia = models.CharField(max_length=500, null=False, blank=False)
+    sistemaOperativo = models.CharField(max_length=50, null=False, blank=False)
+    plataforma = models.CharField(max_length=50, null=True, blank=True)
+    fichaTecnica = models.CharField(max_length=200, null=False, blank=False)
+    licencia = models.CharField(max_length=200, null=False, blank=False)
+
+    PENDIETE_REVISION = 1
+    PENDIENTE_PUBLICACION = 2
+    PUBLICADO = 3
+    BLOQUEADO = 4
+    ESTADO_CHOICES = (
+        (PENDIETE_REVISION, 'Pendiente de Revisión'),
+        (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
+        (PUBLICADO, 'Publicado'),
+        (BLOQUEADO, 'Bloqueado'),
+    )
+    estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
+    revisiones = models.IntegerField(null=False, blank=False)
+
 
 # Perfiles de Usuario
 # ADMINISTRADOR: Administrador general de la aplicación

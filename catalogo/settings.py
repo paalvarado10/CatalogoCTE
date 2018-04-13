@@ -89,7 +89,6 @@ DATABASES = {
         'HOST': 'ec2-54-243-213-188.compute-1.amazonaws.com',
         'PORT': '5432',
         'TEST': {
-            'ENGINE': 'django.db.backends.sqlite3',
             'NAME': 'dd1f52u3e1rg36',
         },
     },

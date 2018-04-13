@@ -90,7 +90,7 @@ DATABASES = {
         'HOST': config('HOST_DB', default=''),
         'PORT': '5432',
         'TEST': {
-            'NAME': 'dd1f52u3e1rg36',
+            'NAME': config('NAME_DB', default=''),
         },
     },
 }

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -83,10 +84,10 @@ WSGI_APPLICATION = 'catalogo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dd1f52u3e1rg36',
-        'USER': 'irbnvlydmcxrch',
-        'PASSWORD': '70b24bd34f14df8076ac216570b8b6270b4d2275b5e15db16ca466fb33f1733b',
-        'HOST': 'ec2-54-243-213-188.compute-1.amazonaws.com',
+        'NAME': config('NAME_DB', default=''),
+        'USER': config('USER_DB', default=''),
+        'PASSWORD': config('PASSWORD_DB', default=''),
+        'HOST': config('HOST_DB', default=''),
         'PORT': '5432',
         'TEST': {
             'NAME': 'dd1f52u3e1rg36',

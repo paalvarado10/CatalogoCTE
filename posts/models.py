@@ -42,11 +42,10 @@ class Herramienta(models.Model):
 # REVISOR: Usuario c-te revisor borradores (también puede crear contenidos)
 class Perfil(models.Model):
     ADMINISTRADOR = 1
-    CREADOR = 2
-    REVISOR = 3
+    USER_GTI = 2
     ROLE_CHOICES = (
         (ADMINISTRADOR, 'Administrador'),
-        (CREADOR, 'Miembro GTI'),
+        (USER_GTI, 'Miembro GTI'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     fotoUrl = models.CharField(max_length=500, null=True, blank=True)

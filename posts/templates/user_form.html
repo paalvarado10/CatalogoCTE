@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Crear cuenta de usuario</title>
+</head>
+<body>
+
+{% block content %}
+    <form action="{% url 'catalogo:addUsuario' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Añadir">
+        <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+    </form>
+{% endblock %}
+
+</body>
+</html>

@@ -20,7 +20,7 @@ def index(request):
         context = {'usuarios': usuarios}
         return render(request, 'index.html', context)
     else:
-        return HttpResponseRedirect(reverse('catalogo:login'))
+        return HttpResponseRedirect(reverse('catalogo:index'))
 
 
 def login_view(request):

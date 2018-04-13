@@ -142,3 +142,38 @@ class UserChangePassword(PasswordChangeForm):
                     mensajes.append('Contraseña muy similar a los datos del usuario')
             raise forms.ValidationError(mensajes)
         return password2
+
+class UserUpdateGTIForm(ModelForm):
+    pk_user = None
+    username = forms.CharField(label="Usuario", max_length=20)
+    first_name = forms.CharField(label="Nombres", max_length=20)
+    last_name = forms.CharField(label="Apellidos", max_length=20)
+    email = forms.EmailField(label="Correo electronico")
+    foto = forms.FileField(required=False)
+    USER_GTI = 2
+    ROLE_CHOICES = (
+        (USER_GTI, 'Miembro GTI'),
+    )
+    roles = forms.ChoiceField(choices=ROLE_CHOICES)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'roles','foto']
+
+    # verificacion correo unico
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        busqueda = User.objects.filter(email=email)
+        if busqueda:
+            user = len(busqueda)
+            if user > 1:
+                raise forms.ValidationError('Correo ya ha sido registrado')
+            else:
+                return email
+        return email
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.exclude(pk=self.instance.id).filter(username=username).exists():
+            raise forms.ValidationError(u'Usuario "%s" ya esta en uso.' % username)
+        return username

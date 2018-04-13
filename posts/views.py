@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from azure.storage.blob import BlockBlobService
-from posts.forms import UserForm, UserUpdateForm, UserChangePassword
+from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from posts.models import Perfil
@@ -20,7 +20,7 @@ def index(request):
         context = {'usuarios': usuarios}
         return render(request, 'index.html', context)
     else:
-        return HttpResponseRedirect(reverse('catalogo:index'))
+        return render(request, 'index.html')
 
 
 def login_view(request):
@@ -128,6 +128,45 @@ def user_update(request, pk):
         form = UserUpdateForm(instance=user_model)
     return render(request, 'user_update.html', {'form': form})
 
+def user_updateGTI(request, pk):
+    user_model = User.objects.get(id=pk)
+    if request.method == 'POST':
+
+        form = UserUpdateGTIForm(request.POST, request.FILES, instance=user_model)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            username = cleaned_data.get('username')
+            first_name = cleaned_data.get('first_name')
+            last_name = cleaned_data.get('last_name')
+            email = cleaned_data.get('email')
+            roles = cleaned_data.get('roles')
+            user_model.first_name = first_name
+            user_model.last_name = last_name
+            user_model.email = email
+            if user_model.username != username:
+                user_model.username = username
+
+            user_model.save()
+            print(user_model.username + " " + username)
+
+            profile_model = Perfil.objects.get(user_id=user_model.id)
+            fotoSubio = True if 'foto' in request.FILES else False
+            if fotoSubio:
+                myfile = request.FILES['foto']
+                chu = myfile.chunks()
+                st = ''
+                file = str(st)
+                for chunk in chu:
+                    a = chunk
+                    file = file + a
+                url = guardarDarUrl(file, myfile.name)
+                profile_model.fotoUrl = url
+            profile_model.role = roles[0]
+            profile_model.save()
+            return HttpResponseRedirect(reverse('catalogo:index'))
+    else:
+        form = UserUpdateGTIForm(instance=user_model)
+    return render(request, 'user_update.html', {'form': form})
 
 def user_change_password(request):
     if request.user.is_authenticated():

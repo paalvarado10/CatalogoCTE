@@ -38,7 +38,7 @@
 {% elif user.is_authenticated and user.perfil.role == 2 %}
     <h3>Miebro GTI Page</h3>
     <a href="{% url 'catalogo:logout' %}"> Salir </a>
-    <a href="{% url 'catalogo:user_update' user.id %}" class="btn">Editar</a>
+    <a href="{% url 'catalogo:user_update_gti' user.id %}" class="btn">Editar</a>
     <a href="{% url 'catalogo:user_change_password'%}" class="btn">Cambiar Contraseña</a>
 {% elif not user.is_authenticated %}
     <a href="{% url 'catalogo:login' %}" class="cancel">Login</a>

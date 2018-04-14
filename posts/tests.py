@@ -27,3 +27,5 @@ class HerramientaModelCase(TestCase):
     def test_nombre_herramienta(self):
         tester = Herramienta.objects.get(nombre ='prueba')
         self.assertEqual(tester.nombre_herramienta(), 'prueba')
+
+

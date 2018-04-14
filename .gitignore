@@ -1,7 +1,6 @@
 venv
 env
 *.pyc
-static
 .env
 .DS_Store
 .idea/*.*

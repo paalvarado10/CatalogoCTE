@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
-from posts.models import TestModel, Herramienta, Actividad, RecursoActividad
+from posts.models import TestModel, Herramienta, Actividad, RecursoActividad, Tutorial, RecursoTutorial
 
 
 # Create your tests here.
@@ -117,3 +117,53 @@ class RecursoActividadModelCase(TestCase):
     def test_descripcion_recurso_actividad(self):
         tester = RecursoActividad.objects.get(descripcion='descRecurso')
         self.assertEqual(tester.descripcion_recurso_actividad(), 'descRecurso')
+
+class TutorialModelCase(TestCase):
+    def setUp(self):
+        Herramienta.objects.create(version="Version Prueba", nombre="prueba", urlReferencia="www.google.com", sistemaOperativo="Windows", plataforma="Plataforma Prueba",fichaTecnica="Ficha tecnica prueba", descripcion="desc", licencia="gratis", estado=1, revisiones=0, logo="logo")
+        herramienta = Herramienta.objects.get(nombre='prueba')
+        Tutorial.objects.create(herramienta=herramienta, version="Version Prueba", nombre="tutorialPrueba", funcionalidad="funcionalidadTutorial", estado=1, revisiones=0)
+
+    def test_herramienta_tutorial(self):
+        tester = Tutorial.objects.get(nombre='tutorialPrueba')
+        self.assertEqual(tester.herramienta_tutorial(), 'prueba')
+
+    def test_version_tutorial(self):
+        tester = Tutorial.objects.get(nombre='tutorialPrueba')
+        self.assertEqual(tester.version_tutorial(), 'Version Prueba')
+
+    def test_nombre_tutorial(self):
+        tester = Tutorial.objects.get(nombre='tutorialPrueba')
+        self.assertEqual(tester.nombre_tutorial(), 'tutorialPrueba')
+
+    def test_funcionalidad_tutorial(self):
+        tester = Tutorial.objects.get(nombre='tutorialPrueba')
+        self.assertEqual(tester.funcionalidad_tutorial(), 'funcionalidadTutorial')
+
+    def test_estado_tutorial(self):
+        tester = Tutorial.objects.get(nombre='tutorialPrueba')
+        self.assertEqual(tester.estado_tutorial(), 1)
+
+    def test_revisiones_tutorial(self):
+        tester = Tutorial.objects.get(nombre='tutorialPrueba')
+        self.assertEqual(tester.revisiones_tutorial(), 0)
+
+class RecursoTutorialModelCase(TestCase):
+    def setUp(self):
+        Herramienta.objects.create(version="Version Prueba", nombre="prueba", urlReferencia="www.google.com", sistemaOperativo="Windows", plataforma="Plataforma Prueba",fichaTecnica="Ficha tecnica prueba", descripcion="desc", licencia="gratis", estado=1, revisiones=0, logo="logo")
+        herramienta = Herramienta.objects.get(nombre='prueba')
+        Tutorial.objects.create(herramienta=herramienta, version="Version Prueba", nombre="tutorialPrueba", funcionalidad="funcionalidadTutorial", estado=1, revisiones=0)
+        tutorial=Tutorial.objects.get(nombre='tutorialPrueba')
+        RecursoTutorial.objects.create(tutorial=tutorial, url='www.recTutorial.com', descripcion='descRecuTuto')
+
+    def test_tutorial_recurso_tutorial(self):
+        tester = RecursoTutorial.objects.get(descripcion='descRecuTuto')
+        self.assertEqual(tester.tutorial_recurso_tutorial(), 'tutorialPrueba')
+
+    def test_url_recurso_tutorial(self):
+        tester = RecursoTutorial.objects.get(descripcion='descRecuTuto')
+        self.assertEqual(tester.url_recurso_tutorial(), 'www.recTutorial.com')
+
+    def test_descripcion_recurso_tutorial(self):
+        tester = RecursoTutorial.objects.get(descripcion='descRecuTuto')
+        self.assertEqual(tester.descripcion_recurso_tutorial(), 'descRecuTuto')

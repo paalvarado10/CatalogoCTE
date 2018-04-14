@@ -99,9 +99,6 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.perfil.save()
 
 
-
-
-
 class Actividad(models.Model):
     class Meta:
         unique_together = (('id', 'version'),)
@@ -153,7 +150,6 @@ class Actividad(models.Model):
         return self.revisiones
 
 
-
 class RecursoActividad(models.Model):
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
@@ -194,8 +190,41 @@ class Tutorial(models.Model):
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
     revisiones = models.IntegerField(null=False, blank=False)
 
+    def __unicode__(self):
+        return self
+
+    def herramienta_tutorial(self):
+        return self.herramienta.nombre
+
+    def version_tutorial(self):
+        return self.version
+
+    def nombre_tutorial(self):
+        return self.nombre
+
+    def funcionalidad_tutorial(self):
+        return self.funcionalidad
+
+    def estado_tutorial(self):
+        return self.estado
+
+    def revisiones_tutorial(self):
+        return self.revisiones
+
+
 class RecursoTutorial(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
 
+    def __unicode__(self):
+        return self
+
+    def tutorial_recurso_tutorial(self):
+        return self.tutorial.nombre
+
+    def url_recurso_tutorial(self):
+        return self.url
+
+    def descripcion_recurso_tutorial(self):
+        return self.descripcion

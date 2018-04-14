@@ -10,6 +10,13 @@ from django.dispatch import receiver
 class TestModel(models.Model):
     nombre = models.CharField(max_length=100, null=False, blank=False)
 
+    def __unicode__(self):
+        return self.nombre
+
+
+    def full_name(self):
+        return self.nombre
+
 
 class Herramienta(models.Model):
     class Meta:
@@ -36,6 +43,15 @@ class Herramienta(models.Model):
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
     revisiones = models.IntegerField(null=False, blank=False)
 
+
+    def __unicode__(self):
+        return self
+
+    def nombre_herramienta(self):
+        return self.nombre
+
+    def estado_herramienta(self):
+        return self.estado
 
 class Perfil(models.Model):
     ADMINISTRADOR = 1

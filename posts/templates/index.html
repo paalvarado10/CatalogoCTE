@@ -33,15 +33,60 @@
         {% endif %}
     {% endfor %}
     </ul>
-     <a href="{% url 'catalogo:addUsuario' %}"> <div>Crear</div> </a>
+     <a href="{% url 'catalogo:usuario_create' %}"> <div>Crear</div> </a>
+    </br>
+        <h1 align="center">Lista de Herramientas:</h1>
+    <ul>
+    {% for herramienta in herramientas %}
+            <li >
+                {% if herramienta.logo != null %}
+                <img height="42"  src="{{ herramienta.logo }}">
+                {% endif %}
+                {{herramienta.nombre}} {{ herramienta.licencia }}  --- {{ herramienta.descripcion}}
+
+            </li>
+            <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn">Editar</a>
+        <a href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn">Eliminar</a>
+    {% endfor %}
+    </ul>
+       <a href="{% url 'catalogo:herramienta_create' %}"> <div>Agregar Herramienta</div> </a>
     </br>
 {% elif user.is_authenticated and user.perfil.role == 2 %}
     <h3>Miebro GTI Page</h3>
     <a href="{% url 'catalogo:logout' %}"> Salir </a>
     <a href="{% url 'catalogo:user_update_gti' user.id %}" class="btn">Editar</a>
     <a href="{% url 'catalogo:user_change_password'%}" class="btn">Cambiar Contraseña</a>
+    <br>
+
+    <h1 align="center">Lista de Herramientas:</h1>
+    <ul>
+    {% for herramienta in herramientas %}
+            <li >
+                {% if herramienta.logo != null %}
+                <img height="42"  src="{{ herramienta.logo }}">
+                {% endif %}
+                {{herramienta.nombre}} {{ herramienta.licencia }}  --- {{ herramienta.descripcion}}
+
+            </li>
+            <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn">Editar</a>
+    {% endfor %}
+    </ul>
+       <a href="{% url 'catalogo:herramienta_create' %}"> <div>Agregar Herramienta</div> </a>
+    </br>
 {% elif not user.is_authenticated %}
     <a href="{% url 'catalogo:login' %}" class="cancel">Login</a>
+     <h1 align="center">Lista de Herramientas:</h1>
+     <ul>
+    {% for herramienta in herramientas %}
+            <li >
+                {% if herramienta.logo != null %}
+                <img height="42"  src="{{ herramienta.logo }}">
+                {% endif %}
+                {{herramienta.nombre}} {{ herramienta.licencia }}  --- {{ herramienta.descripcion}}
+
+            </li>
+    {% endfor %}
+     </ul>
 {% endif %}
 
 

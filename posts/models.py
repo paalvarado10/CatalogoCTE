@@ -21,7 +21,8 @@ class Herramienta(models.Model):
     plataforma = models.CharField(max_length=50, null=True, blank=True)
     fichaTecnica = models.CharField(max_length=200, null=False, blank=False)
     licencia = models.CharField(max_length=200, null=False, blank=False)
-
+    descripcion = models.CharField(max_length=200, null=False, blank=False)
+    logo = models.CharField(max_length=500, null=False, blank=False)
     PENDIETE_REVISION = 1
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
@@ -36,10 +37,6 @@ class Herramienta(models.Model):
     revisiones = models.IntegerField(null=False, blank=False)
 
 
-# Perfiles de Usuario
-# ADMINISTRADOR: Administrador general de la aplicación
-# CREADOR: Usuario c-te creador de contenidos
-# REVISOR: Usuario c-te revisor borradores (también puede crear contenidos)
 class Perfil(models.Model):
     ADMINISTRADOR = 1
     USER_GTI = 2
@@ -62,14 +59,14 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.perfil.save()
 
 
-class RecursoActividad(models.Model):
-    url = models.CharField(max_length=200, null=False, blank=False)
-    descripcion = models.CharField(max_length=500, null=False, blank=False)
+
 
 
 class Actividad(models.Model):
     class Meta:
         unique_together = (('id', 'version'),)
+
+    herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
     version = models.CharField(max_length=100, null=False, blank=False)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
@@ -87,22 +84,22 @@ class Actividad(models.Model):
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
     revisiones = models.IntegerField(null=False, blank=False)
-    recurso = models.ManyToManyField(RecursoActividad, blank=False, through='RecursoActividad_Actividad')
 
-
-class RecursoActividad_Actividad(models.Model):
-    recursoActividad = models.ForeignKey(RecursoActividad, on_delete=models.CASCADE)
+class RecursoActividad(models.Model):
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
-
-
-class RecursoTutorial(models.Model):
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
+
+
+
+
 
 
 class Tutorial(models.Model):
     class Meta:
         unique_together = (('id', 'version'),)
+
+    herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
     version = models.CharField(max_length=100, null=False, blank=False)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     funcionalidad = models.CharField(max_length=500, null=False, blank=False)
@@ -118,9 +115,9 @@ class Tutorial(models.Model):
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
     revisiones = models.IntegerField(null=False, blank=False)
-    recurso = models.ManyToManyField(RecursoTutorial, blank=False, through='RecursoTutorial_Tutorial')
 
-
-class RecursoTutorial_Tutorial(models.Model):
-    recursoTutorial = models.ForeignKey(RecursoTutorial, on_delete=models.CASCADE)
+class RecursoTutorial(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+    url = models.CharField(max_length=200, null=False, blank=False)
+    descripcion = models.CharField(max_length=500, null=False, blank=False)
+

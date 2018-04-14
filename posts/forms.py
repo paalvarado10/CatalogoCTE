@@ -4,13 +4,41 @@ from __future__ import unicode_literals
 from django.forms import ModelForm
 from django.contrib.auth.forms import forms
 from django.contrib.auth.models import User
-
+from posts.models import Herramienta
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import password_validation
 
 
+class HerramientaForm(ModelForm):
+    nombre = forms.CharField(label="Nombre", max_length=20)
+    logo = forms.FileField(label="Logo",required=False)
+    sistemaOperativo = forms.CharField(label="Sistema Operativo", max_length=50)
+    plataforma = forms.CharField(label="Plataforma", max_length=20)
+    fichaTecnica = forms.CharField(label="Ficha Tecnica",widget=forms.Textarea)
+    licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
+    descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
+    urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
 
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'fichaTecnica','licencia', 'descripcion']
 
+class HerramientaUpdateForm(ModelForm):
+    pk_herramienta = None;
+    nombre = forms.CharField(label="Nombre", max_length=20)
+    logo = forms.FileField(label="Logo",required=False)
+    sistemaOperativo = forms.CharField(label="Sistema Operativo", max_length=50)
+    plataforma = forms.CharField(label="Plataforma", max_length=20)
+    fichaTecnica = forms.CharField(label="Ficha Tecnica",widget=forms.Textarea)
+    licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
+    descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
+    urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
+
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'fichaTecnica','licencia', 'descripcion']
 
 class UserForm(ModelForm):
     username = forms.CharField(label="Usuario", max_length=20)

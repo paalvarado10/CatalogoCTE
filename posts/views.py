@@ -6,10 +6,10 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from azure.storage.blob import BlockBlobService
-from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm
+from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm, HerramientaForm, HerramientaUpdateForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from posts.models import Perfil
+from posts.models import Perfil, Herramienta
 from decouple import config
 
 # Create your views here.
@@ -17,10 +17,13 @@ from decouple import config
 def index(request):
     if request.user.is_authenticated():
         usuarios = User.objects.all()
-        context = {'usuarios': usuarios}
+        herramientas = Herramienta.objects.all()
+        context = {'usuarios': usuarios, 'herramientas': herramientas}
         return render(request, 'index.html', context)
     else:
-        return render(request, 'index.html')
+        herramientas = Herramienta.objects.all()
+        context = {'herramientas': herramientas}
+        return render(request, 'index.html',context)
 
 
 def login_view(request):
@@ -43,7 +46,88 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('catalogo:index'))
 
-def addUsuario(request):
+def herramienta_create(request):
+    if request.method == 'POST':
+        form = HerramientaForm(request.POST, request.FILES)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+
+            version = 'new'
+            nombre = cleaned_data.get('nombre')
+            sistemaOperativo = cleaned_data.get('sistemaOperativo')
+            plataforma = cleaned_data.get('plataforma')
+            fichaTecnica = cleaned_data.get('fichaTecnica')
+            licencia = cleaned_data.get('licencia')
+            estado = 3
+            revisiones = 0
+            descripcion = cleaned_data.get('descripcion')
+            urlReferencia = cleaned_data.get('urlReferencia')
+            logo = ''
+
+            logoL = True if 'logo' in request.FILES else False
+            if logoL:
+                myfile = request.FILES['logo']
+                chu = myfile.chunks()
+                st = ''
+                file = str(st)
+                for chunk in chu:
+                    a = chunk
+                    file = file + a
+                url = guardarDarUrl(file, myfile.name)
+                logo = url
+
+            herramienta = Herramienta.objects.create(version=version,nombre=nombre,
+            sistemaOperativo=sistemaOperativo,plataforma=plataforma,fichaTecnica=fichaTecnica,licencia=licencia,estado=estado,
+            revisiones=revisiones,descripcion=descripcion,urlReferencia=urlReferencia,logo=logo)
+            herramienta.save()
+
+            return HttpResponseRedirect(reverse('catalogo:index'))
+    else:
+        form = HerramientaForm()
+    return render(request, 'herramienta_create.html', {'form': form})
+
+def herramienta_update(request, pk):
+    herramienta = Herramienta.objects.get(id=pk)
+    if request.method == 'POST':
+        form = HerramientaUpdateForm(request.POST, request.FILES, instance=herramienta)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            herramienta.nombre = cleaned_data.get('nombre')
+            herramienta.sistemaOperativo = cleaned_data.get('sistemaOperativo')
+            herramienta.plataforma = cleaned_data.get('plataforma')
+            herramienta.fichaTecnica = cleaned_data.get('fichaTecnica')
+            herramienta.licencia = cleaned_data.get('licencia')
+            herramienta.descripcion = cleaned_data.get('descripcion')
+            herramienta.urlReferencia = cleaned_data.get('urlReferencia')
+
+            logoL = True if 'logo' in request.FILES else False
+            if logoL:
+                myfile = request.FILES['logo']
+                chu = myfile.chunks()
+                st = ''
+                file = str(st)
+                for chunk in chu:
+                    a = chunk
+                    file = file + a
+                url = guardarDarUrl(file, myfile.name)
+                herramienta.logo = url
+
+            herramienta.save()
+
+            return HttpResponseRedirect(reverse('catalogo:index'))
+    else:
+        form = HerramientaUpdateForm(instance=herramienta)
+    return render(request, 'herramienta_update.html', {'form': form})
+
+
+def herramienta_delete(request, pk):
+    herramienta = Herramienta.objects.get(id=pk)
+    if request.method == 'POST':
+        herramienta.delete()
+        return HttpResponseRedirect(reverse('catalogo:index'))
+    return render(request, 'herramienta_delete.html',{'object': herramienta})
+
+def usuario_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
@@ -85,6 +169,7 @@ def addUsuario(request):
     else:
         form = UserForm()
     return render(request, 'user_form.html', {'form': form})
+
 
 
 def user_update(request, pk):

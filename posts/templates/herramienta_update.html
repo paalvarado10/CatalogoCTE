@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Crear cuenta de usuario</title>
+    <title>Actualizar Herramienta</title>
 </head>
 <body>
 
 {% block content %}
-    <form action="{% url 'catalogo:usuario_create' %}" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Añadir">
+        {{ form.as_p }}
+        <input type="submit" value="Actualizar">
         <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
     </form>
 {% endblock %}

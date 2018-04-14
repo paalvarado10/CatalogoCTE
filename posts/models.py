@@ -53,6 +53,31 @@ class Herramienta(models.Model):
     def estado_herramienta(self):
         return self.estado
 
+    def version_herramienta(self):
+        return self.version
+
+    def url_herramienta(self):
+        return self.urlReferencia
+
+    def sistemaOperativo_herramienta(self):
+        return self.sistemaOperativo
+
+    def plataforma_herramienta(self):
+        return self.plataforma
+
+    def ficha_herramienta(self):
+        return self.fichaTecnica
+
+    def licencia_herramienta(self):
+        return self.licencia
+
+    def descripcion_herramienta(self):
+        return self.descripcion
+
+    def logo_herramienta(self):
+        return self.logo
+
+
 class Perfil(models.Model):
     ADMINISTRADOR = 1
     USER_GTI = 2

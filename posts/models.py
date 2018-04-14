@@ -92,7 +92,6 @@ class Perfil(models.Model):
     def __str__(self):  # __unicode__ for Python 2
         return self.user.username
 
-
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -125,6 +124,33 @@ class Actividad(models.Model):
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
     revisiones = models.IntegerField(null=False, blank=False)
+
+    def __unicode__(self):
+        return self
+    # FALTA EL METODO PARA VERIFICAR QUE SE LE ASIGNA BIEN UNA HERRAMIENTA (FOREING KEY)
+    # herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
+    def version_actividad(self):
+        return self.version
+
+    def nombre_actividad(self):
+        return self.nombre
+
+    def descripcion_actividad(self):
+        return self.descripcion
+
+    def instrucciones_actividad(self):
+        return self.instrucciones
+
+    def url_actividad(self):
+        return self.url
+
+    def estado_actividad(self):
+        return self.estado
+
+    def revisiones_actividad(self):
+        return self.revisiones
+
+
 
 class RecursoActividad(models.Model):
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)

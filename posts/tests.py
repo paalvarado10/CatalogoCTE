@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
-from posts.models import TestModel, Herramienta
+from posts.models import TestModel, Herramienta, Actividad
 
 
 # Create your tests here.
@@ -15,7 +15,7 @@ class TestModelTestCase(TestCase):
         self.assertEqual(tester.full_name(), 'name')
 
 
-
+# TEST MODELO HERRAMIENTA
 class HerramientaModelCase(TestCase):
     def setUp(self):
         Herramienta.objects.create(version = "Version Prueba",nombre = "prueba", urlReferencia="www.google.com",sistemaOperativo="Windows",plataforma="Plataforma Prueba",fichaTecnica="Ficha tecnica prueba",descripcion="desc", licencia="gratis",estado=1,revisiones=0, logo="logo")
@@ -60,3 +60,33 @@ class HerramientaModelCase(TestCase):
         tester = Herramienta.objects.get(nombre='prueba')
         self.assertEqual(tester.logo_herramienta(), 'logo')
 
+# TEST PARA EL MODELO DE ACTIVIDAD
+class ActividadModelCase(TestCase):
+    def setUp(self):
+        Herramienta.objects.create(version="Version Prueba", nombre="prueba", urlReferencia="www.google.com", sistemaOperativo="Windows", plataforma="Plataforma Prueba", fichaTecnica="Ficha tecnica prueba", descripcion="desc", licencia="gratis", estado=1, revisiones=0, logo="logo")
+        herramienta=Herramienta.objects.get(nombre ='prueba')
+        Actividad.objects.create(herramienta=herramienta, version="Version Prueba", nombre="actividadprueba", descripcion="descActividad", instrucciones="instruccionesPrueba", url="www.actividad.com", estado=1, revisiones=0)
+
+    def test_version_actividad(self):
+        tester=Actividad.objects.get(nombre='actividadprueba')
+        self.assertEqual(tester.version_actividad(), 'Version Prueba')
+
+    def test_descripcion_actividad(self):
+        tester = Actividad.objects.get(nombre='actividadprueba')
+        self.assertEqual(tester.descripcion_actividad(), 'descActividad')
+
+    def test_instrucciones_actividad(self):
+        tester = Actividad.objects.get(nombre='actividadprueba')
+        self.assertEqual(tester.instrucciones_actividad(), 'instruccionesPrueba')
+
+    def test_url_actividad(self):
+        tester = Actividad.objects.get(nombre='actividadprueba')
+        self.assertEqual(tester.url_actividad(), 'www.actividad.com')
+
+    def test_estado_actividad(self):
+        tester = Actividad.objects.get(nombre='actividadprueba')
+        self.assertEqual(tester.estado_actividad(), 1)
+
+    def test_revisiones_actividad(self):
+        tester = Actividad.objects.get(nombre='actividadprueba')
+        self.assertEqual(tester.revisiones_actividad(), 0)

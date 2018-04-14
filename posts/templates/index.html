@@ -11,116 +11,160 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
-    <div class="header-blue">
+<div class="header-blue">
 
-        <nav class="header-nav navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#">Catálogo Conecta-TE</a>
+    <nav class="header-nav navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Catálogo Conecta-TE</a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                </ul>
-
-                <form class="form-inline">
-                    {% if user.is_authenticated and user.perfil.role == 1 %}
-                        <a href="{% url 'catalogo:logout' %}" class="btn btn-outline-success"> Salir </a>
-                        <a href="{% url 'catalogo:user_update' user.id %}" class="btn btn-outline-success">Editar</a>
-                        <a href="{% url 'catalogo:user_change_password'%}" class="btn btn-outline-success">Cambiar Contraseña</a>
-                    {% elif user.is_authenticated and user.perfil.role == 2 %}
-                        <a href="{% url 'catalogo:logout' %}" class="btn btn-outline-success"> Salir </a>
-                        <a href="{% url 'catalogo:user_update_gti' user.id %}" class="btn btn-outline-success">Editar</a>
-                        <a href="{% url 'catalogo:user_change_password'%}" class="btn btn-outline-success">Cambiar Contraseña</a>
-                    {% elif not user.is_authenticated %}
-                        <a href="{% url 'catalogo:login' %}" class="login-btn btn btn-outline-light">Login</a>
-                    {% endif %}
-                </form>
-            </div>
-        </nav>
-
-       <div class="search row align-items-center justify-content-center">
-          <input type="text" class="searchTerm" placeholder="Herramienta">
-          <button type="submit" class="searchButton">
-            <i class="fa fa-search"></i>
-         </button>
-       </div>
-
-        {% if user.is_authenticated and user.perfil.role == 1 %}
-            <h3>Admin Page</h3>
-
-            <h1 align="center">Lista de Usuarios:</h1>
-            <ul>
-            {% for usuario in usuarios %}
-                {% if user != usuario %}
-                    <li >
-                        {% if usuario.perfil.fotoUrl != null %}
-                        <img height="42"  src="{{ usuario.perfil.fotoUrl }}">
-                        {% endif %}
-                        {{usuario.first_name}} {{ usuario.last_name }}  --- {{ usuario.perfil.get_role_display}}
-
-                    </li>
-                    <a href="{% url 'catalogo:user_update' usuario.id %}" class="btn">Editar</a>
-                {% endif %}
-            {% endfor %}
-            </ul>
-             <a href="{% url 'catalogo:usuario_create' %}"> <div>Crear</div> </a>
-
-            </br>
-            <ul>
-            {% for herramienta in herramientas %}
-                <li >
-                    {% if herramienta.logo != null %}
-                    <img height="42"  src="{{ herramienta.logo }}">
-                    {% endif %}
-                    {{herramienta.nombre}} {{ herramienta.licencia }}  --- {{ herramienta.descripcion}}
-
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn">Editar</a>
-                <a href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn">Eliminar</a>
-            {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
             </ul>
-            <a href="{% url 'catalogo:herramienta_create' %}"> <div>Agregar Herramienta</div> </a>
+
+            <form class="form-inline">
+                {% if user.is_authenticated and user.perfil.role == 1 %}
+                    <a href="{% url 'catalogo:logout' %}" class="btn btn-outline-success"> Salir </a>
+                    <a href="{% url 'catalogo:user_update' user.id %}" class="btn btn-outline-success">Editar</a>
+                    <a href="{% url 'catalogo:user_change_password'%}" class="btn btn-outline-success">Cambiar Contraseña</a>
+                {% elif user.is_authenticated and user.perfil.role == 2 %}
+                    <a href="{% url 'catalogo:logout' %}" class="btn btn-outline-success"> Salir </a>
+                    <a href="{% url 'catalogo:user_update_gti' user.id %}" class="btn btn-outline-success">Editar</a>
+                    <a href="{% url 'catalogo:user_change_password'%}" class="btn btn-outline-success">Cambiar Contraseña</a>
+                {% elif not user.is_authenticated %}
+                    <a href="{% url 'catalogo:login' %}" class="login-btn btn btn-outline-light">Login</a>
+                {% endif %}
+            </form>
+        </div>
+    </nav>
+
+    <div class="search row align-items-center justify-content-center">
+        <input type="text" class="searchTerm" placeholder="Herramienta">
+        <button type="submit" class="searchButton">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+
+    <div class="contenidoCatalogo">
+        {% if user.is_authenticated and user.perfil.role == 1 %}
+            <h3>Bienvenido Administrador </h3>
+            <h2 align="center">Cuentas de usuarios</h2>
+            <ul>
+                {% for usuario in usuarios %}
+                    {% if user != usuario %}
+                        <li >
+                            {% if usuario.perfil.fotoUrl != null %}
+                                <img height="42"  src="{{ usuario.perfil.fotoUrl }}">
+                            {% endif %}
+                            {{usuario.first_name}} {{ usuario.last_name }}  --- {{ usuario.perfil.get_role_display}}
+
+                        </li>
+                        <a href="{% url 'catalogo:user_update' usuario.id %}" class="btn">Editar</a>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="{% url 'catalogo:usuario_create' %}" class="btn btn-outline-success" > <div>Crear cuenta de usuario</div> </a>
+
             </br>
+            <div>
+                <div>
+                    <a href="{% url 'catalogo:herramienta_create' %}" class="float" >
+                        <i class="fa fa-plus my-float" data-toggle="tooltip" data-placement="left"  title="Agregar herramienta"></i>
+                    </a>
+                    <h2 align="center">Herramientas</h2>
+                </div>
+                <div class="row">
+                    {% for herramienta in herramientas %}
+                        <div class="col-sm-4">
+                            <div class="card">
+                                {% if herramienta.logo != null %}
+                                    <img src="{{ herramienta.logo }}" alt="Avatar" style="width:100%;">
+                                {% endif %}
+
+                                <div class="container">
+                                    <h4><b>{{herramienta.nombre}}</b></h4>
+                                    <p>{{ herramienta.descripcion}}</p>
+                                    <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-outline-success">Editar</a>
+                                    <a href="" class="btn btn-outline-success">Ver detalle</a>
+                                    <a href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn btn-outline-danger">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+                </br>
+            </div>
 
         {% elif user.is_authenticated and user.perfil.role == 2 %}
-            <h3>Miebro GTI Page</h3>
+            <h3>Bienvenido {{ user.first_name }} {{ user.last_name }} Miembro GTI</h3>
 
-            <ul>
-            {% for herramienta in herramientas %}
-                    <li >
-                        {% if herramienta.logo != null %}
-                        <img height="42"  src="{{ herramienta.logo }}">
-                        {% endif %}
-                        {{herramienta.nombre}} {{ herramienta.licencia }}  --- {{ herramienta.descripcion}}
+            <div>
+                <div>
+                    <a href="{% url 'catalogo:herramienta_create' %}" class="float" >
+                        <i class="fa fa-plus my-float" data-toggle="tooltip" data-placement="left"  title="Agregar herramienta"></i>
+                    </a>
+                    <h2 align="center">Herramientas</h2>
+                </div>
+                <div class="row">
+                    {% for herramienta in herramientas %}
+                        <div class="col-sm-4">
+                            <div class="card">
+                                {% if herramienta.logo != null %}
+                                    <img src="{{ herramienta.logo }}" alt="Avatar" style="width:100%;">
+                                {% endif %}
 
-                    </li>
-                    <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn">Editar</a>
-            {% endfor %}
-            </ul>
-               <a href="{% url 'catalogo:herramienta_create' %}"> <div>Agregar Herramienta</div> </a>
+                                <div class="container">
+                                    <h4><b>{{herramienta.nombre}}</b></h4>
+                                    <p>{{ herramienta.descripcion}}</p>
+                                    <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-outline-success">Editar</a>
+                                    <a href="" class="btn btn-outline-success">Ver detalle</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+            </div>
 
             </br>
         {% elif not user.is_authenticated %}
-             <ul>
-            {% for herramienta in herramientas %}
-                    <li >
-                        {% if herramienta.logo != null %}
-                        <img height="42"  src="{{ herramienta.logo }}">
-                        {% endif %}
-                        {{herramienta.nombre}} {{ herramienta.licencia }}  --- {{ herramienta.descripcion}}
+            <div class="row">
+                    {% for herramienta in herramientas %}
+                        <div class="col-sm-4">
+                            <div class="card">
+                                {% if herramienta.logo != null %}
+                                    <img src="{{ herramienta.logo }}" alt="Avatar" style="width:100%;">
+                                {% endif %}
 
-                    </li>
-            {% endfor %}
-             </ul>
+                                <div class="container">
+                                    <h4><b>{{herramienta.nombre}}</b></h4>
+                                    <p>{{ herramienta.descripcion}}</p>
+                                    <a href="" class="btn btn-outline-success">Ver detalle</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
         {% endif %}
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    {#para mostrar texto ayuda boton agregar #}
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

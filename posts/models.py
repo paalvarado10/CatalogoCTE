@@ -127,8 +127,10 @@ class Actividad(models.Model):
 
     def __unicode__(self):
         return self
-    # FALTA EL METODO PARA VERIFICAR QUE SE LE ASIGNA BIEN UNA HERRAMIENTA (FOREING KEY)
-    # herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
+
+    def herramienta_actividad(self):
+        return self.herramienta.nombre
+
     def version_actividad(self):
         return self.version
 
@@ -157,8 +159,17 @@ class RecursoActividad(models.Model):
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
 
+    def __unicode__(self):
+        return self
 
+    def url_recurso_actividad(self):
+        return self.url
 
+    def descripcion_recurso_actividad(self):
+        return self.descripcion
+
+    def actividad_recurso_actividad(self):
+        return self.actividad.nombre
 
 
 

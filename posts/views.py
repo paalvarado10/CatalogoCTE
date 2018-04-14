@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from azure.storage.blob import BlockBlobService
-from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm, HerramientaForm, HerramientaUpdateForm
+from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm,\
+    HerramientaForm, HerramientaUpdateForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from posts.models import Perfil, Herramienta
@@ -77,8 +78,8 @@ def herramienta_create(request):
                 logo = url
 
             herramienta = Herramienta.objects.create(version=version,nombre=nombre,
-            sistemaOperativo=sistemaOperativo,plataforma=plataforma,fichaTecnica=fichaTecnica,licencia=licencia,estado=estado,
-            revisiones=revisiones,descripcion=descripcion,urlReferencia=urlReferencia,logo=logo)
+                                                     sistemaOperativo=sistemaOperativo,plataforma=plataforma,fichaTecnica=fichaTecnica,licencia=licencia,estado=estado,
+                                                     revisiones=revisiones,descripcion=descripcion,urlReferencia=urlReferencia,logo=logo)
             herramienta.save()
 
             return HttpResponseRedirect(reverse('catalogo:index'))

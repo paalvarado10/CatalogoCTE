@@ -16,15 +16,14 @@ class FunctionalTest(TestCase):
         self.browser.get('localhost:8000')
         self.assertIn('Home CatalogoCTE', self.browser.title)
         self.browser.close()
-    #
-    # def test_2_login_admin(self):
-    #     self.browser.get('localhost:8000')
-    #     self.browser.find_element_by_id('id_login').click()
-    #     nombreUsuario = self.browser.find_element_by_name('username')
-    #     nombreUsuario.send_keys('admin')
-    #     clave = self.browser.find_element_by_id('password')
-    #     clave.send_keys('catalogo2018')
-    #     self.browser.find_element_by_id('id_entrar').click()
-    #     self.browser.implicitly_wait(10)
-    #     aref = self.browser.find_element_by_xpath('//a[@href="logout"]')
-    #     self.assertIn('Logout', aref.text)
+
+    def test_2_login_admin(self):
+        self.browser.get('localhost:8000')
+        self.browser.find_element_by_id('id_login').click()
+        nombreUsuario = self.browser.find_element_by_name('username')
+        nombreUsuario.send_keys('admin')
+        clave = self.browser.find_element_by_id('password')
+        clave.send_keys('catalogo2018')
+        self.browser.find_element_by_id('boton_login').click()
+        aref = self.browser.find_element_by_xpath('//a[@href="/logout/"]')
+        self.assertIn('Salir', aref.text)

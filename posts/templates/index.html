@@ -89,7 +89,7 @@
                                     <h4><b>{{herramienta.nombre}}</b></h4>
                                     <p>{{ herramienta.descripcion}}</p>
                                     <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-outline-success">Editar</a>
-                                    <a href="" class="btn btn-outline-success">Ver detalle</a>
+                                    <a href="" class="btn btn-outline-success" name="boton_detalle">Ver detalle</a>
                                     <a href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn btn-outline-danger">Eliminar</a>
                                 </div>
                             </div>

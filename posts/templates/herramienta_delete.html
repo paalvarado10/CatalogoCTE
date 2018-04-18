@@ -10,7 +10,7 @@
     <form method="post" >
         {% csrf_token %}
         Esta seguro que desea eliminar :  "{{ object.nombre }}"
-        <input type="submit" value="Eliminar"/>
+        <input type="submit" value="Eliminar" id="boton_eliminar_herramienta"/>
         <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
     </form>
 {% endblock %}

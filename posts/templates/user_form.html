@@ -10,7 +10,7 @@
     <form action="{% url 'catalogo:usuario_create' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
-        <input type="submit" value="Añadir">
+        <input type="submit" value="Añadir" id="boton_add_usuario">
         <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
     </form>
 {% endblock %}

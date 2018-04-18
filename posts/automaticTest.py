@@ -1,7 +1,7 @@
 # -- coding: utf-8 --
 from unittest import TestCase
 
-import sys
+
 from selenium import webdriver
 # from selenium.webdriver.common.by import By
 
@@ -13,17 +13,107 @@ class FunctionalTest(TestCase):
         self.browser.implicitly_wait(2)
 
     def test_1_title(self):
-        self.browser.get('localhost:8000')
+        self.browser.get('https://catalogodevelop.herokuapp.com/')
         self.assertIn('Home CatalogoCTE', self.browser.title)
         self.browser.close()
 
     def test_2_login_admin(self):
-        self.browser.get('localhost:8000')
+        self.browser.get('https://catalogodevelop.herokuapp.com/')
         self.browser.find_element_by_id('id_login').click()
-        nombreUsuario = self.browser.find_element_by_name('username')
-        nombreUsuario.send_keys('admin')
+        nombre_usuario = self.browser.find_element_by_name('username')
+        nombre_usuario.send_keys('admin')
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
         aref = self.browser.find_element_by_xpath('//a[@href="/logout/"]')
         self.assertIn('Salir', aref.text)
+
+    # def test_3_agregar_herramienta(self):
+    #     self.browser.get('localhost:8000')
+    #     self.browser.find_element_by_id('id_login').click()
+    #     nombre_usuario = self.browser.find_element_by_name('username')
+    #     nombre_usuario.send_keys('admin')
+    #     clave = self.browser.find_element_by_id('password')
+    #     clave.send_keys('catalogo2018')
+    #     self.browser.find_element_by_id('boton_login').click()
+    #     self.browser.find_element_by_id('boton_agregar_herramienta').click()
+    #     nombre_herramienta = self.browser.find_element_by_id('id_nombre')
+    #     nombre_herramienta.send_keys("Herramienta Test")
+    #     url_herramienta = self.browser.find_element_by_id('id_urlReferencia')
+    #     url_herramienta.send_keys("www.testHerramienta.com")
+    #     sistema_operativo_herramienta = self.browser.find_element_by_id('id_sistemaOperativo')
+    #     sistema_operativo_herramienta.send_keys("Windows")
+    #     plataforma_herramienta = self.browser.find_element_by_id('id_plataforma')
+    #     plataforma_herramienta.send_keys("Plataforma Test")
+    #     ficha_tecnica_herramienta = self.browser.find_element_by_id('id_fichaTecnica')
+    #     ficha_tecnica_herramienta.send_keys("Ficha Tecnica Test")
+    #     licencia_herramienta = self.browser.find_element_by_id('id_licencia')
+    #     licencia_herramienta.send_keys("Ficha Tecnica Test")
+    #     descripcion_herramienta = self.browser.find_element_by_id('id_descripcion')
+    #     descripcion_herramienta.send_keys("Descripcion Test")
+    #     self.browser.find_element_by_id('boton_add').click()
+    #
+    #     p = self.browser.find_element(By.XPATH, '//p[text()="Descripcion Test"]')
+    #     self.assertIn('Descripcion Test', p.text)
+    #
+    #
+    # def test_4_editar_herramienta(self):
+    #     self.browser.get('localhost:8000')
+    #     self.browser.find_element_by_id('id_login').click()
+    #     nombre_usuario = self.browser.find_element_by_name('username')
+    #     nombre_usuario.send_keys('admin')
+    #     clave = self.browser.find_element_by_id('password')
+    #     clave.send_keys('catalogo2018')
+    #     self.browser.find_element_by_id('boton_login').click()
+    #     aref = self.browser.find_element_by_xpath('//a[@href="/herramienta_update/491"]').click()
+    #     nombre_herramienta = self.browser.find_element_by_id('id_descripcion')
+    #     nombre_herramienta.send_keys('Sistema para el manejo de la informacion de los estudiantes y sus cursos')
+    #     self.browser.find_element_by_id('boton_actualizar_herramienta').click()
+    #
+    #     p = self.browser.find_element(By.XPATH, '//p[text()="Sistema para el manejo de la informacion de los estudiantes y sus cursos"]')
+    #     self.assertIn('Sistema para el manejo de la informacion de los estudiantes y sus cursos', p.text)
+    #
+    #
+    # def test_5_eliminar_herramienta(self):
+    #     self.browser.get('localhost:8000')
+    #     self.browser.find_element_by_id('id_login').click()
+    #     nombre_usuario = self.browser.find_element_by_name('username')
+    #     nombre_usuario.send_keys('admin')
+    #     clave = self.browser.find_element_by_id('password')
+    #     clave.send_keys('catalogo2018')
+    #     self.browser.find_element_by_id('boton_login').click()
+    #     aref = self.browser.find_element_by_xpath('//a[@href="/herramienta_delete/494"]').click()
+    #     self.browser.find_element_by_id('boton_eliminar_herramienta').click()
+    #
+    #     aref = self.browser.find_element_by_xpath('//a[@href="/logout/"]')
+    #     self.assertIn('Salir', aref.text)
+    #
+    # def test_6_crear_miembro_git(self):
+    #     self.browser.get('localhost:8000')
+    #     self.browser.find_element_by_id('id_login').click()
+    #     nombre_usuario = self.browser.find_element_by_name('username')
+    #     nombre_usuario.send_keys('admin')
+    #     clave = self.browser.find_element_by_id('password')
+    #     clave.send_keys('catalogo2018')
+    #     self.browser.find_element_by_id('boton_crear_usuario').click()
+    #
+    #     username_usuario_prueba = self.browser.find_element_by_id('id_username')
+    #     username_usuario_prueba.send_keys("pruebaCrearUsuario")
+    #     nombre_usuario_prueba = self.browser.find_element_by_id('id_first_name')
+    #     nombre_usuario_prueba.send_keys("Prueba")
+    #     apellido_usuario_prueba = self.browser.find_element_by_id('id_last_name')
+    #     apellido_usuario_prueba.send_keys("Crear Usuario")
+    #     correo_usuario_prueba = self.browser.find_element_by_id('id_email')
+    #     correo_usuario_prueba.send_keys("prueba@hotmail.com")
+    #     clave_usuario_prueba = self.browser.find_element_by_id('id_password')
+    #     clave_usuario_prueba.send_keys("clavePrueba")
+    #     clave_usuario_prueba_2 = self.browser.find_element_by_id('id_password2')
+    #     clave_usuario_prueba_2.send_keys("clavePrueba")
+    #     descripcion_herramienta = self.browser.find_element_by_id('id_roles')
+    #     descripcion_herramienta.send_keys("Miembro GTI")
+    #     self.browser.find_element_by_id('boton_add_usuario').click()
+    #
+    #     aref = self.browser.find_element_by_xpath('//li[text="usuario prueba  --- Miembro GTI"]')
+    #     self.assertIn('usuario prueba  --- Miembro GTI', aref.text)
+    #
+    #

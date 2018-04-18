@@ -10,7 +10,7 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Actualizar">
+        <input type="submit" value="Actualizar" id="boton_actualizar_herramienta">
         <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
     </form>
 {% endblock %}

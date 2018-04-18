@@ -67,12 +67,12 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-            <a href="{% url 'catalogo:usuario_create' %}" class="btn btn-outline-success" > <div>Crear cuenta de usuario</div> </a>
+            <a href="{% url 'catalogo:usuario_create' %}" class="btn btn-outline-success" id="boton_crear_usuario"> <div>Crear cuenta de usuario</div> </a>
 
             </br>
             <div>
                 <div>
-                    <a href="{% url 'catalogo:herramienta_create' %}" class="float" >
+                    <a href="{% url 'catalogo:herramienta_create' %}" class="float" id="boton_agregar_herramienta" >
                         <i class="fa fa-plus my-float" data-toggle="tooltip" data-placement="left"  title="Agregar herramienta"></i>
                     </a>
                     <h2 align="center">Herramientas</h2>

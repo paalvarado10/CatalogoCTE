@@ -10,6 +10,7 @@ class FunctionalTest(TestCase):
     def setUp(self):
         self.browser = webdriver.Chrome("C:\\Users\\chromedriver.exe")
     # Sebastian añada su ruta por tener mac :c, para el chromedriver
+        # self.browser = webdriver.Chrome("/Users/BarraganJeronimo/PycharmProjects/chromedriver")
         self.browser.implicitly_wait(2)
 
     def test_1_title(self):

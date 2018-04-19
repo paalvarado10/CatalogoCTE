@@ -19,6 +19,15 @@ class HerramientaForm(ModelForm):
     descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
     urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
 
+    nombre.widget.attrs.update({'class': 'form-control'})
+    logo.widget.attrs.update({'size': '60'})
+    sistemaOperativo.widget.attrs.update({'class': 'form-control'})
+    plataforma.widget.attrs.update({'class': 'form-control'})
+    fichaTecnica.widget.attrs.update({'class': 'form-control'})
+    licencia.widget.attrs.update({'class': 'form-control'})
+    descripcion.widget.attrs.update({'class': 'form-control'})
+    urlReferencia.widget.attrs.update({'class': 'form-control'})
+
     class Meta:
         model = Herramienta
         fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
@@ -34,6 +43,16 @@ class HerramientaUpdateForm(ModelForm):
     licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
     descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
     urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
+
+    nombre.widget.attrs.update({'class': 'form-control'})
+    logo.widget.attrs.update({'size': '60'})
+    sistemaOperativo.widget.attrs.update({'class': 'form-control'})
+    plataforma.widget.attrs.update({'class': 'form-control'})
+    fichaTecnica.widget.attrs.update({'class': 'form-control'})
+    licencia.widget.attrs.update({'class': 'form-control'})
+    descripcion.widget.attrs.update({'class': 'form-control'})
+    urlReferencia.widget.attrs.update({'class': 'form-control'})
+
 
     class Meta:
         model = Herramienta

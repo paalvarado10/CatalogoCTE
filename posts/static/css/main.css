@@ -1,13 +1,13 @@
 body, html{
     width: 100%;
     height: 100%;
-    background: #184e8e linear-gradient(135deg, #172a74, #21a9af);
+    background: #ECECEC;
 }
 
-.header-nav{
-    margin-top: 2em !important;
-    background: transparent;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
 }
+
 
 .login-btn:hover{
     color: #21a9af;
@@ -48,12 +48,14 @@ body, html{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
+    margin-bottom: 2vw;
 }
 
 /* Add rounded corners to the top left and the top right corner of the image */
 img {
     border-radius: 5px 5px 0 0;
 }
+
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
@@ -85,9 +87,24 @@ img {
 .my-float{
 	margin-top:12px;
 }
-
-
-
+.centered {
+    position: relative;
+    top:0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.centered-left {
+    position: relative;
+    top:0;
+    left: 0;
+    right: 0;
+    margin-right: 2vw;
+    margin-left: auto;
+}
+.bellow{
+  margin-top: 1vmax;
+}
 /*end herramientas*/
 
 

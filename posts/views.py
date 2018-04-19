@@ -128,6 +128,11 @@ def herramienta_delete(request, pk):
         return HttpResponseRedirect(reverse('catalogo:index'))
     return render(request, 'herramienta_delete.html',{'object': herramienta})
 
+def herramienta_detail(request, pk):
+    herramienta = Herramienta.objects.get(id=pk)
+    context = {'herramienta': herramienta}
+    return render(request, 'herramienta_delete.html', context)
+
 def usuario_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)

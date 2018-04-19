@@ -3,16 +3,40 @@
 <head>
     <meta charset="utf-8">
     <title>Actualizar Herramienta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home CatalogoCTE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
 
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Actualizar" id="boton_actualizar_herramienta">
-        <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
-    </form>
+    <div class="centered col-md-6 card">
+        <div class="header"><h1>Edición herramienta</h1></div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field.label_tag }}
+                <div class="input-group">
+                    {{ field.errors }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <br/>
+            <div class="row">
+                <div class="centered-left">
+                    <button class="btn btn-outline-success" id="boton_actualizar_herramienta">Editar</button>
+                    <a class="btn btn-outline-danger" href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+                </div>
+            </div>
+        </form>
+        <br/>
+    </div>
 {% endblock %}
 
 </body>

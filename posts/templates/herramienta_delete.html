@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Eliminar Herramienta</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-{% block content %}
+
+{% block title %}Eliminar herramienta{% endblock %}
+
+{% block contenido  %}
     <form method="post" >
         {% csrf_token %}
         Esta seguro que desea eliminar :  "{{ object.nombre }}"
@@ -14,6 +11,3 @@
         <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
     </form>
 {% endblock %}
-
-</body>
-</html>

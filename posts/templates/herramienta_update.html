@@ -1,43 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Actualizar Herramienta</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Home CatalogoCTE</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Editar herramienta{% endblock %}
 
-{% block content %}
-    <div class="centered col-md-6 card">
-        <div class="header"><h1>Edición herramienta</h1></div>
-        <form method="post" enctype="multipart/form-data">
+{% block contenido  %}
+    <div class="centered"><h1>Editar herramienta</h1></div>
+    <div class="formulario">
+        <form method="post" enctype="multipart/form-data" class="col-md-8">
             {% csrf_token %}
-            {% for field in form %}
-                {{ field.label_tag }}
-                <div class="input-group">
-                    {{ field.errors }}
-                    {{ field }}
-                    {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+            {% bootstrap_form form %}
             <br/>
             <div class="row">
-                <div class="centered-left">
-                    <button class="btn btn-outline-success" id="boton_actualizar_herramienta">Editar</button>
-                    <a class="btn btn-outline-danger" href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+                <div class="centered">
+                    <button class="btn btn-success" id="boton_actualizar_herramienta">Editar</button>
+                    <a class="btn btn-danger" href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
                 </div>
             </div>
         </form>
         <br/>
     </div>
 {% endblock %}
-
-</body>
-</html>

@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Crear cuenta de usuario</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Crear cuenta usuario{% endblock %}
 
-{% block content %}
-    <form action="{% url 'catalogo:usuario_create' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Añadir" id="boton_add_usuario">
-        <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
-    </form>
+{% block contenido  %}
+    <div class="centered"><h1>Crear cuenta de usuario</h1></div>
+    <div class="formulario">
+        <form action="{% url 'catalogo:usuario_create' %}" method="post" enctype="multipart/form-data" class="col-md-6">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-success" type="submit" id="boton_add_usuario">Crear cuenta</button>
+            <a class="btn btn-danger"  href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+            <br/>
+        </form>
+    </div>
 {% endblock %}
-
-</body>
-</html>

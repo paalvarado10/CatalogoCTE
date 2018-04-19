@@ -1,4 +1,4 @@
-body, html{
+body{
     width: 100%;
     height: 100%;
     background: #ECECEC;
@@ -8,6 +8,43 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
 }
 
+nav {
+    background-color: #518F89!important;
+    font-family: 'Roboto Slab', serif;
+}
+.navbar-default .navbar-nav>li>a {
+    color: white;
+}
+
+.navbar-default .navbar-nav>.active>a{
+    color: white;
+    background-color: #518F89;
+}
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover{
+    color: #333333;
+    background-color: #518F89;
+}
+
+.contenido{
+    padding:75px 10% 0 10%;
+}
+
+/*inicio*/
+.inicio {
+    width: 100%;
+    height: 200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.inicio > img{
+    max-height: 210px;
+    max-width: 100%;
+}
+
 
 .login-btn:hover{
     color: #21a9af;
@@ -15,10 +52,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .search{
-    margin: 3em;
+    width: 100%;
+    height: 50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-bottom: 10px;
 }
 .searchTerm {
-    border: 3px solid #00B4CC;
+    border: 3px solid #518F89;
     padding: 5px;
     border-radius: 5px;
     outline: none;
@@ -26,15 +68,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchTerm:focus{
-    color: #21a9af;
+    color: #518F89;
 }
 
 .searchButton {
     right: -50px;
     width: 40px;
     height: 36px;
-    border: 1px solid #00B4CC;
-    background: #00B4CC;
+    border: 1px solid #518F89;
+    background: #518F89;
     text-align: center;
     color: #fff;
     border-radius: 5px;
@@ -43,19 +85,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/*herramientas*/
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
-    margin-bottom: 2vw;
-}
 
+
+
+/*herramientas*/
 /* Add rounded corners to the top left and the top right corner of the image */
 img {
     border-radius: 5px 5px 0 0;
 }
 
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    margin-bottom: 2vw;
+    height: 450px;
+}
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
@@ -63,36 +108,40 @@ img {
 }
 
 /* Add some padding inside the card container */
-.container {
+.body-card {
     padding: 2px 16px;
+    height: 240px;
 }
 
-.contenidoCatalogo{
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 0.5%;
+.footer-card {
+    padding: 2px 16px;
+    height: 30px;
 }
+
+.logo-herramieta{
+    max-height: 170px;
+    max-width: 100%;
+}
+
 .float{
-	position:absolute;
-	width:40px;
-	height:40px;
-	right:35%;
-	background-color:#0C9;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
+    position:absolute;
+    width:40px;
+    height:40px;
+    right:35%;
+    background-color:#518F89;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
 }
 
 .my-float{
-	margin-top:12px;
+    margin-top:12px;
 }
 .centered {
-    position: relative;
-    top:0;
-    left: 0;
-    right: 0;
-    margin: auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 .centered-left {
     position: relative;
@@ -103,10 +152,60 @@ img {
     margin-left: auto;
 }
 .bellow{
-  margin-top: 1vmax;
+    margin-top: 1vmax;
 }
 /*end herramientas*/
 
+/*botones*/
+.btn-success {
+    color: #333333;
+    border-color: #518F89;
+    background-color: #ECECEC;
+}
 
+.btn-success:hover {
+    color: white;
+    border-color: #333333;
+    background-color: #518F89;
+}
 
+.btn-success:focus {
+    background-color: #518F89!important;
+}
+.btn-success:active {
+    background-color: #518F89!important;
+}
 
+.btn-danger {
+    color: #333333;
+    background-color: #ECECEC;
+    border-color: #ff5c5c;
+}
+.btn-danger:hover {
+    color: white;
+    border-color: #ff5c5c;
+}
+.btn-danger:focus {
+    background-color: #ff5c5c!important;
+}
+.btn-danger:active {
+    background-color: #ff5c5c!important;
+}
+
+/*formularios*/
+.formulario {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    border-radius: 5px; /* 5px rounded corners */
+    margin-bottom: 2vw;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* On mouse-over, add a deeper shadow */
+.formulario:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}

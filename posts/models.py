@@ -6,16 +6,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
-class TestModel(models.Model):
-    nombre = models.CharField(max_length=100, null=False, blank=False)
-
-    def __unicode__(self):
-        return self.nombre
-
-
-    def full_name(self):
-        return self.nombre
 
 
 class Herramienta(models.Model):
@@ -30,6 +20,10 @@ class Herramienta(models.Model):
     licencia = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=200, null=False, blank=False)
     logo = models.CharField(max_length=500, null=False, blank=False)
+    revisor1 = models.IntegerField(null=True, blank=True)
+    revisor2 = models.IntegerField(null=True, blank=True)
+    autor = models.IntegerField(null=False, blank=False)
+
     PENDIETE_REVISION = 1
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
@@ -41,7 +35,6 @@ class Herramienta(models.Model):
         (BLOQUEADO, 'Bloqueado'),
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
-    revisiones = models.IntegerField(null=False, blank=False)
 
 
     def __unicode__(self):
@@ -109,6 +102,11 @@ class Actividad(models.Model):
     descripcion = models.CharField(max_length=500, null=False, blank=False)
     instrucciones = models.CharField(max_length=500, null=False, blank=False)
     url = models.CharField(max_length=200, null=True, blank=True)
+
+    revisor1 = models.IntegerField(null=True, blank=True)
+    revisor2 = models.IntegerField(null=True, blank=True)
+    autor = models.IntegerField(null=False, blank=False)
+
     PENDIETE_REVISION = 1
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
@@ -155,6 +153,7 @@ class RecursoActividad(models.Model):
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
 
+
     def __unicode__(self):
         return self
 
@@ -177,6 +176,9 @@ class Tutorial(models.Model):
     version = models.CharField(max_length=100, null=False, blank=False)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     funcionalidad = models.CharField(max_length=500, null=False, blank=False)
+    revisor1 = models.IntegerField(null=True, blank=True)
+    revisor2 = models.IntegerField(null=True, blank=True)
+    autor = models.IntegerField(null=False, blank=False)
     PENDIETE_REVISION = 1
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3

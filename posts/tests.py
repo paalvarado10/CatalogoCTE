@@ -2,17 +2,7 @@
 from __future__ import unicode_literals
 
 from django.test import TestCase
-from posts.models import TestModel, Herramienta, Actividad, RecursoActividad, Tutorial, RecursoTutorial
-
-
-# Create your tests here.
-class TestModelTestCase(TestCase):
-    def setUp(self):
-        TestModel.objects.create(nombre='name')
-
-    def test_full_name(self):
-        tester = TestModel.objects.get(nombre='name')
-        self.assertEqual(tester.full_name(), 'name')
+from posts.models import Herramienta, Actividad, RecursoActividad, Tutorial, RecursoTutorial
 
 
 # TEST MODELO HERRAMIENTA

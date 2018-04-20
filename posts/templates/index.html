@@ -16,27 +16,6 @@
         </button>
     </div>
     <div >
-        {% if user.is_authenticated and user.perfil.role == 1 %}
-            <h3>Bienvenido Administrador </h3>
-            <h2 align="center">Cuentas de usuarios</h2>
-            <ul>
-                {% for usuario in usuarios %}
-                    {% if user != usuario %}
-                        <li >
-                            {% if usuario.perfil.fotoUrl != null %}
-                                <img height="42"  src="{{ usuario.perfil.fotoUrl }}">
-                            {% endif %}
-                            {{usuario.first_name}} {{ usuario.last_name }}  --- {{ usuario.perfil.get_role_display}}
-
-                        </li>
-                        <a href="{% url 'catalogo:user_update' usuario.id %}" class="btn">Editar</a>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <a href="{% url 'catalogo:usuario_create' %}" class="btn btn-success" id="boton_crear_usuario"> <div>Crear cuenta de usuario</div> </a>
-
-            </br>
-        {% endif %}
         <div>
             <div>
                 {% if user.is_authenticated %}

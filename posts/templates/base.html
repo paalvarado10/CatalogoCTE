@@ -33,18 +33,22 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="#">Link <span class="sr-only">(current)</span>
+                <li id="catalogoli" class="active">
+                    <a id="catalogoIndex" href="{% url 'catalogo:index' %}">Catálogo <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="">
-                    <a href="#">Link 2</a>
-                </li>
+                {% if user.is_authenticated and user.perfil.role == 1 %}
+                    <li id="listUsersli">
+                        <a id="cuentasUsuario" href="{% url 'catalogo:users_list' %}" >Cuentas usuarios</a>
+                    </li>
+                {% elif user.is_authenticated and user.perfil.role == 2 %}
+                    <a href="" class="btn btn-success">Revisiones</a>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a id="usuario_loqueado_info" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             Cuenta: {{ user.first_name }} {{ user.last_name }}
                             <span class="caret"></span>
                         </a>

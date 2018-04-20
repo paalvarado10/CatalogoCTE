@@ -13,21 +13,21 @@ class FunctionalTest(TestCase):
         self.browser = webdriver.Chrome("/Users/BarraganJeronimo/PycharmProjects/chromedriver")
         self.browser.implicitly_wait(2)
 
-    # def test_1_title(self):
-    #     self.browser.get('https://catalogodevelop.herokuapp.com/')
-    #     self.assertIn('Inicio Catalogo', self.browser.title)
-    #     self.browser.close()
-    #
-    # def test_2_login_admin(self):
-    #     self.browser.get('https://catalogodevelop.herokuapp.com/')
-    #     self.browser.find_element_by_id('id_login').click()
-    #     nombre_usuario = self.browser.find_element_by_name('username')
-    #     nombre_usuario.send_keys('admin')
-    #     clave = self.browser.find_element_by_id('password')
-    #     clave.send_keys('catalogo2018')
-    #     self.browser.find_element_by_id('boton_login').click()
-    #     aref = self.browser.find_element_by_xpath('//a[@href="/logout/"]')
-    #     self.assertIn('Salir', aref.text)
+    def test_1_title(self):
+        self.browser.get('http://127.0.0.1:8000/')
+        self.assertIn('Inicio Catalogo', self.browser.title)
+        self.browser.close()
+
+    def test_2_login_admin(self):
+        self.browser.get('http://127.0.0.1:8000/')
+        self.browser.find_element_by_id('id_login').click()
+        nombre_usuario = self.browser.find_element_by_name('username')
+        nombre_usuario.send_keys('admin')
+        clave = self.browser.find_element_by_id('password')
+        clave.send_keys('catalogo2018')
+        self.browser.find_element_by_id('boton_login').click()
+        aref = self.browser.find_element_by_id('usuario_loqueado_info')
+        self.assertIn('Cuenta: Admin Conecta-te', aref.text)
 
     # def test_3_agregar_herramienta(self):
     #     self.browser.get('http://localhost:8000')

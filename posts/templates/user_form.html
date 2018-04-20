@@ -10,7 +10,7 @@
             {% csrf_token %}
             {% bootstrap_form form %}
             <button class="btn btn-success" type="submit" id="boton_add_usuario">Crear cuenta</button>
-            <a class="btn btn-danger"  href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+            <a class="btn btn-danger"  href="{% url 'catalogo:users_list' %}" class="cancel">Cancelar</a>
             <br/>
         </form>
     </div>

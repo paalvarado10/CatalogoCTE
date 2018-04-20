@@ -171,7 +171,7 @@ def usuario_create(request):
 
             profile_model.save()
 
-            return HttpResponseRedirect(reverse('catalogo:index'))
+            return HttpResponseRedirect(reverse('catalogo:users_list'))
     else:
         form = UserForm()
     return render(request, 'user_form.html', {'form': form})
@@ -214,7 +214,7 @@ def user_update(request, pk):
                 profile_model.fotoUrl = url
             profile_model.role = roles[0]
             profile_model.save()
-            return HttpResponseRedirect(reverse('catalogo:index'))
+            return HttpResponseRedirect(reverse('catalogo:users_list'))
     else:
         form = UserUpdateForm(instance=user_model)
     return render(request, 'user_update.html', {'form': form})
@@ -273,6 +273,13 @@ def user_change_password(request):
         return render(request, 'user_change_password.html', {'form': form})
     else:
         return HttpResponseRedirect(reverse('catalogo:login'))
+
+def users_list(request):
+    if request.user.is_authenticated() and request.user.perfil.role == 1:
+        usuarios = User.objects.all()
+        context = {'usuarios': usuarios}
+        return render(request, 'user_list_detail.html', context)
+
 
 # guardar en AZURE
 def guardarDarUrl(file, filemane):

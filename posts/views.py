@@ -59,7 +59,9 @@ def herramienta_create(request):
             fichaTecnica = cleaned_data.get('fichaTecnica')
             licencia = cleaned_data.get('licencia')
             estado = 1
-            revisiones = 0
+            revisor1 = 0
+            revisor2 = 0
+            autor = request.user.id
             descripcion = cleaned_data.get('descripcion')
             urlReferencia = cleaned_data.get('urlReferencia')
             logo = ''
@@ -78,7 +80,7 @@ def herramienta_create(request):
 
             herramienta = Herramienta.objects.create(version=version,nombre=nombre,
                                                      sistemaOperativo=sistemaOperativo,plataforma=plataforma,fichaTecnica=fichaTecnica,licencia=licencia,estado=estado,
-                                                     revisiones=revisiones,descripcion=descripcion,urlReferencia=urlReferencia,logo=logo)
+                                                     revisor1=revisor1, revisor2=revisor2, autor=autor, descripcion=descripcion,urlReferencia=urlReferencia,logo=logo)
             herramienta.save()
 
             return HttpResponseRedirect(reverse('catalogo:index'))

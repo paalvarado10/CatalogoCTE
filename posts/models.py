@@ -118,7 +118,6 @@ class Actividad(models.Model):
         (BLOQUEADO, 'Bloqueado'),
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
-    revisiones = models.IntegerField(null=False, blank=False)
 
     def __unicode__(self):
         return self
@@ -144,8 +143,8 @@ class Actividad(models.Model):
     def estado_actividad(self):
         return self.estado
 
-    def revisiones_actividad(self):
-        return self.revisiones
+    # def revisiones_actividad(self):
+    #     return self.revisiones
 
 
 class RecursoActividad(models.Model):
@@ -190,7 +189,9 @@ class Tutorial(models.Model):
         (BLOQUEADO, 'Bloqueado'),
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
-    revisiones = models.IntegerField(null=False, blank=False)
+    revisor1 = models.IntegerField(null=True, blank=True)
+    revisor2 = models.IntegerField(null=True, blank=True)
+    autor = models.IntegerField(null=False, blank=False)
 
     def __unicode__(self):
         return self
@@ -210,8 +211,8 @@ class Tutorial(models.Model):
     def estado_tutorial(self):
         return self.estado
 
-    def revisiones_tutorial(self):
-        return self.revisiones
+    # def revisiones_tutorial(self):
+    #     return self.revisiones
 
 
 class RecursoTutorial(models.Model):

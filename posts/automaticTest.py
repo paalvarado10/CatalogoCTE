@@ -8,9 +8,10 @@ from selenium.webdriver.common.by import By
 
 
 class FunctionalTest(TestCase):
-    #URL= 'https://catalogodevelop.herokuapp.com/'
-    URL = 'http://127.0.0.1:8000/'
     global URL
+    URL = 'https://catalogodevelop.herokuapp.com/'
+    #URL = 'http://127.0.0.1:8000/'
+
 
     def setUp(self):
         # self.browser = webdriver.Chrome("C:\\Users\\chromedriver.exe")

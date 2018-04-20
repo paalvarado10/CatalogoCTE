@@ -3,7 +3,7 @@ from unittest import TestCase
 
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.by import By
 
 
 
@@ -136,7 +136,6 @@ class FunctionalTest(TestCase):
         clave.send_keys('fmedina2018')
         self.browser.find_element_by_id('boton_login').click()
         aref = self.browser.find_element_by_id('usuario_loqueado_info')
-        print(aref.text)
         self.assertIn('Cuenta: Fabian Medina', aref.text)
 
 

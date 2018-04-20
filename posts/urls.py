@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^herramienta_create/$', views.herramienta_create, name='herramienta_create'),
     url(r'^herramienta_update/(?P<pk>\d+)$', views.herramienta_update, name='herramienta_update'),
     url(r'^herramienta_delete/(?P<pk>\d+)$', views.herramienta_delete, name='herramienta_delete'),
-    url(r'^herramienta_detail/(?P<pk>\d+)/$', views.herramienta_detail, name='herramienta_detail')
+    url(r'^herramienta_detail/(?P<pk>\d+)/$', views.herramienta_detail, name='herramienta_detail'),
+    url(r'^vigia/$', views.herramientas_estados, name='vigia'),
+    url(r'^revisar/(?P<pk>\d+)$', views.herramienta_revisar, name='revisar')
 ]

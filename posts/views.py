@@ -18,11 +18,11 @@ from decouple import config
 def index(request):
     if request.user.is_authenticated():
         usuarios = User.objects.all()
-        herramientas = Herramienta.objects.all()
+        herramientas = Herramienta.objects.all().filter(estado=1)
         context = {'usuarios': usuarios, 'herramientas': herramientas}
         return render(request, 'index.html', context)
     else:
-        herramientas = Herramienta.objects.all()
+        herramientas = Herramienta.objects.all().filter(estado=3)
         context = {'herramientas': herramientas}
         return render(request, 'index.html',context)
 
@@ -133,7 +133,39 @@ def herramienta_detail(request, pk):
     context = {'herramienta': herramienta}
     return render(request, 'herramienta_detail.html', context)
 
-# def herramienta_to_check(reuest):
+
+def herramientas_estados(request):
+    if request.user.is_authenticated():
+        herramientas_r = Herramienta.objects.all().filter(estado=1).exclude(autor=request.user.id).exclude(revisor1=request.user.id)
+        herramientas_p = Herramienta.objects.all().filter(estado=2)
+        context = {'herramientas_r': herramientas_r, 'herramientas_p': herramientas_p}
+        return render(request, 'vigia.html', context)
+    else:
+        herramientas = Herramienta.objects.all().filter(estado=3)
+        context = {'herramientas': herramientas}
+        return render(request, 'index.html', context)
+
+def herramienta_revisar(request,pk):
+    if request.user.is_authenticated():
+        herramienta = Herramienta.objects.get(id=pk)
+        if herramienta.revisor1 == 0:
+            herramienta.revisor1 = request.user.id
+        else:
+            herramienta.revisor2 = request.user.id
+            herramienta.estado = 2
+        herramienta.save()
+
+        herramientas_r = Herramienta.objects.all().filter(estado=1).exclude(autor=request.user.id).exclude(revisor1=request.user.id)
+        herramientas_p = Herramienta.objects.all().filter(estado=2)
+        mensaje = 'Revisado con éxito'
+        context = {'mensaje':mensaje,'herramientas_r': herramientas_r, 'herramientas_p': herramientas_p}
+        return render(request, 'vigia.html', context)
+
+    else:
+        herramientas = Herramienta.objects.all().filter(estado=3)
+        context = {'herramientas': herramientas}
+        return render(request, 'index.html', context)
+#def herramienta_to_check(reuest):
 
 
 

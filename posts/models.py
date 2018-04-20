@@ -9,9 +9,7 @@ from django.dispatch import receiver
 
 
 class Herramienta(models.Model):
-    class Meta:
-        unique_together = (('id', 'version'),)
-    version = models.CharField(max_length=100, null=False, blank=False)
+    id_anterior = models.IntegerField(null=True, blank=True)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     urlReferencia = models.CharField(max_length=500, null=False, blank=False)
     sistemaOperativo = models.CharField(max_length=50, null=False, blank=False)
@@ -93,11 +91,8 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
 
 
 class Actividad(models.Model):
-    class Meta:
-        unique_together = (('id', 'version'),)
-
     herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
-    version = models.CharField(max_length=100, null=False, blank=False)
+    id_anterior = models.IntegerField(null=True, blank=True)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
     instrucciones = models.CharField(max_length=500, null=False, blank=False)
@@ -166,11 +161,8 @@ class RecursoActividad(models.Model):
 
 
 class Tutorial(models.Model):
-    class Meta:
-        unique_together = (('id', 'version'),)
-
     herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
-    version = models.CharField(max_length=100, null=False, blank=False)
+    id_anterior = models.IntegerField(null=True, blank=True)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     funcionalidad = models.CharField(max_length=500, null=False, blank=False)
     revisor1 = models.IntegerField(null=True, blank=True)

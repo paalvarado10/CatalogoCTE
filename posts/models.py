@@ -16,9 +16,9 @@ class Herramienta(models.Model):
     urlReferencia = models.CharField(max_length=500, null=False, blank=False)
     sistemaOperativo = models.CharField(max_length=50, null=False, blank=False)
     plataforma = models.CharField(max_length=50, null=True, blank=True)
-    fichaTecnica = models.CharField(max_length=200, null=False, blank=False)
+    fichaTecnica = models.CharField(max_length=2000, null=False, blank=False)
     licencia = models.CharField(max_length=200, null=False, blank=False)
-    descripcion = models.CharField(max_length=200, null=False, blank=False)
+    descripcion = models.CharField(max_length=2000, null=False, blank=False)
     logo = models.CharField(max_length=500, null=False, blank=False)
     revisor1 = models.IntegerField(null=True, blank=True)
     revisor2 = models.IntegerField(null=True, blank=True)
@@ -143,8 +143,6 @@ class Actividad(models.Model):
     def estado_actividad(self):
         return self.estado
 
-    # def revisiones_actividad(self):
-    #     return self.revisiones
 
 
 class RecursoActividad(models.Model):
@@ -210,9 +208,6 @@ class Tutorial(models.Model):
 
     def estado_tutorial(self):
         return self.estado
-
-    # def revisiones_tutorial(self):
-    #     return self.revisiones
 
 
 class RecursoTutorial(models.Model):

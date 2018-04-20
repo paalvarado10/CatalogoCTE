@@ -9,8 +9,8 @@ from selenium.webdriver.common.by import By
 
 class FunctionalTest(TestCase):
     global URL
-    # URL = 'https://catalogodevelop.herokuapp.com/'
-    URL = 'http://127.0.0.1:8000/'
+    URL = 'https://catalogodevelop.herokuapp.com/'
+    # URL = 'http://127.0.0.1:8000/'
 
 
     def setUp(self):
@@ -97,7 +97,7 @@ class FunctionalTest(TestCase):
             self.assertTrue(True)
 
     def test_6_crear_miembro_git(self):
-        self.browser.get('localhost:8000')
+        self.browser.get(URL)
         self.browser.find_element_by_id('id_login').click()
         nombre_usuario = self.browser.find_element_by_name('username')
         nombre_usuario.send_keys('admin')

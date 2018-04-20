@@ -35,7 +35,7 @@
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                <h4 class="media-heading">{{usuario.first_name}} {{ usuario.last_name }}</h4>
+                                                <h4 id="{{usuario.first_name}} {{ usuario.last_name }}" class="media-heading">{{usuario.first_name}} {{ usuario.last_name }}</h4>
                                                 <div><div><strong>Nombre de usuario:</strong></div> <div>{{ usuario.username}}</div></div>
                                                 <div><div><strong>Rol: </strong></div> <div>{{ usuario.perfil.get_role_display}}</div></div>
                                                 <div><div><strong>Correo electrónico:</strong></div> <div>{{ usuario.email}}</div></div>

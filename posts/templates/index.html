@@ -28,22 +28,24 @@
             <br/>
             <div class="row">
                 {% for herramienta in herramientas %}
-                    <div class="col-md-4">
-                        <a id="{{herramienta.nombre}}" data-toggle="tooltip" data-placement="auto"  title="Más información de {{ herramienta.nombre }}" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">
-                            <div class="card">
-                                {% if not herramienta.logo == "default"  %}
-                                    <img class="logo-herramieta" src={{ herramienta.logo }} alt="{{"logo de " }}{{herramienta.nombre}}">
-                                {% else %}
-                                    <img class="logo-herramieta" src="{% static 'img/no_img_herramienta.png' %}"  alt="{{"logo de " }}{{herramienta.nombre}}">
-                                {% endif %}
+                    {% if herramienta.estado == 3 or herramienta.estado == 4   %}
+                        <div class="col-md-4">
+                            <a id="{{herramienta.nombre}}" data-toggle="tooltip" data-placement="auto"  title="Más información de {{ herramienta.nombre }}" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">
+                                <div class="card">
+                                    {% if not herramienta.logo == "default"  %}
+                                        <img class="logo-herramieta" src={{ herramienta.logo }} alt="{{"logo de " }}{{herramienta.nombre}}">
+                                    {% else %}
+                                        <img class="logo-herramieta" src="{% static 'img/no_img_herramienta.png' %}"  alt="{{"logo de " }}{{herramienta.nombre}}">
+                                    {% endif %}
 
-                                <div class="body-card">
-                                    <h4><b>{{herramienta.nombre}}</b></h4>
-                                    <p>{{ herramienta.descripcion}}</p>
+                                    <div class="body-card">
+                                        <h4><b>{{herramienta.nombre}}</b></h4>
+                                        <p>{{ herramienta.descripcion}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    {% endif %}
 
                 {% endfor %}
             </div>

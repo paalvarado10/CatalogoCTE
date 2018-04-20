@@ -16,7 +16,8 @@ from decouple import config
 # Create your views here.
 
 def index(request):
-    herramientas = Herramienta.objects.all().filter(estado=3)
+    herramientas = Herramienta.objects.all()
+
     context = {'herramientas': herramientas}
     return render(request, 'index.html',context)
 
@@ -85,9 +86,10 @@ def herramienta_update(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
     current_logo = herramienta.logo
     if request.method == 'POST':
-        form = HerramientaUpdateForm(request.POST, request.FILES, instance=herramienta)
+        form = HerramientaUpdateForm(request.POST, request.FILES)
         if form.is_valid():
             herramienta.estado = 4
+            herramienta.save()
 
             cleaned_data = form.cleaned_data
             nombre = cleaned_data.get('nombre')
@@ -97,7 +99,6 @@ def herramienta_update(request, pk):
             licencia = cleaned_data.get('licencia')
             descripcion = cleaned_data.get('descripcion')
             urlReferencia = cleaned_data.get('urlReferencia')
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + str(current_logo))
             logo = current_logo
             logoL = True if 'logo' in request.FILES else False
             if logoL:
@@ -116,13 +117,11 @@ def herramienta_update(request, pk):
             estado = 1
             autor = request.user.id
 
-            herramienta_new = Herramienta.objects.create(id=pk, id_anterior=id_anterior, nombre=nombre,
+            herramienta_new = Herramienta.objects.create(id_anterior=id_anterior, nombre=nombre,
                                                      sistemaOperativo=sistemaOperativo, plataforma=plataforma,
                                                      fichaTecnica=fichaTecnica, licencia=licencia, estado=estado,
                                                      revisor1=revisor1, revisor2=revisor2, autor=autor,
                                                      descripcion=descripcion, urlReferencia=urlReferencia, logo=logo)
-
-            herramienta.save()
             herramienta_new.save()
 
             return render(request, 'herramienta_detail.html',{'herramienta': herramienta})
@@ -170,14 +169,21 @@ def herramienta_revisar(request,pk):
         herramientas = Herramienta.objects.all().filter(estado=3)
         context = {'herramientas': herramientas}
         return render(request, 'index.html', context)
+
 def herramienta_publicar(request,pk):
     if request.user.is_authenticated():
         herramienta = Herramienta.objects.get(id=pk)
         herramienta.estado = 3
-        herramienta.save()
         messages.success(request, 'Publicado con exito', extra_tags='alert alert-success')
-        return redirect(reverse('catalogo:vigia'))
 
+        print("herramienta.id_anterior" + str(herramienta.id_anterior))
+        if not herramienta.id_anterior == 0:
+            herramienta_delete = Herramienta.objects.get(id=herramienta.id_anterior)
+            herramienta_delete.estado = 5
+            herramienta_delete.save()
+            herramienta.id_anterior = 0
+        herramienta.save()
+        return redirect(reverse('catalogo:vigia'))
     else:
         herramientas = Herramienta.objects.all().filter(estado=3)
         context = {'herramientas': herramientas}

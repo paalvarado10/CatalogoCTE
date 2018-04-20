@@ -1,33 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Herramienta{% endblock %}
+{% block title %}{{ herramienta.nombre }}{% endblock %}
 
 {% block contenido  %}
-    <div >
+    {% csrf_token %}
 
-        <div class="centered col-md-6 card">
-            <div class="header"><h1>Agregar herramienta a Conecta-Te</h1></div>
-            <form class="bs-example bs-example-form" action="{% url 'catalogo:herramienta_create' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% for field in form %}
-                    {{ field.label_tag }}
-                    <div class="input-group">
-                        {{ field.errors }}
-                        {{ field }}
-                        {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-                <br/>
+    <div >
+        <div class="detalle">
+            <div class="col-md-10">
                 <div class="row">
-                    <div class="centered-left">
-                        <button class="btn btn-outline-success" id="boton_add">Añadir</button>
-                        <a class="btn btn-outline-danger" href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+                    <div class="col-sm-9">
+                        <h1>{{ herramienta.nombre }}</h1>
+                    </div>
+                    <div class="col-sm-3">
+                        <div>
+                            {% if user.is_authenticated and user.perfil.role == 1 %}
+                                <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Editar</a>
+                                <a href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn btn-danger">Eliminar</a>
+                            {% elif user.is_authenticated and user.perfil.role == 2 %}
+                                <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Editar</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            </form>
+
+                <div class="row">
+                    <div class="col-sm-3 ">
+                        <img class="logo-herramieta" src={{ herramienta.logo }} alt="{{"logo de " }}{{herramienta.logo}}">
+                    </div>
+                    <div class="col-sm-9">
+                        <div>
+                            <div><div><strong>Descripción:</strong></div><div>{{ herramienta.descripcion }}</div></div>
+                            <div><div><strong>Sistema Operativo:</strong></div><div>{{ herramienta.sistemaOperativo }}</div></div>
+                            <div><div><strong>URL:</strong></div><div><a href="{{ herramienta.urlReferencia }}" target="_blank">{{ herramienta.urlReferencia }}</a></div></div>
+                            <div><div><strong>Plataforma:</strong></div><div>{{ herramienta.plataforma }}</div></div>
+                            <div><div><strong>Licencia:</strong></div><div>{{ herramienta.licencia }}</div></div>
+                            <div >
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <br/>
         </div>
 

@@ -7,7 +7,7 @@
     <form method="post" >
         {% csrf_token %}
         Esta seguro que desea eliminar :  "{{ object.nombre }}"
-        <input type="submit" value="Eliminar" id="boton_eliminar_herramienta"/>
-        <a href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+        <button class="btn btn-danger" type="submit"  id="boton_eliminar_herramienta">Eliminar</button>
+        <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' object.id %}" class="cancel">Cancelar</a>
     </form>
 {% endblock %}

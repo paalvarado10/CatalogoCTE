@@ -19,14 +19,6 @@ class HerramientaForm(ModelForm):
     descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
     urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
 
-    nombre.widget.attrs.update({'class': 'form-control'})
-    logo.widget.attrs.update({'size': '60'})
-    sistemaOperativo.widget.attrs.update({'class': 'form-control'})
-    plataforma.widget.attrs.update({'class': 'form-control'})
-    fichaTecnica.widget.attrs.update({'class': 'form-control'})
-    licencia.widget.attrs.update({'class': 'form-control'})
-    descripcion.widget.attrs.update({'class': 'form-control'})
-    urlReferencia.widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Herramienta
@@ -43,15 +35,6 @@ class HerramientaUpdateForm(ModelForm):
     licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
     descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
     urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
-
-    nombre.widget.attrs.update({'class': 'form-control'})
-    logo.widget.attrs.update({'size': '60'})
-    sistemaOperativo.widget.attrs.update({'class': 'form-control'})
-    plataforma.widget.attrs.update({'class': 'form-control'})
-    fichaTecnica.widget.attrs.update({'class': 'form-control'})
-    licencia.widget.attrs.update({'class': 'form-control'})
-    descripcion.widget.attrs.update({'class': 'form-control'})
-    urlReferencia.widget.attrs.update({'class': 'form-control'})
 
 
     class Meta:
@@ -156,9 +139,9 @@ class UserUpdateForm(ModelForm):
 
 # Formulario para cambiar la contraseña
 class UserChangePassword(PasswordChangeForm):
-    old_password = forms.CharField(label="Contraseña Admin", widget=forms.PasswordInput())
-    new_password1 = forms.CharField(label="Contraseña Nueva", widget=forms.PasswordInput())
-    new_password2 = forms.CharField(label="Confirmar Contraseña", widget=forms.PasswordInput())
+    old_password = forms.CharField(label="Contraseña actual", widget=forms.PasswordInput())
+    new_password1 = forms.CharField(label="Contraseña nueva", widget=forms.PasswordInput())
+    new_password2 = forms.CharField(label="Confirmar nueva contraseña", widget=forms.PasswordInput())
 
     # verificacion contaseña actual coincide
     def clean_old_password(self):

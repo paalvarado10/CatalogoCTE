@@ -36,99 +36,39 @@
             <a href="{% url 'catalogo:usuario_create' %}" class="btn btn-success" id="boton_crear_usuario"> <div>Crear cuenta de usuario</div> </a>
 
             </br>
+        {% endif %}
+        <div>
             <div>
-                <div>
-                    <a data-toggle="tooltip" data-placement="left"  title="Agregar herramienta" href="{% url 'catalogo:herramienta_create' %}" class="float" id="boton_agregar_herramienta" >
+                {% if user.is_authenticated %}
+                    <a data-toggle="tooltip" data-placement="auto"  title="Agregar herramienta" href="{% url 'catalogo:herramienta_create' %}" class="float" id="boton_agregar_herramienta" >
                         <i class="fa fa-plus my-float" ></i>
                     </a>
-                    <h2 align="center">Herramientas</h2>
-                </div>
-                <div class="row">
-                    {% for herramienta in herramientas %}
-                        <div class="col-md-4">
-                            <div class="card">
-                                {% if herramienta.logo != null %}
-                                    <img class="logo-herramieta" src="{{ herramienta.logo }}" alt="Avatar">
-                                {% endif %}
-
-                                <div class="body-card">
-                                    <h4><b>{{herramienta.nombre}}</b></h4>
-                                    <p>{{ herramienta.descripcion}}</p>
-                                </div>
-                                <div class="footer-card">
-                                    <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Editar</a>
-                                    <a href="" class="btn btn-success" name="boton_detalle">Ver detalle</a>
-                                    <a href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn btn-danger">Eliminar</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    {% endfor %}
-                </div>
-
-                </br>
+                {% endif %}
+                <h2 align="center">Herramientas</h2>
             </div>
-
-        {% elif user.is_authenticated and user.perfil.role == 2 %}
-            <h3>Bienvenido {{ user.first_name }} {{ user.last_name }} Miembro GTI</h3>
-
-            <div>
-                <div>
-                    <a data-toggle="tooltip" data-placement="left"  title="Agregar herramienta" href="{% url 'catalogo:herramienta_create' %}" class="float" id="boton_agregar_herramienta" >
-                        <i class="fa fa-plus my-float" ></i>
-                    </a>
-                    <h2 align="center">Herramientas</h2>
-                </div>
-                <div class="row">
-                    {% for herramienta in herramientas %}
-                        <div class="col-md-4">
-                            <div class="card">
-                                {% if herramienta.logo != null %}
-                                    <img class="logo-herramieta" src="{{ herramienta.logo }}" alt="Avatar">
-                                {% endif %}
-
-                                <div class="body-card">
-                                    <h4><b>{{herramienta.nombre}}</b></h4>
-                                    <p>{{ herramienta.descripcion}}</p>
-                                </div>
-                                <div class="footer-card">
-                                    <a href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Editar</a>
-                                    <a href="" class="btn btn-success" name="boton_detalle">Ver detalle</a>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    {% endfor %}
-                </div>
-
-            </div>
-
-            </br>
-        {% elif not user.is_authenticated %}
+            <br/>
             <div class="row">
                 {% for herramienta in herramientas %}
                     <div class="col-md-4">
-                        <div class="card">
-                            {% if herramienta.logo != null %}
-                                <img class="logo-herramieta" src="{{ herramienta.logo }}" alt="Avatar">
-                            {% endif %}
+                        <a id="{{herramienta.nombre}}" data-toggle="tooltip" data-placement="auto"  title="Más información de {{ herramienta.nombre }}" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">
+                            <div class="card">
+                                {% if herramienta.logo != null %}
+                                    <img class="logo-herramieta" src="{{ herramienta.logo }}" alt="Avatar">
+                                {% endif %}
 
-                            <div class="body-card">
-                                <h4><b>{{herramienta.nombre}}</b></h4>
-                                <p>{{ herramienta.descripcion}}</p>
+                                <div class="body-card">
+                                    <h4><b>{{herramienta.nombre}}</b></h4>
+                                    <p>{{ herramienta.descripcion}}</p>
+                                </div>
                             </div>
-                            <div class="footer-card">
-
-                                <a href="" class="btn btn-success" name="boton_detalle">Ver detalle</a>
-
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
                 {% endfor %}
             </div>
-        {% endif %}
+
+            </br>
+        </div>
     </div>
 {% endblock %}
 

@@ -16,7 +16,7 @@ nav {
     color: white;
 }
 
-.navbar-default .navbar-nav>.active>a{
+.navbar-default .navbar-nav>.active>a {
     color: white;
     background-color: #518F89;
 }
@@ -26,6 +26,17 @@ nav {
     color: #333333;
     background-color: #518F89;
 }
+
+.dropdown-menu .divider {
+    background-color: #518F89;
+}
+
+.navbar-nav>li>.dropdown-menu{
+    color: #555;
+    background-color: #e7e7e7;
+}
+
+
 
 .contenido{
     padding:75px 10% 0 10%;
@@ -99,7 +110,8 @@ img {
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
     margin-bottom: 2vw;
-    height: 450px;
+    height: 420px;
+    background-color: rgba(146, 178, 170, 0.73);
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -203,9 +215,22 @@ img {
     display:flex;
     align-items:center;
     justify-content:center;
+    background-color: rgba(146, 178, 170, 0.73);
 }
 
 /* On mouse-over, add a deeper shadow */
 .formulario:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.detalle {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    margin-bottom: 2vw;
+    min-height: 420px;
+    background-color: rgba(146, 178, 170, 0.73);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }

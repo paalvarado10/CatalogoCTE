@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from azure.storage.blob import BlockBlobService
-from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm,\
+from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm, \
     HerramientaForm, HerramientaUpdateForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -115,10 +115,10 @@ def herramienta_update(request, pk):
 
             herramienta.save()
 
-            return HttpResponseRedirect(reverse('catalogo:index'))
+            return render(request, 'herramienta_detail.html',{'herramienta': herramienta})
     else:
         form = HerramientaUpdateForm(instance=herramienta)
-    return render(request, 'herramienta_update.html', {'form': form})
+    return render(request, 'herramienta_update.html', {'form': form, 'id':pk})
 
 
 def herramienta_delete(request, pk):
@@ -131,7 +131,7 @@ def herramienta_delete(request, pk):
 def herramienta_detail(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
     context = {'herramienta': herramienta}
-    return render(request, 'herramienta_delete.html', context)
+    return render(request, 'herramienta_detail.html', context)
 
 def usuario_create(request):
     if request.method == 'POST':

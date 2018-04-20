@@ -34,7 +34,6 @@
                             <li class="list-group-item">
                                 <div>{{ herramienta.nombre }}
                                     <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
-                                    <a class="btn btn-success" href="{% url 'catalogo:revisar' herramienta.id %}">Revisado</a>
                                 </div>
                             </li>
                         {% endfor %}
@@ -58,7 +57,6 @@
                             <li class="list-group-item">
                                 <div>{{ herramienta.nombre }}
                                     <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
-                                    <a class="btn btn-success" href="{% url 'catalogo:publicar' herramienta.id %}">Publicar</a>
                                 </div>
                             </li>
                         {% endfor %}
@@ -84,7 +82,6 @@
                             <li class="list-group-item">
                                 <div>{{ herramienta.nombre }}
                                     <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
-                                    <a class="btn btn-success" href="{% url 'catalogo:revisar' herramienta.id %}">Revisado</a>
                                 </div>
                             </li>
                         {% endfor %}

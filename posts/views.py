@@ -45,8 +45,6 @@ def herramienta_create(request):
         form = HerramientaForm(request.POST, request.FILES)
         if form.is_valid():
             cleaned_data = form.cleaned_data
-
-            version = 'new'
             nombre = cleaned_data.get('nombre')
             sistemaOperativo = cleaned_data.get('sistemaOperativo')
             plataforma = cleaned_data.get('plataforma')
@@ -58,7 +56,8 @@ def herramienta_create(request):
             autor = request.user.id
             descripcion = cleaned_data.get('descripcion')
             urlReferencia = cleaned_data.get('urlReferencia')
-            logo = ''
+            logo = 'default'
+            id_anterior = 0
 
             logoL = True if 'logo' in request.FILES else False
             if logoL:
@@ -72,7 +71,7 @@ def herramienta_create(request):
                 url = guardarDarUrl(file, myfile.name)
                 logo = url
 
-            herramienta = Herramienta.objects.create(version=version,nombre=nombre,
+            herramienta = Herramienta.objects.create(id_anterior=id_anterior,nombre=nombre,
                                                      sistemaOperativo=sistemaOperativo,plataforma=plataforma,fichaTecnica=fichaTecnica,licencia=licencia,estado=estado,
                                                      revisor1=revisor1, revisor2=revisor2, autor=autor, descripcion=descripcion,urlReferencia=urlReferencia,logo=logo)
             herramienta.save()
@@ -84,18 +83,22 @@ def herramienta_create(request):
 
 def herramienta_update(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
+    current_logo = herramienta.logo
     if request.method == 'POST':
         form = HerramientaUpdateForm(request.POST, request.FILES, instance=herramienta)
         if form.is_valid():
+            herramienta.estado = 4
+
             cleaned_data = form.cleaned_data
-            herramienta.nombre = cleaned_data.get('nombre')
-            herramienta.sistemaOperativo = cleaned_data.get('sistemaOperativo')
-            herramienta.plataforma = cleaned_data.get('plataforma')
-            herramienta.fichaTecnica = cleaned_data.get('fichaTecnica')
-            herramienta.licencia = cleaned_data.get('licencia')
-            herramienta.descripcion = cleaned_data.get('descripcion')
-            herramienta.urlReferencia = cleaned_data.get('urlReferencia')
-            herramienta.logo = ''
+            nombre = cleaned_data.get('nombre')
+            sistemaOperativo = cleaned_data.get('sistemaOperativo')
+            plataforma = cleaned_data.get('plataforma')
+            fichaTecnica = cleaned_data.get('fichaTecnica')
+            licencia = cleaned_data.get('licencia')
+            descripcion = cleaned_data.get('descripcion')
+            urlReferencia = cleaned_data.get('urlReferencia')
+            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + str(current_logo))
+            logo = current_logo
             logoL = True if 'logo' in request.FILES else False
             if logoL:
                 myfile = request.FILES['logo']
@@ -106,9 +109,21 @@ def herramienta_update(request, pk):
                     a = chunk
                     file = file + a
                 url = guardarDarUrl(file, myfile.name)
-                herramienta.logo = url
+                logo = url
+            id_anterior = pk
+            revisor1 = 0
+            revisor2 = 0
+            estado = 1
+            autor = request.user.id
+
+            herramienta_new = Herramienta.objects.create(id=pk, id_anterior=id_anterior, nombre=nombre,
+                                                     sistemaOperativo=sistemaOperativo, plataforma=plataforma,
+                                                     fichaTecnica=fichaTecnica, licencia=licencia, estado=estado,
+                                                     revisor1=revisor1, revisor2=revisor2, autor=autor,
+                                                     descripcion=descripcion, urlReferencia=urlReferencia, logo=logo)
 
             herramienta.save()
+            herramienta_new.save()
 
             return render(request, 'herramienta_detail.html',{'herramienta': herramienta})
     else:

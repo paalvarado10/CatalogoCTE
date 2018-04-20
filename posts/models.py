@@ -38,7 +38,7 @@ class Herramienta(models.Model):
 
 
     def __unicode__(self):
-        return self
+        return self or u''
 
     def nombre_herramienta(self):
         return self.nombre

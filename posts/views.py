@@ -16,15 +16,9 @@ from decouple import config
 # Create your views here.
 
 def index(request):
-    if request.user.is_authenticated():
-        usuarios = User.objects.all()
-        herramientas = Herramienta.objects.all().filter(estado=1)
-        context = {'usuarios': usuarios, 'herramientas': herramientas}
-        return render(request, 'index.html', context)
-    else:
-        herramientas = Herramienta.objects.all().filter(estado=3)
-        context = {'herramientas': herramientas}
-        return render(request, 'index.html',context)
+    herramientas = Herramienta.objects.all().filter(estado=3)
+    context = {'herramientas': herramientas}
+    return render(request, 'index.html',context)
 
 #autenticación
 def login_view(request):
@@ -154,18 +148,26 @@ def herramienta_revisar(request,pk):
             herramienta.revisor2 = request.user.id
             herramienta.estado = 2
         herramienta.save()
-
-        herramientas_r = Herramienta.objects.all().filter(estado=1).exclude(autor=request.user.id).exclude(revisor1=request.user.id)
-        herramientas_p = Herramienta.objects.all().filter(estado=2)
-        mensaje = 'Revisado con éxito'
-        context = {'mensaje':mensaje,'herramientas_r': herramientas_r, 'herramientas_p': herramientas_p}
-        return render(request, 'vigia.html', context)
+        messages.success(request, 'Revisado con exito', extra_tags='alert alert-success')
+        return redirect(reverse('catalogo:vigia'))
 
     else:
         herramientas = Herramienta.objects.all().filter(estado=3)
         context = {'herramientas': herramientas}
         return render(request, 'index.html', context)
-#def herramienta_to_check(reuest):
+def herramienta_publicar(request,pk):
+    if request.user.is_authenticated():
+        herramienta = Herramienta.objects.get(id=pk)
+        herramienta.estado = 3
+        herramienta.save()
+        messages.success(request, 'Publicado con exito', extra_tags='alert alert-success')
+        return redirect(reverse('catalogo:vigia'))
+
+    else:
+        herramientas = Herramienta.objects.all().filter(estado=3)
+        context = {'herramientas': herramientas}
+        return render(request, 'index.html', context)
+
 
 
 

@@ -4,9 +4,17 @@
 {% block title %}Vigía{% endblock %}
 
 {% block contenido  %}
-    {% if mensaje %}
-        <div class="alert alert-success">
-            {{ mensaje }}
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+            {% endfor %}
         </div>
     {% endif %}
     {% if user.is_authenticated and user.perfil.role == 1 %}
@@ -39,14 +47,20 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">Herramientas por publicar</div>
                     <div class="panel-body">
-                        <p>Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacin
+                        <p>
+                            Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacin
                             ia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id elit.
                         </p>
                     </div>
                     <!-- List group -->
                     <ul class="list-group">
                         {% for herramienta in herramientas_p %}
-                            <li class="list-group-item"><div>{{ herramienta.nombre }}<button>ver detalle</button><button>dar por revisado</button></div></li>
+                            <li class="list-group-item">
+                                <div>{{ herramienta.nombre }}
+                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
+                                    <a class="btn btn-success" href="{% url 'catalogo:publicar' herramienta.id %}">Publicar</a>
+                                </div>
+                            </li>
                         {% endfor %}
                     </ul>
 

@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^herramienta_delete/(?P<pk>\d+)$', views.herramienta_delete, name='herramienta_delete'),
     url(r'^herramienta_detail/(?P<pk>\d+)/$', views.herramienta_detail, name='herramienta_detail'),
     url(r'^vigia/$', views.herramientas_estados, name='vigia'),
-    url(r'^revisar/(?P<pk>\d+)$', views.herramienta_revisar, name='revisar')
+    url(r'^revisar/(?P<pk>\d+)$', views.herramienta_revisar, name='revisar'),
+    url(r'^publicar/(?P<pk>\d+)$', views.herramienta_publicar, name='publicar')
 ]

@@ -26,7 +26,7 @@ def index(request):
         context = {'herramientas': herramientas}
         return render(request, 'index.html',context)
 
-
+#autenticación
 def login_view(request):
     if request.user.is_authenticated():
         return redirect(reverse('catalogo:index'))
@@ -41,12 +41,11 @@ def login_view(request):
         else:
             mensaje = 'Nombre de usuario o clave no valido'
     return render(request, 'login.html', {'mensaje': mensaje})
-
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('catalogo:index'))
 
+#Herramientas
 def herramienta_create(request):
     if request.method == 'POST':
         form = HerramientaForm(request.POST, request.FILES)
@@ -59,7 +58,7 @@ def herramienta_create(request):
             plataforma = cleaned_data.get('plataforma')
             fichaTecnica = cleaned_data.get('fichaTecnica')
             licencia = cleaned_data.get('licencia')
-            estado = 3
+            estado = 1
             revisiones = 0
             descripcion = cleaned_data.get('descripcion')
             urlReferencia = cleaned_data.get('urlReferencia')
@@ -100,7 +99,7 @@ def herramienta_update(request, pk):
             herramienta.licencia = cleaned_data.get('licencia')
             herramienta.descripcion = cleaned_data.get('descripcion')
             herramienta.urlReferencia = cleaned_data.get('urlReferencia')
-
+            herramienta.logo = ''
             logoL = True if 'logo' in request.FILES else False
             if logoL:
                 myfile = request.FILES['logo']
@@ -120,7 +119,6 @@ def herramienta_update(request, pk):
         form = HerramientaUpdateForm(instance=herramienta)
     return render(request, 'herramienta_update.html', {'form': form, 'id':pk})
 
-
 def herramienta_delete(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
     if request.method == 'POST':
@@ -133,6 +131,13 @@ def herramienta_detail(request, pk):
     context = {'herramienta': herramienta}
     return render(request, 'herramienta_detail.html', context)
 
+# def herramienta_to_check(reuest):
+
+
+
+
+
+#Manejo de cuentas de usuario
 def usuario_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)
@@ -175,8 +180,6 @@ def usuario_create(request):
     else:
         form = UserForm()
     return render(request, 'user_form.html', {'form': form})
-
-
 
 def user_update(request, pk):
     user_model = User.objects.get(id=pk)

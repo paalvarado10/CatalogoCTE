@@ -31,8 +31,10 @@
                     <div class="col-md-4">
                         <a id="{{herramienta.nombre}}" data-toggle="tooltip" data-placement="auto"  title="Más información de {{ herramienta.nombre }}" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">
                             <div class="card">
-                                {% if herramienta.logo != null %}
-                                    <img class="logo-herramieta" src="{{ herramienta.logo }}" alt="Avatar">
+                                {% if herramienta.logo  %}
+                                    <img class="logo-herramieta" src={{ herramienta.logo }} alt="{{"logo de " }}{{herramienta.nombre}}">
+                                {% else %}
+                                    <img class="logo-herramieta" src="{% static 'img/no_img_herramienta.png' %}"  alt="{{"logo de " }}{{herramienta.nombre}}">
                                 {% endif %}
 
                                 <div class="body-card">

@@ -1,9 +1,22 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inicio Sesión</title>
+    {% load bootstrap3%}
+    {% load static %}
+    {% load staticfiles %}
+    {# Load CSS#}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
 
-{% block title %}Inicio Sesión{% endblock %}
-
-{% block contenido  %}
+<div class="contenido">
     <div class="wrapper2 p10">
         <div class="inicio">
             <img src="{% static 'img/logo-Conectate.png' %}" alt="Logo Conectate"/>
@@ -30,4 +43,9 @@
         </div>
 
     </div>
-{% endblock %}
+</div>
+{# JavaScript and  Jquery#}
+{% bootstrap_javascript jquery=True %}
+</body>
+</html>
+

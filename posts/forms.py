@@ -27,14 +27,14 @@ class HerramientaForm(ModelForm):
 
 class HerramientaUpdateForm(ModelForm):
     pk_herramienta = None;
-    nombre = forms.CharField(label="Nombre", max_length=20)
+    nombre = forms.CharField(label="Nombre", max_length=100)
     logo = forms.FileField(label="Logo",required=False)
     sistemaOperativo = forms.CharField(label="Sistema Operativo", max_length=50)
     plataforma = forms.CharField(label="Plataforma", max_length=20)
     fichaTecnica = forms.CharField(label="Ficha Tecnica",widget=forms.Textarea)
     licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
     descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
-    urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
+    urlReferencia =  forms.CharField(label="Url herramienta", max_length=500)
 
 
     class Meta:

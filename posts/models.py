@@ -44,9 +44,6 @@ class Herramienta(models.Model):
     def estado_herramienta(self):
         return self.estado
 
-    def version_herramienta(self):
-        return self.version
-
     def url_herramienta(self):
         return self.urlReferencia
 
@@ -120,9 +117,6 @@ class Actividad(models.Model):
     def herramienta_actividad(self):
         return self.herramienta.nombre
 
-    def version_actividad(self):
-        return self.version
-
     def nombre_actividad(self):
         return self.nombre
 
@@ -188,9 +182,6 @@ class Tutorial(models.Model):
 
     def herramienta_tutorial(self):
         return self.herramienta.nombre
-
-    def version_tutorial(self):
-        return self.version
 
     def nombre_tutorial(self):
         return self.nombre

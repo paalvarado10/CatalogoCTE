@@ -9,7 +9,7 @@
     {% load staticfiles %}
     {# Load CSS#}
     {% bootstrap_css %}
-
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon-96x96.png' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -27,7 +27,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="{% url 'catalogo:index' %}">
-                <img alt="logo conectate" height="51px" src="{% static 'img/logo_navbar2.png' %}">
+                <img alt="logo conectate" height="51px" src="{% static 'img/logo_navbar_black.png' %}">
             </a>
         </div>
 

@@ -7,7 +7,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-
 class Herramienta(models.Model):
     id_anterior = models.IntegerField(null=True, blank=True)
     nombre = models.CharField(max_length=100, null=False, blank=False)
@@ -26,17 +25,15 @@ class Herramienta(models.Model):
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
     BLOQUEADO = 4
+    HISTORIC = 5
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
+        (HISTORIC, 'Histórico')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
-
-
-    def __unicode__(self):
-        return self or u''
 
     def nombre_herramienta(self):
         return self.nombre
@@ -111,9 +108,6 @@ class Actividad(models.Model):
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
 
-    def __unicode__(self):
-        return self
-
     def herramienta_actividad(self):
         return self.herramienta.nombre
 
@@ -138,10 +132,6 @@ class RecursoActividad(models.Model):
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
-
-
-    def __unicode__(self):
-        return self
 
     def url_recurso_actividad(self):
         return self.url
@@ -173,12 +163,15 @@ class Tutorial(models.Model):
         (BLOQUEADO, 'Bloqueado'),
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
-    revisor1 = models.IntegerField(null=True, blank=True)
-    revisor2 = models.IntegerField(null=True, blank=True)
-    autor = models.IntegerField(null=False, blank=False)
 
-    def __unicode__(self):
-        return self
+    def herramienta_revisor1(self):
+        return self.herramienta.revisor1
+
+    def herramienta_revisor2(self):
+        return self.herramienta.revisor2
+
+    def herramienta_autor(self):
+        return self.herramienta.autor
 
     def herramienta_tutorial(self):
         return self.herramienta.nombre
@@ -197,9 +190,6 @@ class RecursoTutorial(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
-
-    def __unicode__(self):
-        return self
 
     def tutorial_recurso_tutorial(self):
         return self.tutorial.nombre

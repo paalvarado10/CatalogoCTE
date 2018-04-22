@@ -7,12 +7,11 @@
     {% if messages %}
         <div>
             {% for message in messages %}
-                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                    {{ message }}
+                <div class="{{ message.tags }} alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-
+                    <p id="mensaje">{{ message }}</p>
                 </div>
             {% endfor %}
         </div>
@@ -24,16 +23,14 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">Herramientas por revisar</div>
                     <div class="panel-body">
-                        <p>Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacin
-                            ia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                        </p>
+                       <p>En esta lista se encuentra las herramientas que fueron modificadas y están pendientes de revisión</p>
                     </div>
                     <!-- List group -->
                     <ul class="list-group">
                         {% for herramienta in herramientas_r %}
                             <li class="list-group-item">
                                 <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
+                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}"> Abrir </a>
                                 </div>
                             </li>
                         {% endfor %}
@@ -46,17 +43,14 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">Herramientas por publicar</div>
                     <div class="panel-body">
-                        <p>
-                            Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacin
-                            ia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                        </p>
+                       <p>En esta lista se encuentra las herramientas que fueron modificadas</p>
                     </div>
                     <!-- List group -->
                     <ul class="list-group">
                         {% for herramienta in herramientas_p %}
                             <li class="list-group-item">
                                 <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
+                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">Abrir</a>
                                 </div>
                             </li>
                         {% endfor %}
@@ -66,27 +60,23 @@
             </div>
         </div>
 
-
     {% elif user.is_authenticated and user.perfil.role == 2 %}
-        <div class="row">
-            <div class="col-md-6">
+        <div class="centered">
+            <div class="col-md-8">
                 <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">Por revisar</div>
+                    <div class="panel-heading">Herramientas por revisar</div>
                     <div class="panel-body">
-                        <p>Herramientas por revisar</p>
+                        <p>En esta lista se encuentra las herramientas que fueron modificadas</p>
                     </div>
-                    <!-- List group -->
                     <ul class="list-group">
                         {% for herramienta in herramientas_r %}
                             <li class="list-group-item">
                                 <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">ver detalle</a>
+                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">Abrir</a>
                                 </div>
                             </li>
                         {% endfor %}
                     </ul>
-
                 </div>
             </div>
         </div>

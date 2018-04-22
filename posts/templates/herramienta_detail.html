@@ -5,26 +5,66 @@
 
 {% block contenido  %}
     {% csrf_token %}
-
+    {% if user.perfil.role == 1 and herramienta.estado == 3%}
+        <div class="modal fade" id="elminarModal" tabindex="-1" role="dialog" aria-labelledby="elminarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="elminarModalLabel">Advertencia</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Tenga en cuenta que eliminar una herramienta es un proceso irreversible.
+                            Escriba el nombre de la herramienta {{ herramienta.nombre }} para poder continuar.
+                        </p>
+                        <input onkeyup="deleteEnable('{{herramienta.nombre}}')"  type="text" class="form-control" id="herramienta_name">
+                    </div>
+                    <div class="modal-footer">
+                        <form method="post" >
+                            {% csrf_token %}
+                            <button  type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button id="eliminar_herramienta_btn_modal" class="btn btn-danger2 disabled" type="submit"  id="boton_eliminar_herramienta">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="{{message.tags}}  alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p id="mensaje">{{ message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div >
         <div class="detalle">
             <div class="col-md-10">
                 <div class="row">
                     <div class="col-sm-9">
-                        <h1>{{ herramienta.nombre }}</h1>
+                        {% if herramienta.estado == 1 or herramienta.estado == 2%}
+                            <h1>Versión modificada:{{ herramienta.nombre }}</h1>
+                        {% else%}
+                            <h1>{{ herramienta.nombre }}</h1>
+                        {% endif %}
                     </div>
                     <div class="col-sm-3">
                         <div>
                             {% if user.is_authenticated %}
                                 {% if herramienta.estado == 1 %}
-                                    <a class="btn btn-success" href="{% url 'catalogo:revisar' herramienta.id %}">Revisado</a>
+                                    <a  id="revisar_herramienta_btn" class="btn btn-success" href="{% url 'catalogo:revisar' herramienta.id %}">Marcar como revisado</a>
                                 {% elif herramienta.estado == 2 %}
-                                    <a class="btn btn-success" href="{% url 'catalogo:publicar' herramienta.id %}">Publicar</a>
-                                {% elif herramienta.estado == 3 and user.perfil.role == 1 %}
-                                    <a id="editar_herramienta_btn" href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Editar</a>
-                                    <a id="eliminar_herramienta_btn" href="{% url 'catalogo:herramienta_delete' herramienta.id %}" class="btn btn-danger">Eliminar</a>
-                                {% elif herramienta.estado == 3 and user.perfil.role == 2 %}
-                                    <a id="editar_herramienta_btn" href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Editar</a>
+                                    <a id="publicar_herramienta_btn" class="btn btn-success" href="{% url 'catalogo:publicar' herramienta.id %}">Publicar herramienta</a>
+                                {% elif herramienta.estado == 3 %}
+                                    <a id="editar_herramienta_btn" href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Crear una edición</a>
+                                    {% if user.perfil.role == 1 %}
+                                        <button id="eliminar_herramienta_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target="#elminarModal">Eliminar</button>
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -53,11 +93,128 @@
                     </div>
                 </div>
             </div>
-
-
             <br/>
         </div>
+        {% if user.is_authenticated and herramienta_old %}
+            {% if herramienta.estado == 1 or herramienta.estado == 2%}
+                <div class="detalle">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h1> Versión anterior:{{ herramienta.nombre }}</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 ">
+                                {% if not herramienta_old.logo == "default"  %}
+                                    <img class="logo-herramieta" src={{ herramienta_old.logo }} alt="{{"logo de " }}{{herramienta_old.nombre}}">
+                                {% else %}
+                                    <img class="logo-herramieta" src="{% static 'img/no_img_herramienta.png' %}"  alt="{{"logo de " }}{{herramienta_old.nombre}}">
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-9">
+                                <div>
+                                    <div><div><strong>Descripción:</strong></div><div>{{ herramienta_old.descripcion }}</div></div>
+                                    <div><div><strong>Sistema Operativo:</strong></div><div>{{ herramienta_old.sistemaOperativo }}</div></div>
+                                    <div><div><strong>URL:</strong></div><div><a href="{{ herramienta_old.urlReferencia }}" target="_blank">{{ herramienta_old.urlReferencia }}</a></div></div>
+                                    <div><div><strong>Plataforma:</strong></div><div>{{ herramienta_old.plataforma }}</div></div>
+                                    <div><div><strong>Licencia:</strong></div><div>{{ herramienta_old.licencia }}</div></div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Tutoriales</div>
+                        <div class="panel-body">
+                            <p>En esta lista se encuentran los tutoriales realizados con {{ herramienta.nombre }}</p>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div>
+                                    tutorial 1
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                                <div>
+                                    tutorial 2
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                                <div>
+                                    tutorial 3
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                                <div>
+                                    tutorial 4
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Actividades</div>
+                        <div class="panel-body">
+                            <p>En esta lista se encuentran las actividades que se relacionan con {{ herramienta.nombre }}</p>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div>
+                                    tutorial 1
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                                <div>
+                                    tutorial 2
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                                <div>
+                                    tutorial 3
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                                <div>
+                                    tutorial 4
+                                    <a class="btn btn-success" href=""> Abrir </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
     </div>
 
 {% endblock %}
+
+{% if user.perfil.role == 1 and herramienta.estado == 3%}
+    {% block extra_script %}
+        <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').focus()
+
+            });
+            function deleteEnable(val) {
+                var name = $('#herramienta_name').val();
+                if(name===val.toString()){
+                    $('#eliminar_herramienta_btn_modal').removeClass("disabled");
+                }else{
+                    $('#eliminar_herramienta_btn_modal').addClass("disabled");
+                }
+            }
+        </script>
+    {% endblock %}
+{% endif %}
+
+

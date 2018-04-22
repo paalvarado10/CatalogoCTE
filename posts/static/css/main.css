@@ -8,12 +8,19 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
 }
 
+a {
+    color: black ;
+}
+
 nav {
     background-color: #518F89!important;
     font-family: 'Roboto Slab', serif;
 }
+div {
+    font-family: 'Roboto Slab', serif;
+}
 .navbar-default .navbar-nav>li>a {
-    color: white;
+    color: black;
 }
 
 .navbar-default .navbar-nav>.active>a {
@@ -23,9 +30,11 @@ nav {
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:focus,
 .navbar-default .navbar-nav>.active>a:hover{
-    color: #333333;
-    background-color: #518F89;
+    color: white;
+    background-color: #31708f;
 }
+
+
 
 .dropdown-menu .divider {
     background-color: #518F89;
@@ -36,7 +45,9 @@ nav {
     background-color: #e7e7e7;
 }
 
-
+.navbar-nav .open .dropdown-menu{
+    background-color: #e7e7e7;
+}
 
 .contenido{
     padding:75px 10% 0 10%;
@@ -108,7 +119,7 @@ img {
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
     margin-bottom: 2vw;
-    height: 420px;
+    height: 480px;
     background-color: rgba(146, 178, 170, 0.73);
 }
 
@@ -119,7 +130,7 @@ img {
 
 /* Add some padding inside the card container */
 .body-card {
-    padding: 2px 16px;
+    padding: 1vw 1vw 1vw 1vw;
     height: 240px;
 }
 
@@ -202,6 +213,21 @@ img {
     background-color: #ff5c5c!important;
 }
 
+.btn-danger2 {
+    color: #333333;
+    background-color: #ec3939;
+    border-color: #ff5c5c;
+}
+.btn-danger2:hover {
+    color: white;
+    border-color: #ff5c5c;
+}
+.btn-danger2:focus {
+    background-color: #ff5c5c!important;
+}
+.btn-danger2:active {
+    background-color: #ff5c5c!important;
+}
 /*formularios*/
 .formulario {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -231,4 +257,9 @@ img {
     display:flex;
     align-items:center;
     justify-content:center;
+}
+
+.panel-default>.panel-heading {
+    background-color: rgba(146, 178, 170, 0.73);
+    border-color: #ddd;
 }

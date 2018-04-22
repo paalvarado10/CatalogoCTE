@@ -23,7 +23,7 @@
                         <form method="post" >
                             {% csrf_token %}
                             <button  type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button id="eliminar_herramienta_btn_modal" class="btn btn-danger2 disabled" type="submit"  id="boton_eliminar_herramienta">Eliminar</button>
+                            <button id="eliminar_herramienta_btn_modal" class="btn btn-danger2" type="submit"  id="boton_eliminar_herramienta" disabled="true">Eliminar</button>
                         </form>
                     </div>
                 </div>
@@ -209,8 +209,10 @@
                 var name = $('#herramienta_name').val();
                 if(name===val.toString()){
                     $('#eliminar_herramienta_btn_modal').removeClass("disabled");
+                    $('#eliminar_herramienta_btn_modal').prop('disabled', false);
                 }else{
                     $('#eliminar_herramienta_btn_modal').addClass("disabled");
+                    $('#eliminar_herramienta_btn_modal').prop('disabled', true);
                 }
             }
         </script>

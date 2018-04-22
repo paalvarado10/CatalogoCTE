@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Cuentas de usuarios{% endblock %}
+
+{% block contenido  %}
+    <div >
+        {% if user.is_authenticated and user.perfil.role == 1 %}
+            <div class="detalle">
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h1 align="center">Cuentas de usuarios</h1>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="centered" style="padding-top: 2vw">
+                                <a href="{% url 'catalogo:usuario_create' %}" class="btn btn-success" id="boton_crear_usuario">
+                                    <div>Crear cuenta de usuario</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="centered">
+                            <div class="col-sm-6">
+                                {% for usuario in usuarios %}
+                                    {% if user != usuario %}
+                                        <div class="media">
+                                            <div class="media-left media-middle">
+                                                <a href="#">
+                                                    {% if usuario.perfil.fotoUrl != null %}
+                                                        <img class="media-object" width="130vw" src="{{ usuario.perfil.fotoUrl }}">
+                                                    {% endif %}
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 id="{{usuario.first_name}} {{ usuario.last_name }}" class="media-heading">{{usuario.first_name}} {{ usuario.last_name }}</h4>
+                                                <div><div><strong>Nombre de usuario:</strong></div> <div>{{ usuario.username}}</div></div>
+                                                <div><div><strong>Rol: </strong></div> <div>{{ usuario.perfil.get_role_display}}</div></div>
+                                                <div><div><strong>Correo electrónico:</strong></div> <div>{{ usuario.email}}</div></div>
+                                                <a class="btn btn-success" href="{% url 'catalogo:user_update' usuario.id %}" class="btn">Editar</a>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block extra_script %}
+    <script>
+        $(".nav").find(".active").removeClass("active");
+        var actual = $("#listUsersli")
+        $(actual).addClass("active");
+    </script>
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Editar herramienta{% endblock %}
+
+{% block contenido  %}
+    <div class="centered"><h1>Editar herramienta</h1></div>
+    <div class="formulario">
+        <form method="post" enctype="multipart/form-data" class="col-md-8">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <br/>
+            <div class="row">
+                <div class="centered">
+                    <button class="btn btn-success" id="boton_actualizar_herramienta">Enviar edición  </button>
+
+                    <a class="btn btn-danger" href="{% url 'catalogo:herramienta_detail' id %}" class="cancel">Cancelar</a>
+                </div>
+            </div>
+        </form>
+        <br/>
+    </div>
+{% endblock %}

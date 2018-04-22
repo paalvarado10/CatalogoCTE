@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Crear cuenta usuario{% endblock %}
+
+{% block contenido  %}
+    <div class="centered"><h1>Crear cuenta de usuario</h1></div>
+    <div class="formulario">
+        <form action="{% url 'catalogo:usuario_create' %}" method="post" enctype="multipart/form-data" class="col-md-6">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-success" type="submit" id="boton_add_usuario">Crear cuenta</button>
+            <a class="btn btn-danger"  href="{% url 'catalogo:users_list' %}" class="cancel">Cancelar</a>
+            <br/>
+        </form>
+    </div>
+{% endblock %}

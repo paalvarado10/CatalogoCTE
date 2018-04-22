@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Agregar herramienta{% endblock %}
+
+{% block contenido  %}
+    <div >
+        <div class="centered"><h1>Agregar herramienta a Conecta-Te</h1></div>
+        <div class="formulario">
+            <form class="bs-example bs-example-form col-md-8" action="{% url 'catalogo:herramienta_create' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <br/>
+                <div class="row">
+                    <div class="centered">
+                        <button class="btn btn-success" id="boton_add">Añadir</button>
+                        <a class="btn btn-danger" href="{% url 'catalogo:index' %}" class="cancel">Cancelar</a>
+                    </div>
+                    <br/>
+                </div>
+            </form>
+            <br/>
+        </div>
+
+    </div>
+
+{% endblock %}

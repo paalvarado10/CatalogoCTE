@@ -342,7 +342,6 @@ class FunctionalTest(TestCase):
             self.assertTrue(True)
         except Exception:
             self.assertTrue(False)
-        self.assertIn('Inicio Catalogo', self.browser.title)
 
     def test_11_visualizacion_herramienta_usuario_cte(self):
         self.browser.get(URL)

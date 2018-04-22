@@ -69,20 +69,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'catalogo.wsgi.application'
 
-# Database MASTER
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd2mfa0js1qcqhp',
-#         'USER': 'ksbketlkkfxfnm',
-#         'PASSWORD': '6ed5d17657f1b8c0370060523df84faf051f09ce12bae5b88d32988cafbe2412',
-#         'HOST': 'ec2-54-243-213-188.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
-# Database DEVELOP
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

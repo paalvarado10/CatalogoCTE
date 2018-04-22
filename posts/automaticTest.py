@@ -70,30 +70,48 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
-        self.browser.find_element_by_id('Herramienta P').click()
+        self.browser.find_element_by_id('Herramienta edit').click()
         self.browser.find_element_by_id('editar_herramienta_btn').click()
         descripcion_herramienta = self.browser.find_element_by_id('id_nombre')
         descripcion_herramienta.clear()
         descripcion_herramienta.send_keys('Updated name test')
         self.browser.find_element_by_id('boton_actualizar_herramienta').click()
-        self.assertIn('Herramienta P', self.browser.title)
+        self.assertIn('Herramienta edit', self.browser.title)
 
-    # def test_05_eliminar_herramienta(self):
-    #     self.browser.get(URL)
-    #     self.browser.find_element_by_id('id_login').click()
-    #     nombre_usuario = self.browser.find_element_by_name('username')
-    #     nombre_usuario.send_keys('admin')
-    #     clave = self.browser.find_element_by_id('password')
-    #     clave.send_keys('catalogo2018')
-    #     self.browser.find_element_by_id('boton_login').click()
-    #     self.browser.find_element_by_id('Herramienta P').click()
-    #     self.browser.find_element_by_id('eliminar_herramienta_btn').click()
-    #     self.browser.find_element_by_id('eliminar_herramienta_btn_modal').click()
-    #     try:
-    #         self.browser.find_element_by_id('Herramienta P')
-    #         self.assertTrue(False)
-    #     except Exception:
-    #         self.assertTrue(True)
+    def test_05_eliminar_herramienta(self):
+        self.browser.get(URL)
+        self.browser.find_element_by_id('id_login').click()
+        nombre_usuario = self.browser.find_element_by_name('username')
+        nombre_usuario.send_keys('admin')
+        clave = self.browser.find_element_by_id('password')
+        clave.send_keys('catalogo2018')
+        self.browser.find_element_by_id('boton_login').click()
+        self.browser.find_element_by_id('Herramienta P').click()
+        self.browser.find_element_by_id('eliminar_herramienta_btn').click()
+        self.browser.find_element_by_id('eliminar_herramienta_btn_modal').click()
+        try:
+            self.browser.find_element_by_id('Herramienta P')
+            self.assertTrue(False)
+        except Exception:
+            self.assertTrue(True)
+
+    def test_11_publicar_herramienta(self):
+        self.browser.get(URL)
+        self.browser.find_element_by_id('id_login').click()
+        nombre_usuario = self.browser.find_element_by_name('username')
+        nombre_usuario.send_keys('admin')
+        clave = self.browser.find_element_by_id('password')
+        clave.send_keys('catalogo2018')
+        self.browser.find_element_by_id('boton_login').click()
+        self.browser.find_element_by_id('vigia').click()
+        self.browser.find_element_by_link_text('Abrir').click()
+        self.browser.find_element_by_id('publicar_herramienta_btn').click()
+        self.browser.find_element_by_id('catalogoIndex').click()
+        try:
+            self.browser.find_element_by_id('Herramienta P')
+            self.assertTrue(True)
+        except Exception:
+            self.assertTrue(False)
 
     def test_06_crear_miembro_git(self):
         self.browser.get(URL)
@@ -126,6 +144,8 @@ class FunctionalTest(TestCase):
         creado = self.browser.find_element_by_id('Crear Usuario').text
         self.assertIn('Crear Usuario', creado)
 
+    # PRUEBAS MIEMBRO GIT
+
     def test_07_login_miembro_gti(self):
         self.browser.get(URL)
         self.browser.find_element_by_id('id_login').click()
@@ -136,7 +156,6 @@ class FunctionalTest(TestCase):
         self.browser.find_element_by_id('boton_login').click()
         aref = self.browser.find_element_by_id('usuario_loqueado_info')
         self.assertIn('Cuenta: Fabian Medina', aref.text)
-
 
     def test_08_agregar_herramienta(self):
         self.browser.get(URL)
@@ -164,7 +183,6 @@ class FunctionalTest(TestCase):
         self.browser.find_element_by_id('boton_add').click()
         self.assertIn('Inicio Catalogo', self.browser.title)
 
-
     def test_09_editar_herramienta_miembro_gti(self):
         self.browser.get(URL)
         self.browser.find_element_by_id('id_login').click()
@@ -181,9 +199,22 @@ class FunctionalTest(TestCase):
         self.browser.find_element_by_id('boton_actualizar_herramienta').click()
         self.assertIn('Herramienta P', self.browser.title)
 
+    def test_10_revisar_herramienta_miembro_gti(self):
+        self.browser.get(URL)
+        self.browser.find_element_by_id('id_login').click()
+        nombre_usuario = self.browser.find_element_by_name('username')
+        nombre_usuario.send_keys('fmedina')
+        clave = self.browser.find_element_by_id('password')
+        clave.send_keys('fmedina2018')
+        self.browser.find_element_by_id('boton_login').click()
+        self.browser.find_element_by_id('vigia').click()
+        self.browser.find_element_by_link_text('Abrir').click()
+        self.browser.find_element_by_id('revisar_herramienta_btn').click()
+        self.assertIn('Vigia', self.browser.title)
+        # mensaje=self.browser.find_element_by_id('mensaje').text
+        # self.assertIn('Ha revisado con éxito a Herramienta P', mensaje)
 
-
-    def test_10_visualizacion_herramienta_usuario_cte(self):
+    def test_11_visualizacion_herramienta_usuario_cte(self):
         self.browser.get(URL)
         self.browser.find_element_by_id('Foros Moodle').click()
         self.assertIn('Foros Moodle', self.browser.title)

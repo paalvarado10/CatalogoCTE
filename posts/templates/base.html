@@ -58,7 +58,11 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'catalogo:user_update' user.id %}" class="btn btn-outline-success">Editar cuenta</a></li>
+                            {% if user.perfil.role == 1 %}
+                                <li><a href="{% url 'catalogo:user_update' user.id %}" class="btn btn-outline-success">Editar cuenta</a></li>
+                            {% else %}
+                                <li><a href="{% url 'catalogo:user_update_gti' user.id %}" class="btn btn-outline-success">Editar cuenta</a></li>
+                            {% endif %}
                             <li><a href="{% url 'catalogo:user_change_password'%}" class="btn btn-outline-success">Cambio de Contraseña</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{% url 'catalogo:logout' %}" class="btn btn-outline-success">Cerrar sesión</a></li>

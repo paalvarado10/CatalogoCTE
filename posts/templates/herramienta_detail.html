@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-sm-9">
                         {% if herramienta.estado == 1 or herramienta.estado == 2%}
-                            <h1>Versión modificada:{{ herramienta.nombre }}</h1>
+                            <h1>Versión modificada: {{ herramienta.nombre }}</h1>
                         {% else%}
                             <h1>{{ herramienta.nombre }}</h1>
                         {% endif %}
@@ -76,7 +76,7 @@
                         {% if not herramienta.logo == "default"  %}
                             <img class="logo-herramieta" src={{ herramienta.logo }} alt="{{"logo de " }}{{herramienta.nombre}}">
                         {% else %}
-                            <img class="logo-herramieta" src="{% static 'img/no_img_herramienta.png' %}"  alt="{{"logo de " }}{{herramienta.nombre}}">
+                            <img class="logo-herramieta" src="{% static 'img/no_img_herramienta.png' %}"  alt="{{"no logo de " }}{{herramienta.nombre}}">
                         {% endif %}
                     </div>
                     <div class="col-sm-9">

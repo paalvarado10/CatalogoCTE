@@ -17,7 +17,7 @@ from decouple import config
 def index(request):
     herramientas = Herramienta.objects.all()
     context = {'herramientas': herramientas}
-    return render(request, 'index.html',context)
+    return render(request, 'index.html', context)
 
 
 # Autenticación
@@ -196,9 +196,6 @@ def herramienta_detail(request, pk):
             return render(request, 'herramienta_detail.html', context)
 
 
-
-
-
 def herramientas_vigia(request):
     if request.user.is_authenticated():
         herramientas_r = Herramienta.objects.all().filter(estado=1).exclude(autor=request.user.id). \
@@ -230,7 +227,7 @@ def herramienta_revisar(request, pk):
         return render(request, 'index.html', context)
 
 
-def herramienta_publicar(request,pk):
+def herramienta_publicar(request, pk):
     if request.user.is_authenticated():
         herramienta = Herramienta.objects.get(id=pk)
         herramienta.estado = 3
@@ -248,12 +245,7 @@ def herramienta_publicar(request,pk):
         context = {'herramientas': herramientas}
         return render(request, 'index.html', context)
 
-
-
-
-
-
-#Manejo de cuentas de usuario
+# Manejo de cuentas de usuario
 def usuario_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST, request.FILES)
@@ -297,6 +289,7 @@ def usuario_create(request):
         form = UserForm()
     return render(request, 'user_form.html', {'form': form})
 
+
 def user_update(request, pk):
     user_model = User.objects.get(id=pk)
     if request.method == 'POST':
@@ -337,6 +330,7 @@ def user_update(request, pk):
         form = UserUpdateForm(instance=user_model)
     return render(request, 'user_update.html', {'form': form})
 
+
 def user_updateGTI(request, pk):
     user_model = User.objects.get(id=pk)
     if request.method == 'POST':
@@ -371,10 +365,13 @@ def user_updateGTI(request, pk):
                 profile_model.fotoUrl = url
             profile_model.role = roles[0]
             profile_model.save()
+            messages.success(request, 'Datos actualizados con éxito',
+                             extra_tags='alert alert-success')
             return HttpResponseRedirect(reverse('catalogo:index'))
     else:
         form = UserUpdateGTIForm(instance=user_model)
     return render(request, 'user_update.html', {'form': form})
+
 
 def user_change_password(request):
     if request.user.is_authenticated():
@@ -391,6 +388,7 @@ def user_change_password(request):
     else:
         return HttpResponseRedirect(reverse('catalogo:login'))
 
+
 def users_list(request):
     if request.user.is_authenticated() and request.user.perfil.role == 1:
         usuarios = User.objects.all()
@@ -398,7 +396,7 @@ def users_list(request):
         return render(request, 'user_list_detail.html', context)
 
 
-# guardar en AZURE
+# Guardar en AZURE
 def guardarDarUrl(file, filemane):
     baseUrl = 'https://catalogo2018storage.blob.core.windows.net/pictures/'
     sas = '?sv=2017-07-29&ss=bf&srt=co&sp=rwdlac&se=2018-05-19T00:27:02Z&st=2018-04-01T16:27:02Z&spr=https,http&sig=iJy3%2BhD2JhuYvXTRfsXT2qTM2p08tfhNGAfb%2BG5YR6w%3D'

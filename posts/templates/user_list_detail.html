@@ -28,9 +28,11 @@
                                     {% if user != usuario %}
                                         <div class="media">
                                             <div class="media-left media-middle">
-                                                <a href="#">
-                                                    {% if usuario.perfil.fotoUrl != null %}
-                                                        <img class="media-object" width="130vw" src="{{ usuario.perfil.fotoUrl }}">
+                                                <a>
+                                                    {% if usuario.perfil.fotoUrl != None %}
+                                                        <img class="img-perfil" src="{{ usuario.perfil.fotoUrl }}" alt="{{"foto perfil de " }} {{ usuario.username }}">
+                                                    {% else %}
+                                                        <img class="img-perfil" src="{% static 'img/default-user-image.png' %}"  alt="no foto perfil">
                                                     {% endif %}
                                                 </a>
                                             </div>

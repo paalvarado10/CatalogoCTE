@@ -100,11 +100,13 @@ class Actividad(models.Model):
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
     BLOQUEADO = 4
+    HISTORIC = 5
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
+        (HISTORIC, 'Histórico')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
 
@@ -127,7 +129,6 @@ class Actividad(models.Model):
         return self.estado
 
 
-
 class RecursoActividad(models.Model):
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
@@ -143,7 +144,6 @@ class RecursoActividad(models.Model):
         return self.actividad.nombre
 
 
-
 class Tutorial(models.Model):
     herramienta = models.ForeignKey(Herramienta, on_delete=models.CASCADE)
     id_anterior = models.IntegerField(null=True, blank=True)
@@ -156,11 +156,13 @@ class Tutorial(models.Model):
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
     BLOQUEADO = 4
+    HISTORIC = 5
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
+        (HISTORIC, 'Histórico')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
 

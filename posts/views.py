@@ -7,10 +7,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from azure.storage.blob import BlockBlobService
 from posts.forms import UserForm, UserUpdateForm, UserChangePassword, UserUpdateGTIForm, \
-    HerramientaForm, HerramientaUpdateForm
+    HerramientaForm, HerramientaUpdateForm, TutorialForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from posts.models import Perfil, Herramienta
+from posts.models import Perfil, Herramienta, Tutorial
 from decouple import config
 
 
@@ -139,15 +139,13 @@ def herramienta_update(request, pk):
 
 def herramienta_detail(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
+    tutoriales = Tutorial.objects.all().filter(herramienta=herramienta)
     if request.user.is_authenticated():
         if request.method == 'POST' and request.user.perfil.role == 1:
             herramienta.delete()
             messages.success(request, 'Ha eliminado con éxito a ' + herramienta.nombre,
                              extra_tags='alert alert-success')
             return redirect(reverse('catalogo:index'))
-        elif herramienta.estado == 3:
-            context = {'herramienta': herramienta}
-            return render(request, 'herramienta_detail.html', context)
 
         elif herramienta.estado == 4:
             temp = list(Herramienta.objects.all().filter(id_anterior=pk).exclude(estado=5))
@@ -178,21 +176,19 @@ def herramienta_detail(request, pk):
                         msg = msg + ' y los revisores  fueron: ' + revisor1.user.first_name + ' ' +\
                                     revisor1.user.last_name + ' y ' + revisor2.user.first_name \
                                     + ' ' + revisor2.user.last_name
-
                     messages.warning(request, msg, extra_tags='alert alert-warning')
                     return render(request, 'herramienta_detail.html', context)
                 except Herramienta.DoesNotExist:
                     print("Base de datos inconsistente")
                 except Herramienta.MultipleObjectsReturned:
                     print("Base de datos inconsistente")
-        else:
-            if herramienta.estado == 3:
-                context = {'herramienta': herramienta}
-                return render(request, 'herramienta_detail.html', context)
 
+        else:
+            context = {'herramienta': herramienta, 'tutoriales': tutoriales}
+            return render(request, 'herramienta_detail.html', context)
     else:
         if herramienta.estado == 3 or herramienta.estado == 4:
-            context = {'herramienta': herramienta}
+            context = {'herramienta': herramienta, 'tutoriales': tutoriales}
             return render(request, 'herramienta_detail.html', context)
 
 
@@ -394,6 +390,41 @@ def users_list(request):
         usuarios = User.objects.all()
         context = {'usuarios': usuarios}
         return render(request, 'user_list_detail.html', context)
+
+# Tutorial
+
+
+def tutorial_create(request, pk):
+    herramienta = Herramienta.objects.get(id=pk)
+    if request.method == 'POST':
+        form = TutorialForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            nombre = cleaned_data.get('nombre')
+            funcionalidad = cleaned_data.get('funcionalidad')
+            estado = 1
+            revisor1 = 0
+            revisor2 = 0
+            autor = request.user.id
+            id_anterior = 0
+            tutorial = Tutorial.objects.create(herramienta=herramienta, id_anterior=id_anterior, nombre=nombre, estado=estado,
+                                               funcionalidad=funcionalidad, revisor1=revisor1, revisor2=revisor2,
+                                               autor=autor)
+            tutorial.save()
+            return redirect(reverse('catalogo:herramienta_detail',kwargs={'pk': pk}))
+    else:
+        form = TutorialForm()
+    return render(request, 'tutorial_create.html', {'form': form, 'herramienta': herramienta})
+
+
+
+
+
+
+
+
+
+
 
 
 # Guardar en AZURE

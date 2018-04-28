@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.forms import ModelForm
 from django.contrib.auth.forms import forms
 from django.contrib.auth.models import User
-from posts.models import Herramienta
+from posts.models import Herramienta, Tutorial
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import password_validation
 
@@ -25,6 +25,7 @@ class HerramientaForm(ModelForm):
         fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
                   'fichaTecnica','licencia', 'descripcion']
 
+
 class HerramientaUpdateForm(ModelForm):
     pk_herramienta = None;
     nombre = forms.CharField(label="Nombre", max_length=100)
@@ -34,13 +35,14 @@ class HerramientaUpdateForm(ModelForm):
     fichaTecnica = forms.CharField(label="Ficha Tecnica",widget=forms.Textarea)
     licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
     descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
-    urlReferencia =  forms.CharField(label="Url herramienta", max_length=500)
+    urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
 
 
     class Meta:
         model = Herramienta
         fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
                   'fichaTecnica','licencia', 'descripcion']
+
 
 class UserForm(ModelForm):
     username = forms.CharField(label="Usuario", max_length=20)
@@ -173,6 +175,7 @@ class UserChangePassword(PasswordChangeForm):
             raise forms.ValidationError(mensajes)
         return password2
 
+
 class UserUpdateGTIForm(ModelForm):
     pk_user = None
     username = forms.CharField(label="Usuario", max_length=20)
@@ -207,3 +210,12 @@ class UserUpdateGTIForm(ModelForm):
         if User.objects.exclude(pk=self.instance.id).filter(username=username).exists():
             raise forms.ValidationError(u'Usuario "%s" ya esta en uso.' % username)
         return username
+
+
+class TutorialForm(ModelForm):
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    funcionalidad = forms.CharField(label="Funcionalidad", max_length=500, widget=forms.Textarea)
+
+    class Meta:
+        model = Tutorial
+        fields = ['nombre', 'funcionalidad']

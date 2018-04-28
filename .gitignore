@@ -10,3 +10,4 @@ activate
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+posts/addData.py

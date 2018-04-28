@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Agregar Tutorial a {{ herramienta.nombre }}{% endblock %}
+
+{% block contenido  %}
+    <div >
+        <div class="centered"><h1>Agregar tutorial a {{ herramienta.nombre }} a Conecta-Te</h1></div>
+        <div class="formulario">
+            <form class="bs-example bs-example-form col-md-8" action="{% url 'catalogo:tutorial_create' herramienta.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <br/>
+                <div class="row">
+                    <div class="centered">
+                        <button class="btn btn-success" id="boton_add">Añadir</button>
+                        <a id="cancelar" class="btn btn-danger" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">Cancelar</a>
+                    </div>
+                    <br/>
+                </div>
+            </form>
+            <br/>
+        </div>
+
+    </div>
+
+{% endblock %}

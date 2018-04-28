@@ -134,29 +134,22 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
-                        <div class="panel-heading">Tutoriales</div>
+                        <div class="panel-heading">
+                            Tutoriales
+                            <a  id="agregar-tutorial" class="btn btn-success" href="{% url 'catalogo:tutorial_create' herramienta.id %}">Agregar tutorial</a>
+                        </div>
                         <div class="panel-body">
                             <p>En esta lista se encuentran los tutoriales realizados con {{ herramienta.nombre }}</p>
                         </div>
                         <!-- List group -->
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <div>
-                                    tutorial 1
-                                    <a class="btn btn-success" href=""> Abrir </a>
-                                </div>
-                                <div>
-                                    tutorial 2
-                                    <a class="btn btn-success" href=""> Abrir </a>
-                                </div>
-                                <div>
-                                    tutorial 3
-                                    <a class="btn btn-success" href=""> Abrir </a>
-                                </div>
-                                <div>
-                                    tutorial 4
-                                    <a class="btn btn-success" href=""> Abrir </a>
-                                </div>
+                                {% for tutorial in tutoriales %}
+                                    <div>
+                                        Nombre: {{ tutorial.nombre }}
+                                        <a class="btn btn-success" href=""> Ver </a>
+                                    </div>
+                                {% endfor %}
                             </li>
                         </ul>
                     </div>
@@ -207,12 +200,13 @@
             });
             function deleteEnable(val) {
                 var name = $('#herramienta_name').val();
+                var boton = $('#eliminar_herramienta_btn_modal')
                 if(name===val.toString()){
-                    $('#eliminar_herramienta_btn_modal').removeClass("disabled");
-                    $('#eliminar_herramienta_btn_modal').prop('disabled', false);
+                    boton.removeClass("disabled");
+                    boton.prop('disabled', false);
                 }else{
-                    $('#eliminar_herramienta_btn_modal').addClass("disabled");
-                    $('#eliminar_herramienta_btn_modal').prop('disabled', true);
+                    boton.addClass("disabled");
+                    boton.prop('disabled', true);
                 }
             }
         </script>

@@ -11,39 +11,39 @@ class HerramientaModelCase(TestCase):
 
     def test_estado_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.estado_herramienta(), 1)
+        self.assertEqual(tester.estado, 1)
 
     def test_nombre_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.nombre_herramienta(), 'prueba')
+        self.assertEqual(tester.nombre, 'prueba')
 
     def test_url_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.url_herramienta(), 'www.google.com')
+        self.assertEqual(tester.urlReferencia, 'www.google.com')
 
     def test_sistemaOperativo_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.sistemaOperativo_herramienta(), 'Windows')
+        self.assertEqual(tester.sistemaOperativo, 'Windows')
 
     def test_plataforma_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.plataforma_herramienta(), 'Plataforma Prueba')
+        self.assertEqual(tester.plataforma, 'Plataforma Prueba')
 
     def test_ficha_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.ficha_herramienta(), 'Ficha tecnica prueba')
+        self.assertEqual(tester.fichaTecnica, 'Ficha tecnica prueba')
 
     def test_licencia_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.licencia_herramienta(), 'gratis')
+        self.assertEqual(tester.licencia, 'gratis')
 
     def test_descripcion_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.descripcion_herramienta(), 'desc')
+        self.assertEqual(tester.descripcion, 'desc')
 
     def test_logo_herramienta(self):
         tester = Herramienta.objects.get(nombre='prueba')
-        self.assertEqual(tester.logo_herramienta(), 'logo')
+        self.assertEqual(tester.logo, 'logo')
 
 
 # # TEST PARA EL MODELO DE ACTIVIDAD
@@ -55,19 +55,19 @@ class ActividadModelCase(TestCase):
 #
     def test_descripcion_actividad(self):
         tester = Actividad.objects.get(nombre='actividadprueba')
-        self.assertEqual(tester.descripcion_actividad(), 'descActividad')
+        self.assertEqual(tester.descripcion, 'descActividad')
 
     def test_instrucciones_actividad(self):
         tester = Actividad.objects.get(nombre='actividadprueba')
-        self.assertEqual(tester.instrucciones_actividad(), 'instruccionesPrueba')
+        self.assertEqual(tester.instrucciones, 'instruccionesPrueba')
 
     def test_url_actividad(self):
         tester = Actividad.objects.get(nombre='actividadprueba')
-        self.assertEqual(tester.url_actividad(), 'www.actividad.com')
+        self.assertEqual(tester.url, 'www.actividad.com')
 
     def test_estado_actividad(self):
         tester = Actividad.objects.get(nombre='actividadprueba')
-        self.assertEqual(tester.estado_actividad(), 1)
+        self.assertEqual(tester.estado, 1)
 
     # def test_revisiones_actividad(self):
     #     tester = Actividad.objects.get(nombre='actividadprueba')
@@ -75,7 +75,7 @@ class ActividadModelCase(TestCase):
 
     def test_herramienta_actividad(self):
         tester = Actividad.objects.get(nombre='actividadprueba')
-        self.assertEqual(tester.herramienta_actividad(), 'prueba')
+        self.assertEqual(tester.herramienta.nombre, 'prueba')
 
 
 # TEST RECURSO ACTIVIDAD
@@ -89,15 +89,15 @@ class RecursoActividadModelCase(TestCase):
 
     def test_actividad_recurso_actividad(self):
         tester = RecursoActividad.objects.get(descripcion='descRecurso')
-        self.assertEqual(tester.actividad_recurso_actividad(), 'actividadprueba')
+        self.assertEqual(tester.actividad.nombre, 'actividadprueba')
 
     def test_url_recurso_actividad(self):
         tester = RecursoActividad.objects.get(descripcion='descRecurso')
-        self.assertEqual(tester.url_recurso_actividad(), 'www.recurso.com')
+        self.assertEqual(tester.url, 'www.recurso.com')
 
     def test_descripcion_recurso_actividad(self):
         tester = RecursoActividad.objects.get(descripcion='descRecurso')
-        self.assertEqual(tester.descripcion_recurso_actividad(), 'descRecurso')
+        self.assertEqual(tester.descripcion, 'descRecurso')
 
 class TutorialModelCase(TestCase):
     def setUp(self):
@@ -107,19 +107,19 @@ class TutorialModelCase(TestCase):
 
     def test_herramienta_tutorial(self):
         tester = Tutorial.objects.get(nombre='tutorialPrueba')
-        self.assertEqual(tester.herramienta_tutorial(), 'prueba')
+        self.assertEqual(tester.herramienta.nombre, 'prueba')
 
     def test_nombre_tutorial(self):
         tester = Tutorial.objects.get(nombre='tutorialPrueba')
-        self.assertEqual(tester.nombre_tutorial(), 'tutorialPrueba')
+        self.assertEqual(tester.nombre, 'tutorialPrueba')
 
     def test_funcionalidad_tutorial(self):
         tester = Tutorial.objects.get(nombre='tutorialPrueba')
-        self.assertEqual(tester.funcionalidad_tutorial(), 'funcionalidadTutorial')
+        self.assertEqual(tester.funcionalidad, 'funcionalidadTutorial')
 
     def test_estado_tutorial(self):
         tester = Tutorial.objects.get(nombre='tutorialPrueba')
-        self.assertEqual(tester.estado_tutorial(), 1)
+        self.assertEqual(tester.estado, 1)
 
     # def test_revisiones_tutorial(self):
     #     tester = Tutorial.objects.get(nombre='tutorialPrueba')
@@ -135,12 +135,12 @@ class RecursoTutorialModelCase(TestCase):
 
     def test_tutorial_recurso_tutorial(self):
         tester = RecursoTutorial.objects.get(descripcion='descRecuTuto')
-        self.assertEqual(tester.tutorial_recurso_tutorial(), 'tutorialPrueba')
+        self.assertEqual(tester.tutorial.nombre, 'tutorialPrueba')
 
     def test_url_recurso_tutorial(self):
         tester = RecursoTutorial.objects.get(descripcion='descRecuTuto')
-        self.assertEqual(tester.url_recurso_tutorial(), 'www.recTutorial.com')
+        self.assertEqual(tester.url, 'www.recTutorial.com')
 
     def test_descripcion_recurso_tutorial(self):
         tester = RecursoTutorial.objects.get(descripcion='descRecuTuto')
-        self.assertEqual(tester.descripcion_recurso_tutorial(), 'descRecuTuto')
+        self.assertEqual(tester.descripcion, 'descRecuTuto')

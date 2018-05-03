@@ -21,3 +21,51 @@
         <br/>
     </div>
 {% endblock %}
+{% block extra_script %}
+    <script>
+        var fichaTecnica = $('#id_fichaTecnica');
+        fichaTecnica.attr('onkeyup','countFichaTecnica()')
+        var max = fichaTecnica.attr('maxlength');
+        var tam = fichaTecnica.val().length;
+        fichaTecnica.after("<div id=\"id_fichaTecnica_count\">" + (max-tam) + " restantes</div>")
+
+        var descripcion = $('#id_descripcion');
+        descripcion.attr('onkeyup','countDescripcion()')
+        var max2 = descripcion.attr('maxlength');
+        var tam2 = descripcion.val().length;
+        descripcion.after("<div id=\"id_descripcion_count\">" + (max2-tam2) + " restantes</div>")
+
+        function countFichaTecnica() {
+            var fichaTecnica = $('#id_fichaTecnica');
+            var max = fichaTecnica.attr('maxlength');
+            var contador = $('#id_fichaTecnica_count');
+            var val = fichaTecnica.val();
+            var newLines = val.match(/(\r\n|\n|\r)/g);
+            var addition = 0;
+            if (newLines != null) {
+                addition = newLines.length;
+            }
+            var tam = val.length + addition
+            console.log(val.length)
+            console.log(addition)
+            contador.text((Number(max) - tam) + ' caracteres restantes');
+        }
+
+        function countDescripcion() {
+            var descripcion = $('#id_descripcion');
+            var max = descripcion.attr('maxlength');
+            var contador = $('#id_descripcion_count');
+
+            var val = descripcion.val();
+            var newLines = val.match(/(\r\n|\n|\r)/g);
+            var addition = 0;
+            if (newLines != null) {
+                addition = newLines.length;
+            }
+            var tam = val.length + addition
+            console.log(val.length)
+            console.log(addition)
+            contador.text((Number(max) - tam) + ' caracteres restantes');
+        }
+    </script>
+{% endblock %}

@@ -25,14 +25,27 @@ class Herramienta(models.Model):
     PUBLICADO = 3
     BLOQUEADO = 4
     HISTORIC = 5
+    BORRADOR = 6
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
-        (HISTORIC, 'Histórico')
+        (HISTORIC, 'Histórico'),
+        (BORRADOR, 'Borrador')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
+
+    def comparar(self,otra_herramienta):
+        return {'id_nombre':self.nombre == otra_herramienta.nombre,
+                'id_urlReferencia': self.urlReferencia == otra_herramienta.urlReferencia,
+                'id_sistemaOperativo': self.sistemaOperativo == otra_herramienta.sistemaOperativo,
+                'id_plataforma': self.plataforma == otra_herramienta.plataforma,
+                'id_fichaTecnica': self.fichaTecnica == otra_herramienta.fichaTecnica,
+                'id_licencia': self.licencia == otra_herramienta.licencia,
+                'id_descripcion' : self.descripcion == otra_herramienta.descripcion,
+                'id_logo': self.logo == otra_herramienta.logo}
+
 
 
 class Perfil(models.Model):

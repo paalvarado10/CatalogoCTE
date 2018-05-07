@@ -44,8 +44,6 @@ def usuario_create(request):
             email = cleaned_data.get('email')
             roles = cleaned_data.get('roles')
 
-
-
             user_model = User.objects.create_user(username=username, password=password)
             user_model.first_name = first_name
             user_model.last_name = last_name
@@ -97,9 +95,9 @@ def user_update(request, pk):
             user_model.save()
 
             profile_model = Perfil.objects.get(user_id=user_model.id)
-            foto_uploaded = True if 'logo' in request.FILES else False
+            foto_uploaded = True if 'foto' in request.FILES else False
             if foto_uploaded:
-                myfile = request.FILES['logo']
+                myfile = request.FILES['foto']
                 chu = myfile.chunks()
                 archivo = ''
                 for chunk in chu:
@@ -136,9 +134,9 @@ def user_updateGTI(request, pk):
             user_model.save()
 
             profile_model = Perfil.objects.get(user_id=user_model.id)
-            foto_uploaded = True if 'logo' in request.FILES else False
+            foto_uploaded = True if 'foto' in request.FILES else False
             if foto_uploaded:
-                myfile = request.FILES['logo']
+                myfile = request.FILES['foto']
                 chu = myfile.chunks()
                 archivo = ''
                 for chunk in chu:

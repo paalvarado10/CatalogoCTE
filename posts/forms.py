@@ -14,6 +14,13 @@ class HerramientaForm(ModelForm):
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
     urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
 
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                                                 label="Seleccione una acción",
+                                                 choices=ESTADO)
     SISTEMAS_OPERATIVOS = (
         ('No aplica', 'No aplica'),
         ('MAC OS', 'MAC OS'),
@@ -44,7 +51,7 @@ class HerramientaForm(ModelForm):
     class Meta:
         model = Herramienta
         fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
-                  'licencia', 'fichaTecnica', 'descripcion']
+                  'licencia', 'fichaTecnica', 'descripcion', 'estado']
 
 class HerramientaUpdateForm(ModelForm):
     pk_herramienta = None
@@ -66,6 +73,58 @@ class HerramientaUpdateForm(ModelForm):
                                                  widget=forms.CheckboxSelectMultiple,
                                                  label="Sistema Operativo",
                                                  choices=SISTEMAS_OPERATIVOS)
+
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                               label="Seleccione una acción",
+                               choices=ESTADO)
+
+    PLATAFORMAS = (
+        ('Plataforma 1', 'Plataforma 1'),
+        ('Plataforma 2', 'Plataforma 2'),
+        ('Plataforma 3', 'Plataforma 3'),
+        ('Plataforma 4', 'Plataforma 4'),
+    )
+    plataforma = forms.ChoiceField(label="Plataforma", choices=PLATAFORMAS)
+    LICENCIA = (
+        ('Licencia 1', 'Licencia 1'),
+        ('Licencia 2', 'Licencia 2'),
+        ('Licencia 3', 'Licencia 3'),
+        ('Licencia 4', 'Licencia 4'),
+    )
+    licencia = forms.ChoiceField(label="Licencia", choices=LICENCIA)
+
+
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'licencia', 'fichaTecnica', 'descripcion','estado']
+
+
+class HerramientaRevisionForm(ModelForm):
+    pk_herramienta = None
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    logo = forms.FileField(label="Logo",required=False)
+    fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
+
+    SISTEMAS_OPERATIVOS = (
+        ('No aplica', 'No aplica'),
+        ('MAC OS', 'MAC OS'),
+        ('Windows', 'Windows'),
+        ('IOS', 'IOS'),
+        ('Android', 'Android'),
+        ('Linux ', 'Linux'),
+    )
+    sistemaOperativo = forms.MultipleChoiceField(required=True,
+                                                 widget=forms.CheckboxSelectMultiple,
+                                                 label="Sistema Operativo",
+                                                 choices=SISTEMAS_OPERATIVOS)
+
     PLATAFORMAS = (
         ('Plataforma 1', 'Plataforma 1'),
         ('Plataforma 2', 'Plataforma 2'),

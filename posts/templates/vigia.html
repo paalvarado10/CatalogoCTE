@@ -23,18 +23,14 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">Herramientas por revisar</div>
                     <div class="panel-body">
-                       <p>En esta lista se encuentra las herramientas que fueron modificadas y están pendientes de revisión</p>
+                        <p>En esta lista se encuentra las herramientas que fueron modificadas y están pendientes de revisión</p>
                     </div>
                     <!-- List group -->
-                    <ul class="list-group">
+                    <div class="list-group">
                         {% for herramienta in herramientas_r %}
-                            <li class="list-group-item">
-                                <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}"> Abrir </a>
-                                </div>
-                            </li>
+                            <a class="list-group-item" href="{% url 'catalogo:herramienta_detail' herramienta.id %}"> {{ herramienta.nombre }} </a>
                         {% endfor %}
-                    </ul>
+                    </div>
 
                 </div>
             </div>
@@ -43,18 +39,23 @@
                     <!-- Default panel contents -->
                     <div class="panel-heading">Herramientas por publicar</div>
                     <div class="panel-body">
-                       <p>En esta lista se encuentra las herramientas que fueron modificadas</p>
+                        <p>En esta lista se encuentra las herramientas que ya fueron revisadas y están pendientes de publicarse</p>
                     </div>
                     <!-- List group -->
-                    <ul class="list-group">
+                    <div class="list-group">
                         {% for herramienta in herramientas_p %}
-                            <li class="list-group-item">
-                                <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">Abrir</a>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <a class="item-publicar col-sm-9" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">
+                                        {{ herramienta.nombre }}
+                                    </a>
+                                    <a class="item-publicar col-sm-3" href="{% url 'catalogo:publicar' herramienta.id %}">
+                                        Publicar
+                                    </a>
                                 </div>
-                            </li>
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
 
                 </div>
             </div>
@@ -68,15 +69,11 @@
                     <div class="panel-body">
                         <p>En esta lista se encuentra las herramientas que fueron modificadas</p>
                     </div>
-                    <ul class="list-group">
+                    <div class="list-group">
                         {% for herramienta in herramientas_r %}
-                            <li class="list-group-item">
-                                <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">Abrir</a>
-                                </div>
-                            </li>
+                            <a class="list-group-item" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">{{ herramienta.nombre }}</a>
                         {% endfor %}
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -270,3 +270,15 @@ img {
     background-color: rgba(146, 178, 170, 0.73);
     border-color: #000000;
 }
+
+
+.item-publicar{
+    background-color: rgba(146, 178, 170, 0.73);
+    border-width:1px 0;
+    border-color: #000000;
+
+}
+
+.item-publicar:hover{
+    background-color: rgba(163, 178, 174, 0.73);
+}

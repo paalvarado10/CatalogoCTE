@@ -163,6 +163,13 @@ img {
     box-shadow: 2px 2px 3px #999;
 }
 
+#boton_agregar_actividad {
+    width:30px;
+    height:30px;
+    margin-top: -5px;
+}
+
+
 .my-float{
     margin-top:12px;
 }

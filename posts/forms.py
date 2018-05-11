@@ -9,7 +9,7 @@ from django.contrib.auth import password_validation
 
 class HerramientaForm(ModelForm):
     nombre = forms.CharField(label="Nombre", max_length=100)
-    logo = forms.FileField(label="Logo",required=False)
+    logo = forms.FileField(label="Logo", required=False)
     fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
     urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
@@ -19,8 +19,8 @@ class HerramientaForm(ModelForm):
         (1, 'Enviar para revisión')
     )
     estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
-                                                 label="Seleccione una acción",
-                                                 choices=ESTADO)
+                               label="Seleccione una acción",
+                               choices=ESTADO)
     SISTEMAS_OPERATIVOS = (
         ('No aplica', 'No aplica'),
         ('MAC OS', 'MAC OS'),
@@ -50,13 +50,14 @@ class HerramientaForm(ModelForm):
 
     class Meta:
         model = Herramienta
-        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
+        fields = ['nombre', 'logo', 'urlReferencia', 'sistemaOperativo', 'plataforma',
                   'licencia', 'fichaTecnica', 'descripcion', 'estado']
+
 
 class HerramientaUpdateForm(ModelForm):
     pk_herramienta = None
     nombre = forms.CharField(label="Nombre", max_length=100)
-    logo = forms.FileField(label="Logo",required=False)
+    logo = forms.FileField(label="Logo", required=False)
     fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
     urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
@@ -97,17 +98,16 @@ class HerramientaUpdateForm(ModelForm):
     )
     licencia = forms.ChoiceField(label="Licencia", choices=LICENCIA)
 
-
     class Meta:
         model = Herramienta
-        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
-                  'licencia', 'fichaTecnica', 'descripcion','estado']
+        fields = ['nombre', 'logo', 'urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'licencia', 'fichaTecnica', 'descripcion', 'estado']
 
 
 class HerramientaRevisionForm(ModelForm):
     pk_herramienta = None
     nombre = forms.CharField(label="Nombre", max_length=100)
-    logo = forms.FileField(label="Logo",required=False)
+    logo = forms.FileField(label="Logo", required=False)
     fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
     urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
@@ -140,11 +140,11 @@ class HerramientaRevisionForm(ModelForm):
     )
     licencia = forms.ChoiceField(label="Licencia", choices=LICENCIA)
 
-
     class Meta:
         model = Herramienta
-        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
+        fields = ['nombre', 'logo', 'urlReferencia', 'sistemaOperativo', 'plataforma',
                   'licencia', 'fichaTecnica', 'descripcion']
+
 
 class UserForm(ModelForm):
     username = forms.CharField(label="Usuario", max_length=20)
@@ -220,7 +220,7 @@ class UserUpdateForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'roles','foto']
+        fields = ['username', 'first_name', 'last_name', 'email', 'roles', 'foto']
 
     # verificacion correo unico
     def clean_email(self):
@@ -277,6 +277,7 @@ class UserChangePassword(PasswordChangeForm):
             raise forms.ValidationError(mensajes)
         return password2
 
+
 class UserUpdateGTIForm(ModelForm):
     pk_user = None
     username = forms.CharField(label="Usuario", max_length=20)
@@ -311,3 +312,22 @@ class UserUpdateGTIForm(ModelForm):
         if User.objects.exclude(pk=self.instance.id).filter(username=username).exists():
             raise forms.ValidationError(u'Usuario "%s" ya esta en uso.' % username)
         return username
+
+
+class ActividadForm(ModelForm):
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    instrucciones = forms.CharField(label="Instrucciones", widget=forms.Textarea, max_length=2000)
+    url = forms.CharField(label="Url Actividad", max_length=500)
+
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                               label="Seleccione una acción",
+                               choices=ESTADO)
+
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'url', 'instrucciones', 'descripcion', 'estado']

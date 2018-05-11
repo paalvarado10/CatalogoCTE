@@ -2,57 +2,43 @@
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from .. import azure_storage
-from posts.forms import HerramientaForm, HerramientaUpdateForm, HerramientaRevisionForm
+from posts.forms import HerramientaForm, HerramientaUpdateForm, HerramientaRevisionForm, ActividadForm
 from django.contrib import messages
 from posts.models import Perfil, Actividad
 from .borradores_view import *
 
 
-# Herramientas
-def herramienta_create(request):
+# Actividades
+def actividad_create(request, pk):
+    herramienta = Herramienta.objects.get(id=pk)
     if request.method == 'POST':
-        form = HerramientaForm(request.POST, request.FILES)
+        form = ActividadForm(request.POST, request.FILES)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             nombre = cleaned_data.get('nombre')
-            sistemaoperativo = arreglo_a_texto(cleaned_data.get('sistemaOperativo'))
-            plataforma = cleaned_data.get('plataforma')
-            fichatecnica = cleaned_data.get('fichaTecnica')
-            licencia = cleaned_data.get('licencia')
+            instrucciones = cleaned_data.get('instrucciones')
             estado = cleaned_data.get('estado')
             revisor1 = 0
             revisor2 = 0
             autor = request.user.id
             descripcion = cleaned_data.get('descripcion')
-            urlreferencia = cleaned_data.get('urlReferencia')
-            logo = 'default'
+            url = cleaned_data.get('url')
             id_anterior = 0
 
-            logoL = True if 'logo' in request.FILES else False
-            if logoL:
-                myfile = request.FILES['logo']
-                chu = myfile.chunks()
-                archivo = ''
-                for chunk in chu:
-                    a = chunk
-                    archivo = archivo + a
-                url = azure_storage.guardar_archivo(archivo, myfile.name)
-                logo = url
+            actividad = Actividad.objects.create(herramienta=herramienta, id_anterior=id_anterior, nombre=nombre,
+                                                 instrucciones=instrucciones, estado=estado,
+                                                 revisor1=revisor1, revisor2=revisor2, autor=autor,
+                                                 descripcion=descripcion, url=url)
 
-            herramienta = Herramienta.objects.create(id_anterior=id_anterior, nombre=nombre,
-                                                     sistemaOperativo=sistemaoperativo, plataforma=plataforma,
-                                                     fichaTecnica=fichatecnica, licencia=licencia, estado=estado,
-                                                     revisor1=revisor1, revisor2=revisor2, autor=autor,
-                                                     descripcion=descripcion, urlReferencia=urlreferencia, logo=logo)
-            herramienta.save()
-            messages.success(request, 'Se ha creado con éxito la herramienta ' +
-                             str(herramienta.nombre) + ', los cambios serán publicados '
-                                                       'hasta terminar el proceso de vigía',
+            actividad.save()
+            messages.success(request, 'Se ha creado con éxito la Actividad ' +
+                             str(actividad.nombre) + ', los cambios serán publicados '
+                                                     'hasta terminar el proceso de vigía',
                              extra_tags='alert alert-success')
             return redirect(reverse('catalogo:index'))
     else:
-        form = HerramientaForm()
-    return render(request, 'herramienta_create.html', {'form': form})
+        form = ActividadForm()
+    return render(request, 'actividad_create.html', {'form': form, 'id': pk})
 
 
 def herramienta_update(request, pk):
@@ -120,7 +106,8 @@ def herramienta_update(request, pk):
                                                            sistemaOperativo=sistemaOperativo, plataforma=plataforma,
                                                            fichaTecnica=fichaTecnica, licencia=licencia, estado=estado,
                                                            revisor1=revisor1, revisor2=revisor2, autor=autor,
-                                                           descripcion=descripcion, urlReferencia=urlReferencia, logo=logo)
+                                                           descripcion=descripcion, urlReferencia=urlReferencia,
+                                                           logo=logo)
                 herramienta_n.save()
                 if estado == 1:
                     messages.success(request, 'La herramienta ' + str(herramienta.nombre) +
@@ -181,34 +168,41 @@ def disable_list(herramienta):
         return None
 
 
-def herramienta_detail(request, pk):
+def actividad_detail(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
-    actividades = Actividad.objects.all().filter(herramienta_id=pk)
     if request.user.is_authenticated():
-        if request.method == 'POST':
+        if request.method == 'POST' and request.user.perfil.role == 1 or herramienta.estado == 6:
+
             return eliminar_herramienta(herramienta, request)
+
         elif herramienta.estado == 3:
-            context = {'herramienta': herramienta, 'actividades': actividades}
+
+            context = {'herramienta': herramienta}
             return render(request, 'herramienta_detail.html', context)
 
         elif herramienta.estado == 6:
+
             return herramienta_borrador(herramienta, request)
 
         elif herramienta.estado == 4:
+
             return herramienta_bloqueada(herramienta, request, pk)
 
         elif herramienta.estado == 1:
+
             return herramienta_revision(herramienta, request)
 
         elif herramienta.estado == 2:
+
             return herramienta_publicacion(herramienta, request)
         else:
             if herramienta.estado == 3:
-                context = {'herramienta': herramienta, 'actividades': actividades}
+                context = {'herramienta': herramienta}
                 return render(request, 'herramienta_detail.html', context)
+
     else:
         if herramienta.estado == 3 or herramienta.estado == 4:
-            context = {'herramienta': herramienta, 'actividades': actividades}
+            context = {'herramienta': herramienta}
             return render(request, 'herramienta_detail.html', context)
 
 
@@ -296,7 +290,8 @@ def herramienta_revisar(request, pk):
             herramienta.revisor2 = request.user.id
             herramienta.estado = 2
         herramienta.save()
-        messages.success(request, 'Ha revisado con éxito a '+str(herramienta.nombre), extra_tags='alert alert-success')
+        messages.success(request, 'Ha revisado con éxito a ' + str(herramienta.nombre),
+                         extra_tags='alert alert-success')
         return redirect(reverse('catalogo:vigia'))
 
     else:
@@ -308,7 +303,8 @@ def herramienta_publicar(request, pk):
     if request.user.is_authenticated():
         herramienta = Herramienta.objects.get(id=pk)
         herramienta.estado = 3
-        messages.success(request, 'Ha sido publicado con éxito a '+str(herramienta.nombre), extra_tags='alert alert-success')
+        messages.success(request, 'Ha sido publicado con éxito a ' + str(herramienta.nombre),
+                         extra_tags='alert alert-success')
 
         if not herramienta.id_anterior == 0:
             herramienta_delete = Herramienta.objects.get(id=herramienta.id_anterior)

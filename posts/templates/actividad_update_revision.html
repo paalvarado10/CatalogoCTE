@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Editar revisión{% endblock %}
+
+{% block contenido  %}
+    <div class="centered"><h1>Editar revisión</h1></div>
+    <div class="formulario">
+        <form method="post" enctype="multipart/form-data" class="col-md-8">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <br/>
+            <div class="row">
+                <div class="centered">
+                    <p class="text-center">
+                        Al enviar los cambios se dará por revisada esta instancia y el proceso de gestión
+                        de conocimiento revisará esta versión
+                    </p>
+                </div>
+                <div class="centered">
+                    <button class="btn btn-success" id="boton_actualizar_herramienta">Enviar cambios</button>
+                    <a class="btn btn-danger" href="{% url 'catalogo:herramienta_detail' id%}" class="cancel">Cancelar</a>
+                </div>
+            </div>
+        </form>
+        <br/>
+    </div>
+{% endblock %}
+{% block extra_script %}
+    {% for key, value in disable.items %}
+        {% if not key == 'id_sistemaOperativo'%}
+            <script>
+                {% if value %}
+                    var campo = $('#{{ key }}');
+                    var label = $("label[for='{{ key }}']")
+                    campo.hide();
+                    label.hide()
+                {% endif %}
+            </script>
+        {% else %}
+            <script>
+                {% if value %}
+                    var campo = $('.checkbox');
+                    var label = $("label:contains('Sistema Operativo')")
+                    campo.hide();
+                    label.hide();
+                {% endif %}
+            </script>
+        {% endif %}
+    {% endfor %}
+    <script>
+        var fichaTecnica = $('#id_fichaTecnica');
+        fichaTecnica.attr('onkeyup','countFichaTecnica()')
+        var max = fichaTecnica.attr('maxlength');
+        var tam = fichaTecnica.val().length;
+        fichaTecnica.after("<div id=\"id_fichaTecnica_count\">" + (max-tam) + " restantes</div>")
+
+        var descripcion = $('#id_descripcion');
+        descripcion.attr('onkeyup','countDescripcion()')
+        var max2 = descripcion.attr('maxlength');
+        var tam2 = descripcion.val().length;
+        descripcion.after("<div id=\"id_descripcion_count\">" + (max2-tam2) + " restantes</div>")
+
+        function countFichaTecnica() {
+            var fichaTecnica = $('#id_fichaTecnica');
+            var max = fichaTecnica.attr('maxlength');
+            var contador = $('#id_fichaTecnica_count');
+            var val = fichaTecnica.val();
+            var newLines = val.match(/(\r\n|\n|\r)/g);
+            var addition = 0;
+            if (newLines != null) {
+                addition = newLines.length;
+            }
+            var tam = val.length + addition
+            contador.text((Number(max) - tam) + ' caracteres restantes');
+        }
+
+        function countDescripcion() {
+            var descripcion = $('#id_descripcion');
+            var max = descripcion.attr('maxlength');
+            var contador = $('#id_descripcion_count');
+
+            var val = descripcion.val();
+            var newLines = val.match(/(\r\n|\n|\r)/g);
+            var addition = 0;
+            if (newLines != null) {
+                addition = newLines.length;
+            }
+            var tam = val.length + addition
+            contador.text((Number(max) - tam) + ' caracteres restantes');
+        }
+    </script>
+{% endblock %}

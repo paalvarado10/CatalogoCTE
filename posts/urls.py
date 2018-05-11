@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^publicar/(?P<pk>\d+)$', views.herramienta_publicar, name='publicar'),
     url(r'^borradores/$', views.borradores_list, name='borradores'),
     url(r'^actividad_create/(?P<pk>\d+)$', views.actividad_create, name='actividad_create'),
+    url(r'^actividad_detail/(?P<pk>\d+)/$', views.actividad_detail, name='actividad_detail'),
+    url(r'^actividad_update/(?P<pk>\d+)$', views.actividad_update, name='actividad_update'),
+    url(r'^actividad_update_revision/(?P<pk>\d+)$', views.actividad_update_revision, name='actividad_update_revision'),
 ]

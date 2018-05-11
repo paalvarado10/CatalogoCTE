@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.forms import ModelForm
 from django.contrib.auth.forms import forms
 from django.contrib.auth.models import User
@@ -10,51 +8,157 @@ from django.contrib.auth import password_validation
 
 
 class HerramientaForm(ModelForm):
-    nombre = forms.CharField(label="Nombre", max_length=20)
-    logo = forms.FileField(label="Logo",required=False)
-    sistemaOperativo = forms.CharField(label="Sistema Operativo", max_length=50)
-    plataforma = forms.CharField(label="Plataforma", max_length=20)
-    fichaTecnica = forms.CharField(label="Ficha Tecnica",widget=forms.Textarea)
-    licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
-    descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
-    urlReferencia =  forms.CharField(label="Url herramienta", max_length=50)
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    logo = forms.FileField(label="Logo", required=False)
+    fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
 
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                               label="Seleccione una acción",
+                               choices=ESTADO)
+    SISTEMAS_OPERATIVOS = (
+        ('No aplica', 'No aplica'),
+        ('MAC OS', 'MAC OS'),
+        ('Windows', 'Windows'),
+        ('IOS', 'IOS'),
+        ('Android', 'Android'),
+        ('Linux ', 'Linux'),
+    )
+    sistemaOperativo = forms.MultipleChoiceField(required=True,
+                                                 widget=forms.CheckboxSelectMultiple,
+                                                 label="Sistema Operativo",
+                                                 choices=SISTEMAS_OPERATIVOS)
+    PLATAFORMAS = (
+        ('Plataforma 1', 'Plataforma 1'),
+        ('Plataforma 2', 'Plataforma 2'),
+        ('Plataforma 3', 'Plataforma 3'),
+        ('Plataforma 4', 'Plataforma 4'),
+    )
+    plataforma = forms.ChoiceField(label="Plataforma", choices=PLATAFORMAS)
+    LICENCIA = (
+        ('Licencia 1', 'Licencia 1'),
+        ('Licencia 2', 'Licencia 2'),
+        ('Licencia 3', 'Licencia 3'),
+        ('Licencia 4', 'Licencia 4'),
+    )
+    licencia = forms.ChoiceField(label="Licencia", choices=LICENCIA)
 
     class Meta:
         model = Herramienta
-        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
-                  'fichaTecnica','licencia', 'descripcion']
+        fields = ['nombre', 'logo', 'urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'licencia', 'fichaTecnica', 'descripcion', 'estado']
+
 
 class HerramientaUpdateForm(ModelForm):
-    pk_herramienta = None;
+    pk_herramienta = None
     nombre = forms.CharField(label="Nombre", max_length=100)
-    logo = forms.FileField(label="Logo",required=False)
-    sistemaOperativo = forms.CharField(label="Sistema Operativo", max_length=50)
-    plataforma = forms.CharField(label="Plataforma", max_length=20)
-    fichaTecnica = forms.CharField(label="Ficha Tecnica",widget=forms.Textarea)
-    licencia = forms.CharField(label="Licencia", widget=forms.Textarea)
-    descripcion = forms.CharField(label="Descripcion",widget=forms.Textarea)
-    urlReferencia =  forms.CharField(label="Url herramienta", max_length=500)
+    logo = forms.FileField(label="Logo", required=False)
+    fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
 
+    SISTEMAS_OPERATIVOS = (
+        ('No aplica', 'No aplica'),
+        ('MAC OS', 'MAC OS'),
+        ('Windows', 'Windows'),
+        ('IOS', 'IOS'),
+        ('Android', 'Android'),
+        ('Linux ', 'Linux'),
+    )
+    sistemaOperativo = forms.MultipleChoiceField(required=True,
+                                                 widget=forms.CheckboxSelectMultiple,
+                                                 label="Sistema Operativo",
+                                                 choices=SISTEMAS_OPERATIVOS)
+
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                               label="Seleccione una acción",
+                               choices=ESTADO)
+
+    PLATAFORMAS = (
+        ('Plataforma 1', 'Plataforma 1'),
+        ('Plataforma 2', 'Plataforma 2'),
+        ('Plataforma 3', 'Plataforma 3'),
+        ('Plataforma 4', 'Plataforma 4'),
+    )
+    plataforma = forms.ChoiceField(label="Plataforma", choices=PLATAFORMAS)
+    LICENCIA = (
+        ('Licencia 1', 'Licencia 1'),
+        ('Licencia 2', 'Licencia 2'),
+        ('Licencia 3', 'Licencia 3'),
+        ('Licencia 4', 'Licencia 4'),
+    )
+    licencia = forms.ChoiceField(label="Licencia", choices=LICENCIA)
 
     class Meta:
         model = Herramienta
-        fields = ['nombre', 'logo','urlReferencia', 'sistemaOperativo', 'plataforma',
-                  'fichaTecnica','licencia', 'descripcion']
+        fields = ['nombre', 'logo', 'urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'licencia', 'fichaTecnica', 'descripcion', 'estado']
+
+
+class HerramientaRevisionForm(ModelForm):
+    pk_herramienta = None
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    logo = forms.FileField(label="Logo", required=False)
+    fichaTecnica = forms.CharField(label="Ficha Técnica", widget=forms.Textarea, max_length=2000)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    urlReferencia = forms.CharField(label="Url herramienta", max_length=500)
+
+    SISTEMAS_OPERATIVOS = (
+        ('No aplica', 'No aplica'),
+        ('MAC OS', 'MAC OS'),
+        ('Windows', 'Windows'),
+        ('IOS', 'IOS'),
+        ('Android', 'Android'),
+        ('Linux ', 'Linux'),
+    )
+    sistemaOperativo = forms.MultipleChoiceField(required=True,
+                                                 widget=forms.CheckboxSelectMultiple,
+                                                 label="Sistema Operativo",
+                                                 choices=SISTEMAS_OPERATIVOS)
+
+    PLATAFORMAS = (
+        ('Plataforma 1', 'Plataforma 1'),
+        ('Plataforma 2', 'Plataforma 2'),
+        ('Plataforma 3', 'Plataforma 3'),
+        ('Plataforma 4', 'Plataforma 4'),
+    )
+    plataforma = forms.ChoiceField(label="Plataforma", choices=PLATAFORMAS)
+    LICENCIA = (
+        ('Licencia 1', 'Licencia 1'),
+        ('Licencia 2', 'Licencia 2'),
+        ('Licencia 3', 'Licencia 3'),
+        ('Licencia 4', 'Licencia 4'),
+    )
+    licencia = forms.ChoiceField(label="Licencia", choices=LICENCIA)
+
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'logo', 'urlReferencia', 'sistemaOperativo', 'plataforma',
+                  'licencia', 'fichaTecnica', 'descripcion']
+
 
 class UserForm(ModelForm):
     username = forms.CharField(label="Usuario", max_length=20)
     first_name = forms.CharField(label="Nombres", max_length=20)
     last_name = forms.CharField(label="Apellidos", max_length=20)
     foto = forms.FileField(required=False)
-    email = forms.EmailField(label="Correo electronico")
+    email = forms.EmailField(label="Correo electrónico")
     password = forms.CharField(label="Contraseña", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirmación Contraseña", widget=forms.PasswordInput())
     ADMINISTRADOR = 1
     USER_GTI = 2
     ROLE_CHOICES = (
-        (ADMINISTRADOR, 'Administrador'),
         (USER_GTI, 'Miembro GTI'),
+        (ADMINISTRADOR, 'Administrador'),
     )
     roles = forms.ChoiceField(choices=ROLE_CHOICES)
 
@@ -104,19 +208,19 @@ class UserUpdateForm(ModelForm):
     username = forms.CharField(label="Usuario", max_length=20)
     first_name = forms.CharField(label="Nombres", max_length=20)
     last_name = forms.CharField(label="Apellidos", max_length=20)
-    email = forms.EmailField(label="Correo electronico")
+    email = forms.EmailField(label="Correo electrónico")
     foto = forms.FileField(required=False)
     ADMINISTRADOR = 1
     USER_GTI = 2
     ROLE_CHOICES = (
-        (ADMINISTRADOR, 'Administrador'),
         (USER_GTI, 'Miembro GTI'),
+        (ADMINISTRADOR, 'Administrador'),
     )
     roles = forms.ChoiceField(choices=ROLE_CHOICES)
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'roles','foto']
+        fields = ['username', 'first_name', 'last_name', 'email', 'roles', 'foto']
 
     # verificacion correo unico
     def clean_email(self):
@@ -173,12 +277,13 @@ class UserChangePassword(PasswordChangeForm):
             raise forms.ValidationError(mensajes)
         return password2
 
+
 class UserUpdateGTIForm(ModelForm):
     pk_user = None
     username = forms.CharField(label="Usuario", max_length=20)
     first_name = forms.CharField(label="Nombres", max_length=20)
     last_name = forms.CharField(label="Apellidos", max_length=20)
-    email = forms.EmailField(label="Correo electronico")
+    email = forms.EmailField(label="Correo electrónico")
     foto = forms.FileField(required=False)
     USER_GTI = 2
     ROLE_CHOICES = (
@@ -188,7 +293,7 @@ class UserUpdateGTIForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'roles','foto']
+        fields = ['username', 'first_name', 'last_name', 'email', 'roles', 'foto']
 
     # verificacion correo unico
     def clean_email(self):
@@ -207,3 +312,22 @@ class UserUpdateGTIForm(ModelForm):
         if User.objects.exclude(pk=self.instance.id).filter(username=username).exists():
             raise forms.ValidationError(u'Usuario "%s" ya esta en uso.' % username)
         return username
+
+
+class ActividadForm(ModelForm):
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    instrucciones = forms.CharField(label="Instrucciones", widget=forms.Textarea, max_length=2000)
+    url = forms.CharField(label="Url Actividad", max_length=500)
+
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                               label="Seleccione una acción",
+                               choices=ESTADO)
+
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'url', 'instrucciones', 'descripcion', 'estado']

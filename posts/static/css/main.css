@@ -145,18 +145,30 @@ img {
     display: block;
     margin: 0 auto;
 }
+.img-perfil {
+    max-height: 10vw;
+    display: block;
+    margin: 0 auto;
+}
 
 .float{
     position:absolute;
     width:40px;
     height:40px;
-    right:35%;
+    right:10%;
     background-color:#518F89;
     color:#FFF;
     border-radius:50px;
     text-align:center;
     box-shadow: 2px 2px 3px #999;
 }
+
+#boton_agregar_actividad {
+    width:30px;
+    height:30px;
+    margin-top: -5px;
+}
+
 
 .my-float{
     margin-top:12px;
@@ -263,5 +275,17 @@ img {
 
 .panel-default>.panel-heading {
     background-color: rgba(146, 178, 170, 0.73);
-    border-color: #ddd;
+    border-color: #000000;
+}
+
+
+.item-publicar{
+    background-color: rgba(146, 178, 170, 0.73);
+    border-width:1px 0;
+    border-color: #000000;
+
+}
+
+.item-publicar:hover{
+    background-color: rgba(163, 178, 174, 0.73);
 }

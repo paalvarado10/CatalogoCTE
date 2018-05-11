@@ -3,7 +3,7 @@ from unittest import TestCase
 
 
 from selenium import webdriver
-# from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import By
 
 
 
@@ -32,6 +32,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
+        self.browser.implicitly_wait(5)
+        self.browser.find_element_by_id('cuentasUsuario').click()
+        self.browser.implicitly_wait(5)
+        self.browser.find_element_by_id('vigia').click()
+        self.browser.implicitly_wait(5)
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
         self.assertIn('Inicio Catalogo', self.browser.title)
@@ -70,8 +75,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('fmedina2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -81,8 +89,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('pablo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -92,8 +103,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTA DE ELEMENTOS POR PUBLICAR
         self.browser.find_element_by_id('vigia').click()
+    # DETALLE DE ELEMENTO POR PUBLICAR
         self.browser.find_element_by_link_text('Abrir').click()
+    # PUBLICACION DE ELEMENTO
         self.browser.find_element_by_id('publicar_herramienta_btn').click()
         self.browser.find_element_by_id('catalogoIndex').click()
         try:
@@ -126,8 +140,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('fmedina2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -137,8 +154,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('pablo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -148,8 +168,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTA DE ELEMENTOS POR PUBLICAR
         self.browser.find_element_by_id('vigia').click()
+    # DETALLE DE ELEMENTO POR PUBLICAR
         self.browser.find_element_by_link_text('Abrir').click()
+    # PUBLICACION DE ELEMENTO
         self.browser.find_element_by_id('publicar_herramienta_btn').click()
         self.browser.find_element_by_id('catalogoIndex').click()
         try:
@@ -218,8 +241,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('fmedina2018')
         self.browser.find_element_by_id('boton_login').click()
+        self.browser.find_element_by_id('vigia').click()
+        self.browser.implicitly_wait(5)
         aref = self.browser.find_element_by_id('usuario_loqueado_info')
         self.assertIn('Cuenta: Fabian Medina', aref.text)
+
     #PRUEBA EN LA QUE UN MIEMBRO GIT CREA UNA HERRAMIENTA, DOS USUARIOS DISTINTOS GIT LA REVISAN
     # Y EL ADMIN PUBLICA LA EDICION
 
@@ -255,8 +281,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('fmedina2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -266,8 +295,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('pablo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -277,8 +309,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTA DE ELEMENTOS POR PUBLICAR
         self.browser.find_element_by_id('vigia').click()
+    # DETALLE DE ELEMENTO POR PUBLICAR
         self.browser.find_element_by_link_text('Abrir').click()
+    # PUBLICACION DE ELEMENTO
         self.browser.find_element_by_id('publicar_herramienta_btn').click()
         self.browser.find_element_by_id('catalogoIndex').click()
         try:
@@ -311,8 +346,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('fmedina2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -322,8 +360,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('pablo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTADO DE ELEMENTOS EN ESTADO DE REVISION
         self.browser.find_element_by_id('vigia').click()
+    # MIEMBRO GIT ACCEDE AL DETALLE DE UN ELEMENTO EN REVISION
         self.browser.find_element_by_link_text('Abrir').click()
+    # MIEMBRO GIT REVISA EL ELEMENTO
         self.browser.find_element_by_id('revisar_herramienta_btn').click()
         self.browser.find_element_by_id('usuario_loqueado_info').click()
         self.browser.find_element_by_xpath('//a[@href="/logout/"]').click()
@@ -333,8 +374,11 @@ class FunctionalTest(TestCase):
         clave = self.browser.find_element_by_id('password')
         clave.send_keys('catalogo2018')
         self.browser.find_element_by_id('boton_login').click()
+    # LISTA DE ELEMENTOS POR PUBLICAR
         self.browser.find_element_by_id('vigia').click()
+    # DETALLE DE ELEMENTO POR PUBLICAR
         self.browser.find_element_by_link_text('Abrir').click()
+    # PUBLICACION DE ELEMENTO
         self.browser.find_element_by_id('publicar_herramienta_btn').click()
         self.browser.find_element_by_id('catalogoIndex').click()
         try:
@@ -347,3 +391,19 @@ class FunctionalTest(TestCase):
         self.browser.get(URL)
         self.browser.find_element_by_id('Sicua plus foros').click()
         self.assertIn('Sicua plus foros', self.browser.title)
+
+    def test_12_editar_miembro_git(self):
+        self.browser.get(URL)
+        self.browser.find_element_by_id('id_login').click()
+        nombre_usuario = self.browser.find_element_by_name('username')
+        nombre_usuario.send_keys('admin')
+        clave = self.browser.find_element_by_id('password')
+        clave.send_keys('catalogo2018')
+        self.browser.find_element_by_id('boton_login').click()
+        self.browser.find_element_by_id('cuentasUsuario').click()
+        self.browser.find_element_by_xpath('//a[@href="/user_update/8"]').click()
+        username_usuario_prueba = self.browser.find_element_by_id('id_username')
+        username_usuario_prueba.clear()
+        username_usuario_prueba.send_keys('Update')
+        self.browser.find_element_by_id('cambios').click()
+        self.assertIn('Cuentas de usuarios', self.browser.title)

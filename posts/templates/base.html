@@ -42,11 +42,17 @@
                         <a id="cuentasUsuario" href="{% url 'catalogo:users_list' %}" >Cuentas usuarios</a>
                     </li>
                     <li id="vigiaNav">
-                        <a id="vigia" href="{% url 'catalogo:vigia' %}" > Vigía</a>
+                        <a id="vigia" href="{% url 'catalogo:vigia' %}" >Gestión de conocimiento</a>
+                    </li>
+                    <li id="mis_borradores_nav">
+                        <a id="mis_borradores" href="{% url 'catalogo:borradores' %}" >Mis borradores</a>
                     </li>
                 {% elif user.is_authenticated and user.perfil.role == 2 %}
                     <li id="vigiaNav">
-                        <a id="vigia" href="{% url 'catalogo:vigia' %}" > Vigía</a>
+                        <a id="vigia" href="{% url 'catalogo:vigia' %}" >Gestión de conocimiento</a>
+                    </li>
+                    <li id="mis_borradores_nav">
+                        <a id="mis_borradores" href="{% url 'catalogo:borradores' %}" >Mis borradores</a>
                     </li>
                 {% endif %}
             </ul>
@@ -58,7 +64,11 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{% url 'catalogo:user_update' user.id %}" class="btn btn-outline-success">Editar cuenta</a></li>
+                            {% if user.perfil.role == 1 %}
+                                <li><a href="{% url 'catalogo:user_update' user.id %}" class="btn btn-outline-success">Editar cuenta</a></li>
+                            {% else %}
+                                <li><a href="{% url 'catalogo:user_update_gti' user.id %}" class="btn btn-outline-success">Editar cuenta</a></li>
+                            {% endif %}
                             <li><a href="{% url 'catalogo:user_change_password'%}" class="btn btn-outline-success">Cambio de Contraseña</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{% url 'catalogo:logout' %}" class="btn btn-outline-success">Cerrar sesión</a></li>

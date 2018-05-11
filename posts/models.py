@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -11,11 +10,11 @@ class Herramienta(models.Model):
     id_anterior = models.IntegerField(null=True, blank=True)
     nombre = models.CharField(max_length=100, null=False, blank=False)
     urlReferencia = models.CharField(max_length=500, null=False, blank=False)
-    sistemaOperativo = models.CharField(max_length=50, null=False, blank=False)
+    sistemaOperativo = models.CharField(max_length=80, null=False, blank=False)
     plataforma = models.CharField(max_length=50, null=True, blank=True)
     fichaTecnica = models.CharField(max_length=2000, null=False, blank=False)
     licencia = models.CharField(max_length=200, null=False, blank=False)
-    descripcion = models.CharField(max_length=2000, null=False, blank=False)
+    descripcion = models.CharField(max_length=520, null=False, blank=False)
     logo = models.CharField(max_length=500, null=False, blank=False)
     revisor1 = models.IntegerField(null=True, blank=True)
     revisor2 = models.IntegerField(null=True, blank=True)
@@ -26,41 +25,27 @@ class Herramienta(models.Model):
     PUBLICADO = 3
     BLOQUEADO = 4
     HISTORIC = 5
+    BORRADOR = 6
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
-        (HISTORIC, 'Histórico')
+        (HISTORIC, 'Histórico'),
+        (BORRADOR, 'Borrador')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
 
-    def nombre_herramienta(self):
-        return self.nombre
+    def comparar(self,otra_herramienta):
+        return {'id_nombre':self.nombre == otra_herramienta.nombre,
+                'id_urlReferencia': self.urlReferencia == otra_herramienta.urlReferencia,
+                'id_sistemaOperativo': self.sistemaOperativo == otra_herramienta.sistemaOperativo,
+                'id_plataforma': self.plataforma == otra_herramienta.plataforma,
+                'id_fichaTecnica': self.fichaTecnica == otra_herramienta.fichaTecnica,
+                'id_licencia': self.licencia == otra_herramienta.licencia,
+                'id_descripcion' : self.descripcion == otra_herramienta.descripcion,
+                'id_logo': self.logo == otra_herramienta.logo}
 
-    def estado_herramienta(self):
-        return self.estado
-
-    def url_herramienta(self):
-        return self.urlReferencia
-
-    def sistemaOperativo_herramienta(self):
-        return self.sistemaOperativo
-
-    def plataforma_herramienta(self):
-        return self.plataforma
-
-    def ficha_herramienta(self):
-        return self.fichaTecnica
-
-    def licencia_herramienta(self):
-        return self.licencia
-
-    def descripcion_herramienta(self):
-        return self.descripcion
-
-    def logo_herramienta(self):
-        return self.logo
 
 
 class Perfil(models.Model):
@@ -76,6 +61,7 @@ class Perfil(models.Model):
 
     def __str__(self):  # __unicode__ for Python 2
         return self.user.username
+
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
@@ -100,48 +86,23 @@ class Actividad(models.Model):
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
     BLOQUEADO = 4
+    HISTORIC = 5
+    BORRADOR = 6
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
+        (HISTORIC, 'Histórico'),
+        (BORRADOR, 'Borrador')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
-
-    def herramienta_actividad(self):
-        return self.herramienta.nombre
-
-    def nombre_actividad(self):
-        return self.nombre
-
-    def descripcion_actividad(self):
-        return self.descripcion
-
-    def instrucciones_actividad(self):
-        return self.instrucciones
-
-    def url_actividad(self):
-        return self.url
-
-    def estado_actividad(self):
-        return self.estado
-
 
 
 class RecursoActividad(models.Model):
     actividad = models.ForeignKey(Actividad, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
-
-    def url_recurso_actividad(self):
-        return self.url
-
-    def descripcion_recurso_actividad(self):
-        return self.descripcion
-
-    def actividad_recurso_actividad(self):
-        return self.actividad.nombre
-
 
 
 class Tutorial(models.Model):
@@ -164,38 +125,8 @@ class Tutorial(models.Model):
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
 
-    def herramienta_revisor1(self):
-        return self.herramienta.revisor1
-
-    def herramienta_revisor2(self):
-        return self.herramienta.revisor2
-
-    def herramienta_autor(self):
-        return self.herramienta.autor
-
-    def herramienta_tutorial(self):
-        return self.herramienta.nombre
-
-    def nombre_tutorial(self):
-        return self.nombre
-
-    def funcionalidad_tutorial(self):
-        return self.funcionalidad
-
-    def estado_tutorial(self):
-        return self.estado
-
 
 class RecursoTutorial(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     url = models.CharField(max_length=200, null=False, blank=False)
     descripcion = models.CharField(max_length=500, null=False, blank=False)
-
-    def tutorial_recurso_tutorial(self):
-        return self.tutorial.nombre
-
-    def url_recurso_tutorial(self):
-        return self.url
-
-    def descripcion_recurso_tutorial(self):
-        return self.descripcion

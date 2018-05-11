@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load bootstrap3 %}
-{% block title %}Agregar herramienta{% endblock %}
+{% block title %}Agregar Actividad{% endblock %}
 
 {% block contenido  %}
     <div >
-        <div class="centered"><h1>Agregar herramienta a Conecta-Te</h1></div>
+        <div class="centered"><h1>Agregar Actividad</h1></div>
         <div class="formulario">
-            <form class="bs-example bs-example-form col-md-8" action="{% url 'catalogo:herramienta_create' %}" method="post" enctype="multipart/form-data">
+            <form method="post"  class="bs-example bs-example-form col-md-8" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <br/>
@@ -25,11 +25,11 @@
 {% endblock %}
 {% block extra_script %}
     <script>
-        var fichaTecnica = $('#id_fichaTecnica');
-        fichaTecnica.attr('onkeyup','countFichaTecnica()')
-        var max = fichaTecnica.attr('maxlength');
-        var tam = fichaTecnica.val().length;
-        fichaTecnica.after("<div id=\"id_fichaTecnica_count\">" + (max-tam) + " restantes</div>")
+        var instrucciones = $('#id_instrucciones');
+        instrucciones.attr('onkeyup','countInstrucciones()')
+        var max = instrucciones.attr('maxlength');
+        var tam = instrucciones.val().length;
+        instrucciones.after("<div id=\"id_instrucciones_count\">" + (max-tam) + " restantes</div>")
 
         var descripcion = $('#id_descripcion');
         descripcion.attr('onkeyup','countDescripcion()')
@@ -37,11 +37,11 @@
         var tam2 = descripcion.val().length;
         descripcion.after("<div id=\"id_descripcion_count\">" + (max2-tam2) + " restantes</div>")
 
-        function countFichaTecnica() {
-            var fichaTecnica = $('#id_fichaTecnica');
-            var max = fichaTecnica.attr('maxlength');
-            var contador = $('#id_fichaTecnica_count');
-            var val = fichaTecnica.val();
+        function countInstrucciones() {
+            var instrucciones = $('#id_instrucciones');
+            var max = instrucciones.attr('maxlength');
+            var contador = $('#id_instrucciones_count');
+            var val = instrucciones.val();
             var newLines = val.match(/(\r\n|\n|\r)/g);
             var addition = 0;
             if (newLines != null) {

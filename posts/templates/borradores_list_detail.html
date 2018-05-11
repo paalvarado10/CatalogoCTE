@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block title %}Mis borradores{% endblock %}
+
+{% block contenido  %}
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="{{message.tags}}  alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p id="mensaje">{{ message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div >
+        {% if user.is_authenticated %}
+           <div class="centered">
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Mis borradores</div>
+                    <div class="panel-body">
+                       <p>En esta lista se encuentra los borradores de sus modificaciones </p>
+                    </div>
+                    <!-- List group -->
+                    <ul class="list-group">
+                        {% for herramienta in herramientas_b %}
+                            <li class="list-group-item">
+                                <div>{{ herramienta.nombre }}
+                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}"> Abrir </a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block extra_script %}
+    <script>
+        $(".nav").find(".active").removeClass("active");
+        var actual = $("#mis_borradores_nav")
+        $(actual).addClass("active");
+    </script>
+{% endblock %}
+

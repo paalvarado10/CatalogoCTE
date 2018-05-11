@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ actividad.nombre }}{% endblock %}
+
+{% block contenido  %}
+    {% csrf_token %}
+    {% if user.perfil.role == 1 and actividad.estado == 3 or actividad.estado == 6 %}
+        <div class="modal fade" id="elminarModal" tabindex="-1" role="dialog" aria-labelledby="elminarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="elminarModalLabel">Advertencia</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Tenga en cuenta que eliminar una actividad es un proceso irreversible.
+                            Escriba el nombre de la actividad {{ actividad.nombre }} para poder continuar.
+                        </p>
+                        <input onkeyup="deleteEnable('{{actividad.nombre}}')"  type="text" class="form-control" id="actividad_name">
+                    </div>
+                    <div class="modal-footer">
+                        <form method="post" >
+                            {% csrf_token %}
+                            <button  type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button id="eliminar_actividad_btn_modal" class="btn btn-danger2" type="submit"  id="boton_eliminar_actividad" disabled="true">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="{{message.tags}}  alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p id="mensaje">{{ message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div >
+        <div class="detalle">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-sm-9">
+                        {% if actividad.estado == 1 or actividad.estado == 2 %}
+                            <h1>Versión modificada: {{ actividad.nombre }}</h1>
+                        {% else%}
+                            <h1>{{ actividad.nombre }}</h1>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-3">
+                        <div>
+                            {% if user.is_authenticated %}
+                                {% if actividad.estado == 1 %}
+                                    <a  id="revisar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:revisar' actividad.id %}">Aprobar</a>
+                                    <a  id="revisar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:actividad_update_revision' actividad.id %}">Editar</a>
+                                {% elif actividad.estado == 2 %}
+                                    <a id="publicar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:publicar' actividad.id %}">Publicar actividad</a>
+                                {% elif actividad.estado == 6 %}
+                                    <a id="publicar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:actividad_update' actividad.id %}">Continuar edición</a>
+                                    <a id="agregar_actividad_btn" class="btn btn-success" title="Agregar Actividad" href="{% url 'catalogo:actividad_create' actividad.id %}">Añadir Actividad</a>
+                                    <button id="eliminar_actividad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target="#elminarModal">Eliminar</button>
+                                {% elif actividad.estado == 3 %}
+                                    <a id="editar_actividad_btn" href="{% url 'catalogo:actividad_update' actividad.id %}" class="btn btn-success">Crear una edición</a>
+                                    {% if user.perfil.role == 1 %}
+                                        <button id="eliminar_actividad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target="#elminarModal">Eliminar</button>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div>
+                            <div><div><strong>Descripción:</strong></div><div>{{ actividad.descripcion }}</div></div>
+                            <div><div><strong>URL:</strong></div><div><a href="{{ actividad.url }}" target="_blank">{{ actividad.url }}</a></div></div>
+                            <div><div><strong>Instrucciones:</strong></div><div>{{ actividad.instrucciones }}</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+        {% if user.is_authenticated and actividad_old %}
+            {% if actividad.estado == 1 or actividad.estado == 2 or actividad.estado == 6 %}
+                <div class="detalle">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h1> Versión anterior:{{ actividad.nombre }}</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div>
+                                    <div><div><strong>Descripción:</strong></div><div>{{ actividad_old.descripcion }}</div></div>
+                                    <div><div><strong>URL:</strong></div><div><a href="{{ actividad_old.urlReferencia }}" target="_blank">{{ actividad_old.urlReferencia }}</a></div></div>
+                                    <div><div><strong>Instrucciones:</strong></div><div>{{ actividad.instrucciones }}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+{% block extra_script %}
+    {% if user.perfil.role == 1 and actividad.estado == 3 or actividad.estado == 6%}
+        <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').focus()
+
+            });
+            function deleteEnable(val) {
+                var name = $('#actividad_name').val();
+                if(name===val.toString()){
+                    $('#eliminar_actividad_btn_modal').removeClass("disabled");
+                    $('#eliminar_actividad_btn_modal').prop('disabled', false);
+                }else{
+                    $('#eliminar_actividad_btn_modal').addClass("disabled");
+                    $('#eliminar_actividad_btn_modal').prop('disabled', true);
+                }
+            }
+        </script>
+    {% elif actividad.estado == 1 or actividad.estado == 2 %}
+        <script>
+            $(".nav").find(".active").removeClass("active");
+            var actual = $("#vigiaNav")
+            $(actual).addClass("active");
+        </script>
+    {% elif actividad.estado == 6%}
+
+        <script>
+            $(".nav").find(".active").removeClass("active");
+            var actual = $("#mis_borradores_nav")
+            $(actual).addClass("active");
+        </script>
+    {% endif %}
+{% endblock %}
+

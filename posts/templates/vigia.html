@@ -61,6 +61,50 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Actividades por revisar</div>
+                    <div class="panel-body">
+                        <p>En esta lista se encuentra las actividades que fueron modificadas y están pendientes de revisión</p>
+                    </div>
+                    <!-- List group -->
+                    <div class="list-group">
+                        {% for actividad in actividades_r %}
+                            <a class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}"> {{ actividad.nombre }} </a>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Actividades por publicar</div>
+                    <div class="panel-body">
+                        <p>En esta lista se encuentra las actividades que ya fueron revisadas y están pendientes de publicarse</p>
+                    </div>
+                    <!-- List group -->
+                    <div class="list-group">
+                        {% for actividad in actividades_p %}
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <a class="item-publicar col-sm-9" href="{% url 'catalogo:actividad_detail' actividad.id %}">
+                                        {{ actividad.nombre }}
+                                    </a>
+                                    <a class="item-publicar col-sm-3" href="{% url 'catalogo:publicar' actividad.id %}">
+                                        Publicar
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     {% elif user.is_authenticated and user.perfil.role == 2 %}
         <div class="centered">
             <div class="col-md-8">
@@ -72,6 +116,19 @@
                     <div class="list-group">
                         {% for herramienta in herramientas_r %}
                             <a class="list-group-item" href="{% url 'catalogo:herramienta_detail' herramienta.id %}">{{ herramienta.nombre }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Actividades por revisar</div>
+                    <div class="panel-body">
+                        <p>En esta lista se encuentra las actividades que fueron modificadas</p>
+                    </div>
+                    <div class="list-group">
+                        {% for actividad in actividades_r %}
+                            <a class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}">{{ actividad.nombre }}</a>
                         {% endfor %}
                     </div>
                 </div>

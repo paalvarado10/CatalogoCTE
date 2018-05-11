@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^herramienta_detail/(?P<pk>\d+)/$', views.herramienta_detail, name='herramienta_detail'),
     url(r'^vigia/$', views.herramientas_vigia, name='vigia'),
     url(r'^revisar/(?P<pk>\d+)$', views.herramienta_revisar, name='revisar'),
+    url(r'^actividad_revision/(?P<pk>\d+)$', views.actividad_revision, name='actividad_revision'),
     url(r'^publicar/(?P<pk>\d+)$', views.herramienta_publicar, name='publicar'),
     url(r'^borradores/$', views.borradores_list, name='borradores'),
     url(r'^actividad_create/(?P<pk>\d+)$', views.actividad_create, name='actividad_create'),

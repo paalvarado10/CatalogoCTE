@@ -10,7 +10,7 @@ from .borradores_view import *
 
 # Actividades
 def actividad_create(request, pk):
-    actividad = Actividad.objects.get(id=pk)
+    herramienta = Herramienta.objects.get(id=pk)
     if request.method == 'POST':
         form = ActividadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -25,7 +25,7 @@ def actividad_create(request, pk):
             url = cleaned_data.get('url')
             id_anterior = 0
 
-            actividad = Actividad.objects.create(actividad=actividad, id_anterior=id_anterior, nombre=nombre,
+            actividad = Actividad.objects.create(herramienta=herramienta, id_anterior=id_anterior, nombre=nombre,
                                                  instrucciones=instrucciones, estado=estado,
                                                  revisor1=revisor1, revisor2=revisor2, autor=autor,
                                                  descripcion=descripcion, url=url)

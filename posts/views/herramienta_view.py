@@ -184,7 +184,7 @@ def disable_list(herramienta):
 def herramienta_detail(request, pk):
     herramienta = Herramienta.objects.get(id=pk)
     if request.user.is_authenticated():
-        if request.method == 'POST' and request.user.perfil.role == 1:
+        if request.method == 'POST' and request.user.perfil.role == 1 or herramienta.estado == 6:
 
             return eliminar_herramienta(herramienta, request)
 

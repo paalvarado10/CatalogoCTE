@@ -5,7 +5,7 @@
 
 {% block contenido  %}
     {% csrf_token %}
-    {% if user.perfil.role == 1 and herramienta.estado == 3%}
+    {% if user.perfil.role == 1 and herramienta.estado == 3 or herramienta.estado == 6 %}
         <div class="modal fade" id="elminarModal" tabindex="-1" role="dialog" aria-labelledby="elminarModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -63,6 +63,7 @@
                                     <a id="publicar_herramienta_btn" class="btn btn-success" href="{% url 'catalogo:publicar' herramienta.id %}">Publicar herramienta</a>
                                 {% elif herramienta.estado == 6 %}
                                     <a id="publicar_herramienta_btn" class="btn btn-success" href="{% url 'catalogo:herramienta_update' herramienta.id %}">Continuar edición</a>
+                                    <button id="eliminar_herramienta_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target="#elminarModal">Eliminar</button>
                                 {% elif herramienta.estado == 3 %}
                                     <a id="editar_herramienta_btn" href="{% url 'catalogo:herramienta_update' herramienta.id %}" class="btn btn-success">Crear una edición</a>
                                     {% if user.perfil.role == 1 %}
@@ -183,7 +184,7 @@
 
 {% endblock %}
 {% block extra_script %}
-    {% if user.perfil.role == 1 and herramienta.estado == 3%}
+    {% if user.perfil.role == 1 and herramienta.estado == 3 or herramienta.estado == 6%}
         <script>
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').focus()

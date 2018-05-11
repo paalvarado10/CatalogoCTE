@@ -86,11 +86,15 @@ class Actividad(models.Model):
     PENDIENTE_PUBLICACION = 2
     PUBLICADO = 3
     BLOQUEADO = 4
+    HISTORIC = 5
+    BORRADOR = 6
     ESTADO_CHOICES = (
         (PENDIETE_REVISION, 'Pendiente de Revisión'),
         (PENDIENTE_PUBLICACION, 'Pendiente de Publicación'),
         (PUBLICADO, 'Publicado'),
         (BLOQUEADO, 'Bloqueado'),
+        (HISTORIC, 'Histórico'),
+        (BORRADOR, 'Borrador')
     )
     estado = models.PositiveSmallIntegerField(choices=ESTADO_CHOICES, null=True, blank=True)
 

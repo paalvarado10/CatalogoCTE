@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load bootstrap3 %}
-{% block title %}Editar herramienta{% endblock %}
+{% block title %}Editar actividad{% endblock %}
 
 {% block contenido  %}
-    <div class="centered"><h1>Editar herramienta</h1></div>
+    <div class="centered"><h1>Editar actividad</h1></div>
     <div class="formulario">
         <form method="post" enctype="multipart/form-data" class="col-md-8">
             {% csrf_token %}
@@ -12,8 +12,8 @@
             <br/>
             <div class="row">
                 <div class="centered">
-                    <button class="btn btn-success" id="boton_actualizar_herramienta"> Guardar cambios </button>
-                    <a class="btn btn-danger" href="{% url 'catalogo:herramienta_detail' id %}" class="cancel">Cancelar</a>
+                    <button class="btn btn-success" id="boton_actualizar_actividad"> Guardar cambios </button>
+                    <a class="btn btn-danger" href="{% url 'catalogo:actividad_detail' id %}" class="cancel">Cancelar</a>
                 </div>
             </div>
         </form>
@@ -22,11 +22,11 @@
 {% endblock %}
 {% block extra_script %}
     <script>
-        var fichaTecnica = $('#id_fichaTecnica');
-        fichaTecnica.attr('onkeyup','countFichaTecnica()')
-        var max = fichaTecnica.attr('maxlength');
-        var tam = fichaTecnica.val().length;
-        fichaTecnica.after("<div id=\"id_fichaTecnica_count\">" + (max-tam) + " restantes</div>")
+        var instrucciones = $('#id_instrucciones');
+        instrucciones.attr('onkeyup','countInstrucciones()')
+        var max = instrucciones.attr('maxlength');
+        var tam = instrucciones.val().length;
+        instrucciones.after("<div id=\"id_instrucciones_count\">" + (max-tam) + " restantes</div>")
 
         var descripcion = $('#id_descripcion');
         descripcion.attr('onkeyup','countDescripcion()')
@@ -34,11 +34,11 @@
         var tam2 = descripcion.val().length;
         descripcion.after("<div id=\"id_descripcion_count\">" + (max2-tam2) + " restantes</div>")
 
-        function countFichaTecnica() {
-            var fichaTecnica = $('#id_fichaTecnica');
-            var max = fichaTecnica.attr('maxlength');
-            var contador = $('#id_fichaTecnica_count');
-            var val = fichaTecnica.val();
+        function countInstrucciones() {
+            var instrucciones = $('#id_instrucciones');
+            var max = instrucciones.attr('maxlength');
+            var contador = $('#id_instrucciones_count');
+            var val = instrucciones.val();
             var newLines = val.match(/(\r\n|\n|\r)/g);
             var addition = 0;
             if (newLines != null) {

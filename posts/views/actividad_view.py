@@ -43,53 +43,30 @@ def actividad_create(request, pk):
 
 def actividad_update(request, pk):
     actividad = Actividad.objects.get(id=pk)
-    current_logo = actividad.logo
     if request.method == 'POST':
         form = ActividadUpdateForm(request.POST, request.FILES)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             nombre = cleaned_data.get('nombre')
-            sistemaOperativo = arreglo_a_texto(cleaned_data.get('sistemaOperativo'))
-            plataforma = cleaned_data.get('plataforma')
-            fichaTecnica = cleaned_data.get('fichaTecnica')
-            licencia = cleaned_data.get('licencia')
             descripcion = cleaned_data.get('descripcion')
-            urlReferencia = cleaned_data.get('urlReferencia')
-            logo = current_logo
-            logoL = True if 'logo' in request.FILES else False
-            if logoL:
-                myfile = request.FILES['logo']
-                chu = myfile.chunks()
-                archivo = ''
-                for chunk in chu:
-                    a = chunk
-                    archivo = archivo + a
-                url = azure_storage.guardar_archivo(archivo, myfile.name)
-                logo = url
+            instrucciones = cleaned_data.get('instrucciones')
+            url = cleaned_data.get('url')
             estado = cleaned_data.get('estado')
 
             if int(estado) == 6 and actividad.estado == 6:
                 actividad.nombre = nombre
-                actividad.sistemaOperativo = sistemaOperativo
-                actividad.urlReferencia = urlReferencia
-                actividad.plataforma = plataforma
-                actividad.fichaTecnica = fichaTecnica
-                actividad.licencia = licencia
+                actividad.url = url
+                actividad.instrucciones = instrucciones
                 actividad.descripcion = descripcion
-                actividad.logo = logo
                 actividad.save()
                 messages.success(request, 'Se han guardado los cambios de ' + str(actividad.nombre),
                                  extra_tags='alert alert-success')
                 return borradores_list(request)
             elif int(estado) == 1 and actividad.estado == 6:
                 actividad.nombre = nombre
-                actividad.sistemaOperativo = sistemaOperativo
-                actividad.urlReferencia = urlReferencia
-                actividad.plataforma = plataforma
-                actividad.fichaTecnica = fichaTecnica
-                actividad.licencia = licencia
+                actividad.url = url
+                actividad.instrucciones = instrucciones
                 actividad.descripcion = descripcion
-                actividad.logo = logo
                 actividad.estado = 1
                 actividad.save()
                 messages.success(request, 'La actividad ' + str(actividad.nombre) +
@@ -103,11 +80,9 @@ def actividad_update(request, pk):
                 revisor2 = 0
                 autor = request.user.id
                 actividad_n = Actividad.objects.create(id_anterior=pk, nombre=nombre,
-                                                           sistemaOperativo=sistemaOperativo, plataforma=plataforma,
-                                                           fichaTecnica=fichaTecnica, licencia=licencia, estado=estado,
+                                                           instrucciones=instrucciones, estado=estado,
                                                            revisor1=revisor1, revisor2=revisor2, autor=autor,
-                                                           descripcion=descripcion, urlReferencia=urlReferencia,
-                                                           logo=logo)
+                                                           descripcion=descripcion, url=url)
                 actividad_n.save()
                 if estado == 1:
                     messages.success(request, 'La actividad ' + str(actividad.nombre) +
@@ -117,7 +92,6 @@ def actividad_update(request, pk):
                                      extra_tags='alert alert-success')
                 return redirect(reverse('catalogo:index'))
     else:
-        actividad.sistemaOperativo = texto_a_lista(actividad.sistemaOperativo)
         form = ActividadUpdateForm(instance=actividad)
 
     return render(request, 'actividad_update.html', {'form': form, 'id': pk})
@@ -131,28 +105,13 @@ def actividad_update_revision(request, pk):
         if form.is_valid():
             cleaned_data = form.cleaned_data
             actividad.nombre = cleaned_data.get('nombre')
-            actividad.sistemaOperativo = arreglo_a_texto(cleaned_data.get('sistemaOperativo'))
-            actividad.plataforma = cleaned_data.get('plataforma')
-            actividad.fichaTecnica = cleaned_data.get('fichaTecnica')
-            actividad.licencia = cleaned_data.get('licencia')
+            actividad.instrucciones = cleaned_data.get('instrucciones')
             actividad.descripcion = cleaned_data.get('descripcion')
-            actividad.urlReferencia = cleaned_data.get('urlReferencia')
-
-            logoL = True if 'logo' in request.FILES else False
-            if logoL:
-                myfile = request.FILES['logo']
-                chu = myfile.chunks()
-                archivo = ''
-                for chunk in chu:
-                    a = chunk
-                    archivo = archivo + a
-                url = azure_storage.guardar_archivo(archivo, myfile.name)
-                actividad.logo = url
+            actividad.url = cleaned_data.get('url')
 
             actividad.save()
             return actividad_revisar(request, pk)
     else:
-        actividad.sistemaOperativo = texto_a_lista(actividad.sistemaOperativo)
         disable = disable_list(actividad)
         form = ActividadRevisionForm(instance=actividad)
         return render(request, 'actividad_update_revision.html', {'form': form, 'id': pk, 'disable': disable})
@@ -163,7 +122,6 @@ def disable_list(actividad):
         temp = list(Actividad.objects.all().filter(id=actividad.id_anterior).exclude(estado=5))
         actividad_old = temp.pop()
         return actividad.comparar(actividad_old)
-
     else:
         return None
 
@@ -284,7 +242,7 @@ def actividad_revisar(request, pk):
         return redirect(reverse('catalogo:vigia'))
 
     else:
-        actividads = Actividad.objects.all().filter(estado=3)
+        # actividad = Actividad.objects.all().filter(estado=3)
         return redirect(reverse('catalogo:vigia'))
 
 

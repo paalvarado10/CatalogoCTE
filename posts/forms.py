@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django.contrib.auth.forms import forms
 from django.contrib.auth.models import User
-from posts.models import Herramienta
+from posts.models import Herramienta, Actividad
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import password_validation
 
@@ -329,5 +329,37 @@ class ActividadForm(ModelForm):
                                choices=ESTADO)
 
     class Meta:
-        model = Herramienta
+        model = Actividad
         fields = ['nombre', 'url', 'instrucciones', 'descripcion', 'estado']
+
+
+class ActividadUpdateForm(ModelForm):
+    pk_actividad = None
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    instrucciones = forms.CharField(label="Instrucciones", widget=forms.Textarea, max_length=2000)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    url = forms.CharField(label="Url", max_length=500)
+
+    ESTADO = (
+        (6, 'Guardar en mis borradores'),
+        (1, 'Enviar para revisión')
+    )
+    estado = forms.ChoiceField(required=True, widget=forms.RadioSelect,
+                               label="Seleccione una acción",
+                               choices=ESTADO)
+
+    class Meta:
+        model = Actividad
+        fields = ['nombre', 'url', 'instrucciones', 'descripcion', 'estado']
+
+
+class ActividadRevisionForm(ModelForm):
+    pk_actividad = None
+    nombre = forms.CharField(label="Nombre", max_length=100)
+    instrucciones = forms.CharField(label="Instrucciones", widget=forms.Textarea, max_length=2000)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea, max_length=520)
+    url = forms.CharField(label="Url", max_length=500)
+
+    class Meta:
+        model = Herramienta
+        fields = ['nombre', 'url', 'instrucciones', 'descripcion']

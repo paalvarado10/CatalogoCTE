@@ -160,20 +160,22 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
-                        {% if herramienta.estado == 6 %}
+
                         <div class="panel-heading">Actividades
-                            <a data-toggle="tooltip" data-placement="auto" title="Agregar Actividad" href="{% url 'catalogo:actividad_create' herramienta.id %}" class="float" id="boton_agregar_actividad" >
-                                <i class="fa fa-plus my-float" ></i>
-                            </a>
+                            {% if herramienta.estado == 6 %}
+                                <a data-toggle="tooltip" data-placement="auto" title="Agregar Actividad" href="{% url 'catalogo:actividad_create' herramienta.id %}" class="float" id="boton_agregar_actividad" >
+                                    <i class="fa fa-plus my-float" ></i>
+                                </a>
+                            {% endif %}
                         </div>
-                        {% endif %}
+
                         <div class="panel-body">
                             <p>En esta lista se encuentran las actividades que se relacionan con {{ herramienta.nombre }}</p>
                         </div>
                         <!-- List group -->
                         <div class="list-group">
                             {% for actividad in actividades %}
-                                <a class="list-group-item">{{ actividad.nombre }}</a>
+                                <a class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}">{{ actividad.nombre }}</a>
                             {% endfor %}
                         </div>
                     </div>

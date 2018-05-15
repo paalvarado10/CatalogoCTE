@@ -407,3 +407,10 @@ class FunctionalTest(TestCase):
         username_usuario_prueba.send_keys('Update')
         self.browser.find_element_by_id('cambios').click()
         self.assertIn('Cuentas de usuarios', self.browser.title)
+
+
+    def test_13_CCAS_4_visualizacion_actividad(self):
+        self.browser.get(URL)
+        self.browser.find_element_by_id('Foros de Sicua').click()
+        self.browser.find_element_by_id('ActividadTest1').click()
+        

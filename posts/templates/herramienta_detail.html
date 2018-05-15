@@ -175,7 +175,7 @@
                         <!-- List group -->
                         <div class="list-group">
                             {% for actividad in actividades %}
-                                <a class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}">{{ actividad.nombre }}</a>
+                                <a id={{ actividad.nombre }} class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}">{{ actividad.nombre }}</a>
                             {% endfor %}
                         </div>
                     </div>

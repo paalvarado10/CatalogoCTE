@@ -91,6 +91,7 @@
                             <div><div><strong>URL:</strong></div><div><a href="{{ herramienta.urlReferencia }}" target="_blank">{{ herramienta.urlReferencia }}</a></div></div>
                             <div><div><strong>Plataforma:</strong></div><div>{{ herramienta.plataforma }}</div></div>
                             <div><div><strong>Licencia:</strong></div><div>{{ herramienta.licencia }}</div></div>
+                            <div><div><strong>Estado:</strong></div><div>{{ herramienta.estado }}</div></div>
                             <div >
 
                             </div>
@@ -124,6 +125,7 @@
                                     <div><div><strong>URL:</strong></div><div><a href="{{ herramienta_old.urlReferencia }}" target="_blank">{{ herramienta_old.urlReferencia }}</a></div></div>
                                     <div><div><strong>Plataforma:</strong></div><div>{{ herramienta_old.plataforma }}</div></div>
                                     <div><div><strong>Licencia:</strong></div><div>{{ herramienta_old.licencia }}</div></div>
+                                    <div><div><strong>Estado:</strong></div><div>{{ herramienta_old.estado }}</div></div>
                                     <div>
                                     </div>
                                 </div>
@@ -162,7 +164,7 @@
                         <!-- Default panel contents -->
 
                         <div class="panel-heading">Actividades
-                            {% if herramienta.estado == 6 %}
+                            {% if herramienta.estado == 6 or herramienta.estado == 3 %}
                                 <a data-toggle="tooltip" data-placement="auto" title="Agregar Actividad" href="{% url 'catalogo:actividad_create' herramienta.id %}" class="float" id="boton_agregar_actividad" >
                                     <i class="fa fa-plus my-float" ></i>
                                 </a>

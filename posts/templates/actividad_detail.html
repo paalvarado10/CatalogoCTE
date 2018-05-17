@@ -57,13 +57,12 @@
                         <div>
                             {% if user.is_authenticated %}
                                 {% if actividad.estado == 1 %}
-                                    <a  id="revisar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:revisar' actividad.id %}">Aprobar</a>
-                                    <a  id="revisar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:actividad_update_revision' actividad.id %}">Editar</a>
+                                    <a  id="revisar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:actividad_revision' actividad.id %}">Aprobar</a>
+                                    <a  id="editar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:actividad_update_revision' actividad.id %}">Editar</a>
                                 {% elif actividad.estado == 2 %}
                                     <a id="publicar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:publicar' actividad.id %}">Publicar actividad</a>
                                 {% elif actividad.estado == 6 %}
                                     <a id="publicar_actividad_btn" class="btn btn-success" href="{% url 'catalogo:actividad_update' actividad.id %}">Continuar edición</a>
-                                    <a id="agregar_actividad_btn" class="btn btn-success" title="Agregar Actividad" href="{% url 'catalogo:actividad_create' actividad.id %}">Añadir Actividad</a>
                                     <button id="eliminar_actividad_btn" type="button" class="btn btn-danger" data-toggle="modal" data-target="#elminarModal">Eliminar</button>
                                 {% elif actividad.estado == 3 %}
                                     <a id="editar_actividad_btn" href="{% url 'catalogo:actividad_update' actividad.id %}" class="btn btn-success">Crear una edición</a>
@@ -83,6 +82,9 @@
                             <div><div><strong>URL:</strong></div><div><a href="{{ actividad.url }}" target="_blank">{{ actividad.url }}</a></div></div>
                             <div><div><strong>Instrucciones:</strong></div><div>{{ actividad.instrucciones }}</div></div>
                         </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <a id="agregar_actividad_btn" class="btn btn-success" title="Agregar Actividad" href="{% url 'catalogo:actividad_create' actividad.id %}">Añadir otra Actividad</a>
                     </div>
                 </div>
             </div>

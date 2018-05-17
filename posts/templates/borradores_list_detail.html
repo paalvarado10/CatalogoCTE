@@ -19,28 +19,47 @@
     <div >
         {% if user.is_authenticated %}
            <div class="centered">
-            <div class="col-md-10">
-                <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">Mis borradores</div>
-                    <div class="panel-body">
-                       <p>En esta lista se encuentra los borradores de sus modificaciones </p>
+                <div class="col-md-10">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Mis Herramientas en borrador</div>
+                        <div class="panel-body">
+                           <p>En esta lista se encuentra los borradores de sus modificaciones </p>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            {% for herramienta in herramientas_b %}
+                                <li class="list-group-item">
+                                    <div>{{ herramienta.nombre }}
+                                        <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}"> Abrir </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    <!-- List group -->
-                    <ul class="list-group">
-                        {% for herramienta in herramientas_b %}
-                            <li class="list-group-item">
-                                <div>{{ herramienta.nombre }}
-                                    <a class="btn btn-success" href="{% url 'catalogo:herramienta_detail' herramienta.id %}"> Abrir </a>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-
+                </div>
+                <div class="col-md-10">
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Mis Actividades en borrador</div>
+                        <div class="panel-body">
+                           <p>En esta lista se encuentra los borradores de sus modificaciones </p>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            {% for actividad in actividades_b %}
+                                <li class="list-group-item">
+                                    <div>{{ actividad.nombre }}
+                                        <a class="btn btn-success" href="{% url 'catalogo:actividad_detail' actividad.id %}"> Abrir </a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         {% endif %}
-    </div>
+
 {% endblock %}
 {% block extra_script %}
     <script>

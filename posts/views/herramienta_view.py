@@ -279,7 +279,11 @@ def herramientas_vigia(request):
         herramientas_r = Herramienta.objects.all().filter(estado=1).exclude(autor=request.user.id). \
             exclude(revisor1=request.user.id)
         herramientas_p = Herramienta.objects.all().filter(estado=2)
-        context = {'herramientas_r': herramientas_r, 'herramientas_p': herramientas_p}
+
+        actividades_r = Actividad.objects.all().filter(estado=1).exclude(autor=request.user.id). \
+            exclude(revisor1=request.user.id)
+        actividades_p = Actividad.objects.all().filter(estado=2)
+        context = {'herramientas_r': herramientas_r, 'herramientas_p': herramientas_p, 'actividades_p': actividades_p, 'actividades_r': actividades_r}
         return render(request, 'vigia.html', context)
     else:
         herramientas = Herramienta.objects.all().filter(estado=3)

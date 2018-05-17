@@ -175,11 +175,13 @@
                             <p>En esta lista se encuentran las actividades que se relacionan con {{ herramienta.nombre }}</p>
                         </div>
                         <!-- List group -->
-                        <div class="list-group">
-                            {% for actividad in actividades %}
-                                <a class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}">{{ actividad.nombre }}</a>
-                            {% endfor %}
-                        </div>
+                        {% if herramienta.estado == 6 or herramienta.estado == 3 %}
+                            <div class="list-group">
+                                {% for actividad in actividades %}
+                                    <a class="list-group-item" href="{% url 'catalogo:actividad_detail' actividad.id %}">{{ actividad.nombre }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
